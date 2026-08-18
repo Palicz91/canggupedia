@@ -1,0 +1,20 @@
+{
+  "id": "canggu-party-6",
+  "name": "Da Maria Bali",
+  "description": "is a modern Italian restaurant in Seminyak, Bali, known for its Italo Dining concept that blends traditional Italian food with a lively, stylish atmosphere. Inspired by a 1960s Amalfi Coast courtyard, Da Maria serves wood-fired pizzas, fresh pasta, and signature cocktails. By night, it transforms into a buzzing late-night venue with top DJs and vibrant parties.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/da-maria-bali-04.jpg",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/83ZbB5makYHXU2679",
+  "instagramUrl": "https://instagram.com/damariabali",
+  "featured": true,
+  "note": "Parties every Wednesday, Saturday & Sunday\nEach with a different music style\nStay tuned to our Instagram stories for the latest updates & lineups",
+  "openingHours": "Monday – Tuesday: 17:00 – 00:00\nWednesday: 17:00 – 03:00\nThursday – Friday: 17:00 – 00:00\nSaturday – Sunday: 17:00 – 03:00",
+  "priceRange": "Rp 150.000 – Rp 300.000 for mains; cocktails and wines from Rp 120.000++",
+  "tableBookingUrl": "https://wa.me/6281139619892",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://example.com/ticket"
+}

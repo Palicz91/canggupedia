@@ -1,0 +1,19 @@
+{
+  "id": "canggu-party-13",
+  "name": "Klymax at Desa Potato Head",
+  "description": "is a state-of-the-art underground nightclub in Bali, a collaboration between Potato Head and DJ Harvey, designed to prioritize an exceptional sound and dance experience. Located at Desa Potato Head, it features a custom-built sound system, acoustically treated interiors, and a sprung dancefloor, with events typically held on Friday and Saturday nights.",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/2vLDmFymXih1C37y8",
+  "instagramUrl": "https://instagram.com/klymaxdiscotheque",
+  "featured": true,
+  "note": "Open Friday and Saturday only.",
+  "openingHours": "Friday & Saturday: 22:00 – late (until 04:00)",
+  "priceRange": "Entry only on event nights — typically IDR 100.000–200.000 depending on lineup; VIP / table reservations price varies per event",
+  "tableBookingUrl": "https://klymax.co/?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://klymax.co/?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
+}

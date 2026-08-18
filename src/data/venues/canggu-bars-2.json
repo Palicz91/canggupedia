@@ -1,0 +1,18 @@
+{
+  "id": "canggu-bars-2",
+  "name": "Miss Fish",
+  "description": " is a sophisticated Japanese-inspired restaurant and lounge located between Canggu and Seminyak. It offers contemporary cuisine, blending traditional Japanese techniques with European and Latin American influences, and features distinct areas for dining and socializing: the interactive Omakase Bar, the intimate Patio, and the stylish Lounge. The menu includes dishes like Edo period-style hand-rolled sushi and octopus robatayaki, and it's also known for its craft cocktails and evening entertainment",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Miss-Fish-Bali-Omakase-1.jpg",
+  "category": "hangout",
+  "subcategory": [
+    "party",
+    "bars",
+    "dinner"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/X5U7NPaAKrUpogdTA",
+  "instagramUrl": "https://instagram.com/missfishbali",
+  "featured": false,
+  "openingHours": "Tue–Sun 18:00 – 05:00, Closed Monday",
+  "priceRange": "Rp 120.000 – Rp 350.000 per person (drinks & lounge), set-menu/omakase from ~Rp 180.000+"
+}

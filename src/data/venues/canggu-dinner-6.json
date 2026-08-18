@@ -1,0 +1,16 @@
+{
+  "id": "canggu-dinner-6",
+  "name": "Woods Bali",
+  "description": "Woods Bali is a nature-inspired restaurant in Pererenan, Bali, crafted from reclaimed wood with trees integrated into its design. It offers a serene and rustic ambiance, making it a popular spot for both breakfast and romantic dinners.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/woods%20dinner.jpg",
+  "category": "food",
+  "subcategory": [
+    "dinner"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://goo.gl/maps/4E5AuDotCTV1aBoh8",
+  "instagramUrl": "https://instagram.com/woodsbali",
+  "featured": false,
+  "openingHours": "Daily: 08:00 AM – 11:00 PM (Kitchen closes 5-6 PM for preparation)  :contentReference[oaicite:1]{index=1}",
+  "priceRange": "Breakfast items from Rp 85.000; mains Rp 125.000-300.000+; cocktails from Rp 150.000++  :contentReference[oaicite:2]{index=2}"
+}

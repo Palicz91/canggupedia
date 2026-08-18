@@ -1,0 +1,14 @@
+{
+  "id": "canggu-brunch-10",
+  "name": "Kai Cafe",
+  "description": "is a highly-rated, pet-friendly cafe in the Berawa neighborhood of Canggu, Bali. It is known for its relaxed atmosphere, stylish setting, and tasty food and drinks. KAI Cafe offers a modern Australian coastal menu and quality coffee for all-day dining.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/kai%20cafe.jpg",
+  "category": "food",
+  "subcategory": "brunch",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/Aa7Dr21tLvq86oKe7",
+  "instagramUrl": "https://instagram.com/kaicafeberawa",
+  "featured": false,
+  "openingHours": "Monday – Sunday: 08:00 AM – 05:00 PM",
+  "priceRange": "Rp 30.000 – Rp 225.000 per person"
+}

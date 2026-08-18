@@ -1,0 +1,16 @@
+{
+  "id": "canggu-dinner-2",
+  "name": "The Lawn Canggu",
+  "description": "Beachfront restaurant with contemporary cuisine and a relaxed atmosphere, offering sun-beds, ocean-view lounging, and casual dining by the sea.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20lawn.jpg",
+  "category": "food",
+  "subcategory": [
+    "dinner"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/xaeeJEzSWg3ZJzYH9",
+  "instagramUrl": "https://instagram.com/thelawncanggu",
+  "featured": false,
+  "openingHours": "Mon–Fri: 10:00 AM – 10:00 PM\nSat–Sun: 10:00 AM – 11:00 PM",
+  "priceRange": "Mains from Rp150.000; snacks from Rp60.000; cocktails/minimum drinks from Rp120.000"
+}

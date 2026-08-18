@@ -1,0 +1,153 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: venues
+    label: Venues
+    label_singular: Venue
+    folder: src/data/venues
+    format: json
+    create: true
+    delete: true
+    slug: "{{id}}"
+    identifier_field: name
+    summary: "{{name}} — {{location}} / {{category}}"
+    sortable_fields:
+      fields: [name, location, category]
+    fields:
+      - { label: ID, name: id, widget: string, hint: "Unique ID like canggu-brunch-1" }
+      - { label: Name, name: name, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Image URL, name: imageUrl, widget: string, hint: "Full URL to venue image" }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: "Food & Dining", value: food }
+          - { label: "Hangout Spots", value: hangout }
+          - { label: "Wellness & Fitness", value: wellness }
+          - { label: "Fun & Family", value: fun-family }
+      - label: Subcategory
+        name: subcategory
+        widget: select
+        multiple: true
+        options:
+          - brunch
+          - dinner
+          - healthy
+          - authentic
+          - bars
+          - party
+          - gym
+          - boxing
+          - padel
+          - yoga
+          - pilates
+          - spa
+          - waterpark
+          - zoo
+          - activities
+      - label: Location
+        name: location
+        widget: select
+        options:
+          - { label: Canggu, value: canggu }
+          - { label: Uluwatu, value: uluwatu }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
+      - { label: Instagram URL, name: instagramUrl, widget: string }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false }
+      - { label: Price Range, name: priceRange, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Discount Code, name: discountCode, widget: string, required: false }
+      - { label: Note, name: note, widget: text, required: false }
+      - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
+      - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
+      - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
+
+  - name: data
+    label: Other Content
+    files:
+      - name: events
+        label: Events
+        file: src/data/events.json
+        format: json
+        fields:
+          - label: Events
+            name: events
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: ID, name: id, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - label: Location
+                name: location
+                widget: select
+                options:
+                  - { label: Canggu, value: canggu }
+                  - { label: Uluwatu, value: uluwatu }
+              - { label: Image URL, name: imageUrl, widget: string }
+              - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
+              - { label: Price, name: price, widget: string }
+              - { label: Venue, name: venue, widget: string }
+
+      - name: happy-hours
+        label: Happy Hours
+        file: src/data/happy-hours.json
+        format: json
+        fields:
+          - label: Happy Hours
+            name: happy_hours
+            widget: list
+            summary: "{{fields.venue}} — {{fields.time}}"
+            fields:
+              - { label: ID, name: id, widget: string }
+              - { label: Venue, name: venue, widget: string }
+              - label: Days
+                name: days
+                widget: select
+                multiple: true
+                options: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Daily]
+              - { label: Time, name: time, widget: string, hint: "e.g. 5PM - 7PM" }
+              - { label: Offer, name: offer, widget: string }
+              - label: Location
+                name: location
+                widget: select
+                options:
+                  - { label: Canggu, value: canggu }
+                  - { label: Uluwatu, value: uluwatu }
+              - { label: Image URL, name: imageUrl, widget: string }
+              - { label: Google Maps URL, name: googleMapsUrl, widget: string }
+              - { label: Instagram URL, name: instagramUrl, widget: string }
+
+      - name: daily-promos
+        label: Daily Promos
+        file: src/data/daily-promos.json
+        format: json
+        fields:
+          - label: Daily Promos
+            name: daily_promos
+            widget: list
+            summary: "{{fields.title}} — {{fields.day}}"
+            fields:
+              - { label: ID, name: id, widget: string }
+              - label: Day
+                name: day
+                widget: select
+                options: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+              - { label: Title, name: title, widget: string }
+              - { label: Venue, name: venue, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Image URL, name: imageUrl, widget: string }
+              - label: Location
+                name: location
+                widget: select
+                options:
+                  - { label: Canggu, value: canggu }
+                  - { label: Uluwatu, value: uluwatu }
+              - { label: Venue Instagram, name: venueInstagram, widget: string }

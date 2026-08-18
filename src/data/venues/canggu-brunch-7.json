@@ -1,0 +1,18 @@
+{
+  "id": "canggu-brunch-7",
+  "name": "Nude Cafe Berawa",
+  "description": "is a popular Australian-style cafe in Tibubeneng, Bali, known for its healthy food, vibrant atmosphere, and focus on fresh, high-quality ingredients. It serves breakfast, lunch, dinner, and drinks, with many options for vegetarian, vegan, and gluten-free diets. The cafe offers both indoor and outdoor seating and is a popular spot for locals and digital nomads",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/nude%20cafe%20berawa.jpg",
+  "category": "food",
+  "subcategory": [
+    "brunch",
+    "dinner",
+    "healthy"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/LkaWgKW86q7NyvhbA",
+  "instagramUrl": "https://instagram.com/nudebali",
+  "featured": false,
+  "openingHours": "07:00 AM – 10:00 PM",
+  "priceRange": "Rp 70.000 – Rp 120.000 per person"
+}

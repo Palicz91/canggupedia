@@ -1,0 +1,12 @@
+{
+  "id": "canggu-family-2",
+  "name": "Bali Zoo",
+  "description": "Interactive zoo experience with exotic animals and feeding opportunities",
+  "imageUrl": "https://images.pexels.com/photos/34098/south-africa-hluhluwe-giraffes-pattern.jpg?auto=compress&cs=tinysrgb&w=800",
+  "category": "fun-family",
+  "subcategory": "zoo",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Bali+Zoo",
+  "instagramUrl": "https://instagram.com/balizoo",
+  "featured": false
+}

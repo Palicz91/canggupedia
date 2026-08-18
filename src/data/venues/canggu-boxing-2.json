@@ -1,0 +1,12 @@
+{
+  "id": "canggu-boxing-2",
+  "name": "The Block Bali",
+  "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20block%20bali.jpg",
+  "category": "wellness",
+  "subcategory": "boxing",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Punch+Fitness+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/punchfitnessbali",
+  "featured": false
+}

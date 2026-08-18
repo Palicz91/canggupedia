@@ -1,0 +1,12 @@
+{
+  "id": "canggu-boxing-5",
+  "name": "Canggu Muay Thai",
+  "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/canggu%20muaytahi.webp",
+  "category": "wellness",
+  "subcategory": "boxing",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Punch+Fitness+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/punchfitnessbali",
+  "featured": false
+}

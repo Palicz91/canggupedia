@@ -1,0 +1,12 @@
+{
+  "id": "canggu-yoga-1",
+  "name": "The Canggu Studio",
+  "description": "Beautiful yoga studio with ocean views, expert instructors, and daily classes",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/canggu%20studio.webp",
+  "category": "wellness",
+  "subcategory": "yoga",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=The+Practice+Bali+Canggu",
+  "instagramUrl": "https://instagram.com/thepracticebali",
+  "featured": true
+}

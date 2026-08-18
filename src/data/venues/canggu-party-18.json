@@ -1,0 +1,19 @@
+{
+  "id": "canggu-party-18",
+  "name": "The Iron Fairies Bali",
+  "description": "is a whimsical, high-end nightlife venue in Seminyak known for its magical, fantasy-themed design inspired by an iron foundry and a story about iron fairies. It combines decadent cocktails, live music (ranging from R&B to funk), and DJ sets in an enchanting setting filled with ironwork, steampunk decor, and intimate cabaret moments. It is designed by award-winning designer Ashley Sutton.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/iron%20fairies.jpeg",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/sg4C8a3fEVyvMjQv5",
+  "instagramUrl": "https://instagram.com/theironfairies.bali",
+  "featured": true,
+  "openingHours": "Mon–Thu & Sun: 19:00 – 03:00, Fri–Sat: 19:00 – 04:00",
+  "priceRange": "Rp 250.000+ per person",
+  "tableBookingUrl": "https://linktr.ee/theironfairiesbali?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://linktr.ee/theironfairiesbali?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
+}

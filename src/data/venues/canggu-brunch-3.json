@@ -1,0 +1,14 @@
+{
+  "id": "canggu-brunch-3",
+  "name": "Machinery Cafe",
+  "description": "Cozy neighborhood cafe with wholesome brunch classics and excellent coffee",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Machinery-Cafe-Canggu-1.jpg",
+  "category": "food",
+  "subcategory": "brunch",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/akpJnNU1Jd5K8QZX9",
+  "instagramUrl": "https://instagram.com/machinerycafe",
+  "featured": false,
+  "openingHours": "07:00 AM – 05:00 PM",
+  "priceRange": "Rp 40.000 – Rp 100.000 per item"
+}

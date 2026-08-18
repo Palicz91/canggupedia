@@ -1,0 +1,18 @@
+{
+  "id": "canggu-brunch-1",
+  "name": "Avocado Factory",
+  "description": "Healthy brunch spot with amazing smoothie bowls, fresh juices, and Instagram-worthy presentations",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/kursi-makan-avocado-factory-bali-lead.jpeg",
+  "category": "food",
+  "subcategory": [
+    "brunch",
+    "dinner",
+    "healthy"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Crate+Cafe+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/theavocadofactory",
+  "openingHours": "10:00 AM – 10:00 PM",
+  "priceRange": "Rp 100K – 250K per person",
+  "featured": true
+}

@@ -1,0 +1,14 @@
+{
+  "id": "canggu-brunch-9",
+  "name": "Milk and Madu Berawa",
+  "description": "is a popular and family-friendly cafe and restaurant with locations across Bali, Indonesia, known for its gourmet food, excellent coffee, and relaxed atmosphere",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/mm-berawa-gallery-frontview.jpg",
+  "category": "food",
+  "subcategory": "brunch",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/9dNcWZGe8y2BwtSR8",
+  "instagramUrl": "https://instagram.com/milkandmadu",
+  "featured": false,
+  "openingHours": "07:00 AM – 10:00 PM",
+  "priceRange": "Rp 30.000 – Rp 225.000 per person"
+}

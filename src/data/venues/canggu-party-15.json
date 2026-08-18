@@ -1,0 +1,18 @@
+{
+  "id": "canggu-party-15",
+  "name": "Mirror Bali",
+  "description": "is a popular nightclub and lounge in Seminyak, Bali, known for its striking Gothic cathedral-inspired interior, state-of-the-art lighting, and immersive atmosphere. It hosts world-class DJs and themed events, offering a high-energy, stylish nightlife experience with premium drinks, bottle service, and a sophisticated dress code. The venue features a large dance floor and a unique design with features like stained-glass windows and mirrored walls, creating a glamorous and electrifying party scene.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/mirror%20bali%202.jpg",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "seminyak",
+  "googleMapsUrl": "https://maps.app.goo.gl/RpzVHhHmvYDDH8Jt7",
+  "instagramUrl": "https://instagram.com/mirror_allin",
+  "featured": true,
+  "openingHours": "Wednesday, Thursday, Friday, Saturday & Sunday: 22:00 – 03:30 (Closed Monday & Tuesday) :contentReference[oaicite:1]{index=1}",
+  "priceRange": "Entry fee (FDC) typically ~Rp 150.000 for men (redeemable for drinks/food); women often free before 00:00. Typical drinks ~Rp 100.000–150.000; VIP / bottle-service / high-end events range ~Rp 250.000–500.000+ depending on event. :contentReference[oaicite:2]{index=2}",
+  "tableBookingUrl": "https://allin.co.id/mirrorbali/",
+  "ticketUrl": "https://allin.co.id/mirrorbali/"
+}

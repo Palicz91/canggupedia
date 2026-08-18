@@ -1,0 +1,12 @@
+{
+  "id": "canggu-authentic-3",
+  "name": "Santorini Greek",
+  "description": "Mediterranean Greek cuisine with fresh ingredients and seaside vibes",
+  "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "category": "food",
+  "subcategory": "authentic",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Santorini+Greek+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/santorinigreek",
+  "featured": false
+}

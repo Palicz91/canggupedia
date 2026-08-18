@@ -1,0 +1,17 @@
+{
+  "id": "canggu-dinner-5",
+  "name": "Red Gunpowder",
+  "description": "A modern Indian restaurant located in Pererenan, Bali, known for its contemporary take on Indian cuisine in a stylish, reclaimed-wood setting with a garden terrace. Dishes include tandoor octopus, butter chicken, creative cocktails and special events.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bali-best-restaurant-red-gunpowder-2.jpg",
+  "category": "food",
+  "subcategory": [
+    "dinner",
+    "authentic"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/xkv17ZasBi1SAtDd7",
+  "instagramUrl": "https://instagram.com/red.gunpowder",
+  "featured": false,
+  "openingHours": "Daily: 17:00 – 23:00",
+  "priceRange": "Small plates from Rp 110.000; mains Rp 120.000-195.000; signature cocktails Rp 140.000++"
+}

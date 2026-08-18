@@ -1,0 +1,16 @@
+{
+  "id": "canggu-brunch-16",
+  "name": "Deli Cafe",
+  "description": "is a restaurant in Canggu, Bali, that specializes in Australian-inspired sandwiches, gourmet burgers, coffee, and bakery items. It offers a vibrant and cozy atmosphere and is popular for brunch, lunch, and coffee.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_4903.jpg",
+  "category": "food",
+  "subcategory": [
+    "brunch"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/fnytKkQ4rvPBTjGe9",
+  "instagramUrl": "https://instagram.com/delisandwich.id",
+  "featured": false,
+  "openingHours": "Daily: 06:00 – 18:00",
+  "priceRange": "Rp 25.000 – Rp 150.000 per person for typical meals & sandwiches; some items ~Rp 50.000-100.000"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "canggu-party-2",
+  "name": "Desa Kitsune",
+  "description": "is a unique lifestyle village and hospitality concept located in the heart of Canggu, Bali. It is a world-first destination by the French-Japanese lifestyle brand Kitsuné, which seamlessly blends food, fashion, culture, and music into an immersive experience. Every Tuesday and Friday, Desa Kitsuné hosts its signature soirée — a lively night featuring Bali’s top DJs and international guest artists, creating one of the island’s most iconic party experiences.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/desa-kitsune-aerial.jpg",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/FaqViP2DmrswsvsV8",
+  "instagramUrl": "https://instagram.com/desakitsunebali",
+  "featured": true,
+  "note": "Looking to join the vibes?\nSharing tables are available for selected events\nChat with us on WhatsApp or catch the updates on our daily stories",
+  "openingHours": "Mon, Wed, Thu, Sat, Sun: 07:00–23:30 / Tue & Fri: 07:00–02:00",
+  "priceRange": "Entry starts from Rp 250.000 depending on the event",
+  "signatureNights": "Tuesday & Friday – Kitsuné Soirée with Bali’s top DJs and international guest artists",
+  "tableBookingUrl": "wa.me/6281139619892",
+  "guestlistUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfbR1gz3zL6Hl4YdV3b-VrBH7RZmzOGe9ufGol69aIBte0vVw/viewform",
+  "ticketUrl": "https://desakitsune.com/events?tab=desa-kitsune-event"
+}

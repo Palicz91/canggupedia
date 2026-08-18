@@ -1,0 +1,17 @@
+{
+  "id": "canggu-brunch-2",
+  "name": "Terra Eats Bali",
+  "description": "A health-focused eatery and meal delivery service located in the Berawa-Canggu area, offering nutritious and customizable meals, snacks, and beverages.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/WhatsApp-Image-2024-12-10-at-13.16.07-1024x768.jpeg",
+  "category": "food",
+  "subcategory": [
+    "brunch",
+    "healthy"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/Dxw7CdTjNAGh3eey6",
+  "instagramUrl": "https://instagram.com/terra.eats.bali",
+  "featured": false,
+  "openingHours": "07:00 AM – 09:00 PM",
+  "priceRange": "Rp 100.000 – Rp 200.000 per person"
+}

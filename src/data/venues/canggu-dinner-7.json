@@ -1,0 +1,17 @@
+{
+  "id": "canggu-dinner-7",
+  "name": "Ibu Kota Bar & Grilled",
+  "description": "A newly opened Indonesian restaurant in Canggu, Bali, capturing the vibrant dining and entertainment spirit of Jakarta. The venue offers a refined menu of traditional Indonesian dishes alongside crafted cocktails, in a bar & grill setting.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_1754.jpg",
+  "category": "food",
+  "subcategory": [
+    "dinner",
+    "authentic"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/cbmNQr5NA68X2xkT7",
+  "instagramUrl": "https://instagram.com/ibukota.bali",
+  "featured": true,
+  "openingHours": "Tue–Sun: 16:00 – 23:00",
+  "priceRange": "Average spend approx Rp 300.000/person including mains and cocktails"
+}

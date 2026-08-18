@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import events from '../data/events.json';
+import eventsData from '../data/events.json';
 
-const sortedEvents = [...events].sort(
+const sortedEvents = [...eventsData.events].sort(
   (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
 );
 ---

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VenueGrid from '../../components/VenueGrid.tsx';
-import venues from '../../data/venues.json';
+const venueModules = import.meta.glob('../../data/venues/*.json', { eager: true, import: 'default' });
+const venues = Object.values(venueModules) as any[];
 import { categoryConfigs } from '../../data/category-config';
 
 export function getStaticPaths() {

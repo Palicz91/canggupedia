@@ -1,0 +1,19 @@
+{
+  "id": "canggu-party-7",
+  "name": "Old Mans",
+  "description": "is an iconic beachfront bar, restaurant, and social hub located right on Batu Bolong Beach. It is well-known for its relaxed surf-centric atmosphere during the day, which transforms into a lively nightlife spot with music and events after sunset.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/oldmans%20canggu.webp",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/GfGFkBkzps7TsqXh9",
+  "instagramUrl": "https://instagram.com/oldmansbali",
+  "featured": true,
+  "openingHours": "Daily: 12:00 – late (until ~01:00, and often until ~02:00 on Wed/Thu/Sat) ",
+  "priceRange": "Mains from ~Rp 40.000-180.000; cocktails around Rp 85.000; typical dinner/party spend ~Rp 150.000-300.000+ ",
+  "tableBookingUrl": "https://wa.me/6281139619892",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://example.com/ticket"
+}

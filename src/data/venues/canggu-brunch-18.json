@@ -1,0 +1,16 @@
+{
+  "id": "canggu-brunch-18",
+  "name": "Th Goat Father Coffee",
+  "description": "a specialty coffee shop in Canggu, Bali, known for its artisanal coffee and fresh baked goods. The cafe offers a variety of coffee, including creative signature drinks like the Iced Charcoal Latte and traditional options like pour-overs, alongside a selection of pastries like croissants. ",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20goat%20father.jpg",
+  "category": "food",
+  "subcategory": [
+    "brunch"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/HxYpEsFevTqHP61L7",
+  "instagramUrl": "https://instagram.com/desakitsunebali",
+  "featured": false,
+  "openingHours": "Daily: 07:00 – 20:00 WITA",
+  "priceRange": "Pastries & coffees ~ Rp 18.000 – Rp 80.000; coffees & speciality drinks ~ Rp 35.000 – Rp 55.000; full light-meal / brunch menu ~ Rp 55.000 – Rp 150.000 per person"
+}

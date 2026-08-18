@@ -1,0 +1,12 @@
+{
+  "id": "canggu-spa-2",
+  "name": "SPRING Spa",
+  "description": "Serene spa retreat offering holistic treatments and rejuvenation",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/spring.jpg",
+  "category": "wellness",
+  "subcategory": "spa",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Bliss+Sanctuary+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/blisssanctuarybali",
+  "featured": false
+}

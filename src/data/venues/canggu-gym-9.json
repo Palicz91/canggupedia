@@ -1,0 +1,12 @@
+{
+  "id": "canggu-gym-9",
+  "name": "Body Factory",
+  "description": "Boutique fitness studio with holistic approach to health and wellness",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Body-Factory-Bali-4-1024x683.jpg",
+  "category": "wellness",
+  "subcategory": "gym",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=The+Sanctuary+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/sanctuarycanggu",
+  "featured": false
+}

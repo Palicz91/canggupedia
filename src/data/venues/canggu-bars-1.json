@@ -1,0 +1,16 @@
+{
+  "id": "canggu-bars-1",
+  "name": "The Barn",
+  "description": "is a modern British gastropub and sports bar in Canggu, Bali, known for its London-inspired vintage decor, extensive drinks menu, and classic pub fare like Fish & Chips and Sunday Roast. It features live sports shown on multiple screens, bar games like pool and shuffleboard, a sophisticated upstairs cocktail bar, and an air-conditioned interior.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the-barn-canggu.webp",
+  "category": "hangout",
+  "subcategory": "bars",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/SB6NcgHezCYC43By6",
+  "instagramUrl": "https://instagram.com/thebarnbal",
+  "featured": true,
+  "tableBookingUrl": "https://linktr.ee/thebarnbali?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn-UAn2pU56z2gVpiMh5g2bhdzi_G6G1AbKmgR8zWBZR8MrHPbLH8zva7wIF4_aem_hcazojBj0hqfqUrkEqhGXQ",
+  "ticketUrl": "https://example.com/ticket",
+  "openingHours": "Monday–Thursday: 09:00 – 00:00; Friday–Saturday: 09:00 – 02:00; Sunday: 09:00 – 01:00 :contentReference[oaicite:1]{index=1}",
+  "priceRange": "Main dishes & drinks ~ Rp 99.000 – Rp 279.000; typical meal + drink ~ Rp 170.000 per person. Starters from ~Rp 59.000, smaller snacks from ~Rp 25.000. :contentReference[oaicite:2]{index=2}"
+}

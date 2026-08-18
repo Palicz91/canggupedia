@@ -1,0 +1,12 @@
+{
+  "id": "canggu-gym-2",
+  "name": "Elite Fit",
+  "description": "is a premier fitness and wellness center in Pererenan, Bali, offering a high-end gym, training classes, personal training, and recovery facilities. It provides a comprehensive fitness experience with state-of-the-art equipment, a social atmosphere, and scenic rice field views, aiming to be more than just a gym by incorporating community, recovery, and healthy food options.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/elite-fit-bali.webp",
+  "category": "wellness",
+  "subcategory": "gym",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/ix3xgZdQB56FJn6D6",
+  "instagramUrl": "https://instagram.com//elitefitbali/",
+  "featured": false
+}

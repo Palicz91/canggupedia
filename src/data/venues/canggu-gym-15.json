@@ -1,0 +1,12 @@
+{
+  "id": "canggu-gym-15",
+  "name": "BYND Fitness Club Bali",
+  "description": " is a luxury fitness, wellness, and co-working destination located in Canggu, Bali. It features three floors of air-conditioned fitness studios with state-of-the-art equipment, a wide variety of classes, professional trainers, and recovery services like sports massages and a cold plunge pool. The club aims to be an inclusive community space that also includes co-working facilities and amenities like a rooftop pool. ",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bynd.webp",
+  "category": "wellness",
+  "subcategory": "gym",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/NxTuoVc2yccZVjV4A",
+  "instagramUrl": "https://instagram.com/sayaclubbali",
+  "featured": false
+}

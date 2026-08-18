@@ -1,0 +1,21 @@
+{
+  "id": "canggu-party-1",
+  "name": "Savaya",
+  "description": "a luxury cliffside beach club and nightclub located in Uluwatu, Bali, known for its stunning ocean views and world-class electronic music events. It has been ranked the #1 club in Asia for 2024 and 2025, and the top club in the world, attracting major international DJs and artists. The venue is a destination for both daytime relaxation and nighttime parties, featuring an immersive atmosphere and high-end hospitality.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Savaya-Bali-1.jpg",
+  "category": "hangout",
+  "discountCode": "CANGGUPEDIA",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Savaya",
+  "instagramUrl": "https://instagram.com/savayabali",
+  "featured": true,
+  "note": "Looking to join the vibes?\nSharing tables are available for selected events\nChat with us on WhatsApp or catch the updates on our daily stories",
+  "tableBookingUrl": "wa.me/6281139619892",
+  "guestlistUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfbR1gz3zL6Hl4YdV3b-VrBH7RZmzOGe9ufGol69aIBte0vVw/viewform",
+  "ticketUrl": "https://www.savaya.com/event-calendar",
+  "openingHours": "Monday–Thursday 11:00 – 21:00; Friday–Sunday 13:00 – 00:00+",
+  "priceRange": "Rp 150.000 – Rp 600.000 entry (weekday base) + VIP/minimum spend from approx. Rp 8.000.000 ++"
+}

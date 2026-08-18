@@ -1,0 +1,20 @@
+{
+  "id": "canggu-party-3",
+  "name": "The Shady Pig",
+  "description": "a 1920s-themed speakeasy bar in Canggu, Bali, known for its experimental cocktails and mobster syndicate-inspired atmosphere. It offers a menu of refined bites and canapés to accompany its signature and classic drinks.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/The-Shady-Pig-Venue-3.jpg",
+  "category": "hangout",
+  "subcategory": [
+    "party",
+    "bars"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/mvdrHccYNxayh7ni7",
+  "instagramUrl": "https://instagram.com/theshadypig",
+  "featured": true,
+  "tableBookingUrl": "wa.me/6281139619892",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://example.com/ticket",
+  "openingHours": "Tue–Sun 19:00 – 04:00, Closed Monday",
+  "priceRange": "Rp 130.000 – Rp 500.000 per person (cocktails + bar bites) and minimum spend from ~Rp 8.000.000 for VIP table after 23:00"
+}

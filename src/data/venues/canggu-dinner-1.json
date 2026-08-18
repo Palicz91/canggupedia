@@ -1,0 +1,17 @@
+{
+  "id": "canggu-dinner-1",
+  "name": "Numero Quattro",
+  "description": "Beachfront dining with stunning sunset views, fresh seafood, and bohemian vibes",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/restaurants-in-canggu-32-1024x738.webp",
+  "category": "food",
+  "subcategory": [
+    "dinner",
+    "authentic"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/B8PjEtwtDjgbe9zL7",
+  "instagramUrl": "https://instagram.com/numeroquattro.echobeach",
+  "featured": true,
+  "openingHours": "Mon–Sat 17:00–00:00, Sun 13:00–00:00",
+  "priceRange": "Rp 42.800 – Rp 450.800 per item"
+}

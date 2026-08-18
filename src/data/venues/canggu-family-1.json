@@ -1,0 +1,12 @@
+{
+  "id": "canggu-family-1",
+  "name": "Splash Waterpark",
+  "description": "Family-friendly waterpark with slides, pools, and activities for all ages",
+  "imageUrl": "https://images.pexels.com/photos/2524368/pexels-photo-2524368.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "category": "fun-family",
+  "subcategory": "waterpark",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.google.com/?q=Splash+Waterpark+Canggu+Bali",
+  "instagramUrl": "https://instagram.com/splashwaterparkbali",
+  "featured": false
+}

@@ -1,0 +1,14 @@
+{
+  "id": "canggu-brunch-5",
+  "name": "Copenhagen Canggu",
+  "description": "a popular, Nordic-inspired café and bakery located in the trendy Canggu area of Bali, Indonesia.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_9302.JPG",
+  "category": "food",
+  "subcategory": "brunch",
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/oyYDssHQu8KzaRt79",
+  "instagramUrl": "https://instagram.com/copenhagencafe.bali",
+  "featured": false,
+  "openingHours": "06:00 AM – 06:00 PM",
+  "priceRange": "≈ Rp 65.000 – Rp 172.000 per person"
+}

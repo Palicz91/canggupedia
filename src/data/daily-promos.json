@@ -1,72 +1,74 @@
-[
-  {
-    "id": "promo-mon-1",
-    "day": "Monday",
-    "title": "Margarita Mondays",
-    "venue": "Pretty Poison",
-    "description": "2-for-1 margaritas all night long - choose from classic, mango, strawberry, or spicy varieties",
-    "imageUrl": "https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "canggu",
-    "venueInstagram": "https://instagram.com/prettypoisonbali"
-  },
-  {
-    "id": "promo-tue-1",
-    "day": "Tuesday",
-    "title": "Taco Tuesday",
-    "venue": "La Brisa",
-    "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
-    "imageUrl": "https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "canggu",
-    "venueInstagram": "https://instagram.com/labrisabali"
-  },
-  {
-    "id": "promo-wed-1",
-    "day": "Wednesday",
-    "title": "Wine Wednesday",
-    "venue": "Ulu Cliffhouse",
-    "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
-    "imageUrl": "https://images.pexels.com/photos/1407846/pexels-photo-1407846.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "uluwatu",
-    "venueInstagram": "https://instagram.com/ulucliffhouse"
-  },
-  {
-    "id": "promo-thu-1",
-    "day": "Thursday",
-    "title": "Throwback Thursday",
-    "venue": "Old Mans",
-    "description": "90s & 2000s party with drink specials and nostalgic hits all night",
-    "imageUrl": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "canggu",
-    "venueInstagram": "https://instagram.com/oldmanscanggu"
-  },
-  {
-    "id": "promo-fri-1",
-    "day": "Friday",
-    "title": "Friday Sunset Sessions",
-    "venue": "Single Fin",
-    "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
-    "imageUrl": "https://images.pexels.com/photos/1540406/pexels-photo-1540406.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "uluwatu",
-    "venueInstagram": "https://instagram.com/singlefinbali"
-  },
-  {
-    "id": "promo-sat-1",
-    "day": "Saturday",
-    "title": "Brunch & Beats",
-    "venue": "Crate Cafe",
-    "description": "Extended brunch menu with live acoustic music from 10am-3pm",
-    "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "canggu",
-    "venueInstagram": "https://instagram.com/cratecafe"
-  },
-  {
-    "id": "promo-sun-1",
-    "day": "Sunday",
-    "title": "Sunday Roast",
-    "venue": "Ulu Cliffhouse",
-    "description": "Traditional Sunday roast with ocean views - booking recommended",
-    "imageUrl": "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "location": "uluwatu",
-    "venueInstagram": "https://instagram.com/ulucliffhouse"
-  }
-]
+{
+  "daily_promos": [
+    {
+      "id": "promo-mon-1",
+      "day": "Monday",
+      "title": "Margarita Mondays",
+      "venue": "Pretty Poison",
+      "description": "2-for-1 margaritas all night long - choose from classic, mango, strawberry, or spicy varieties",
+      "imageUrl": "https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "canggu",
+      "venueInstagram": "https://instagram.com/prettypoisonbali"
+    },
+    {
+      "id": "promo-tue-1",
+      "day": "Tuesday",
+      "title": "Taco Tuesday",
+      "venue": "La Brisa",
+      "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
+      "imageUrl": "https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "canggu",
+      "venueInstagram": "https://instagram.com/labrisabali"
+    },
+    {
+      "id": "promo-wed-1",
+      "day": "Wednesday",
+      "title": "Wine Wednesday",
+      "venue": "Ulu Cliffhouse",
+      "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
+      "imageUrl": "https://images.pexels.com/photos/1407846/pexels-photo-1407846.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "uluwatu",
+      "venueInstagram": "https://instagram.com/ulucliffhouse"
+    },
+    {
+      "id": "promo-thu-1",
+      "day": "Thursday",
+      "title": "Throwback Thursday",
+      "venue": "Old Mans",
+      "description": "90s & 2000s party with drink specials and nostalgic hits all night",
+      "imageUrl": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "canggu",
+      "venueInstagram": "https://instagram.com/oldmanscanggu"
+    },
+    {
+      "id": "promo-fri-1",
+      "day": "Friday",
+      "title": "Friday Sunset Sessions",
+      "venue": "Single Fin",
+      "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
+      "imageUrl": "https://images.pexels.com/photos/1540406/pexels-photo-1540406.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "uluwatu",
+      "venueInstagram": "https://instagram.com/singlefinbali"
+    },
+    {
+      "id": "promo-sat-1",
+      "day": "Saturday",
+      "title": "Brunch & Beats",
+      "venue": "Crate Cafe",
+      "description": "Extended brunch menu with live acoustic music from 10am-3pm",
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "canggu",
+      "venueInstagram": "https://instagram.com/cratecafe"
+    },
+    {
+      "id": "promo-sun-1",
+      "day": "Sunday",
+      "title": "Sunday Roast",
+      "venue": "Ulu Cliffhouse",
+      "description": "Traditional Sunday roast with ocean views - booking recommended",
+      "imageUrl": "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "location": "uluwatu",
+      "venueInstagram": "https://instagram.com/ulucliffhouse"
+    }
+  ]
+}

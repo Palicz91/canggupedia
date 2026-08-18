@@ -1,0 +1,20 @@
+{
+  "id": "canggu-party-5",
+  "name": "Vault Bali",
+  "description": "is an underground nightclub located in the Berawa/Canggu area of Bali, known for its exclusive atmosphere, top-tier sound system, and a mix of music genres like Hip-Hop, R&B, and electronic music. It features a hidden entrance, a bunker-style design, and regularly hosts Bali’s top DJs and international guests.",
+  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/vault%20bali.png",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/GcnrM2z7dZhfQdcs5",
+  "instagramUrl": "https://instagram.com/vault.bali",
+  "featured": true,
+  "note": "Party every Monday, Wednesday, Thursday, Friday & Saturday\nEach night brings a different music vibe\nFree entry when you mention Guestlist Canggupedia at the entrance\n(before midnight, or 11:30PM on Saturdays)\nStay tuned to our daily Instagram stories for event details",
+  "openingHours": "22:00 – 04:00 (Tue–Sun) / Closed Monday",
+  "priceRange": "Rp 150.000 – Rp 300.000 entry + standard drinks; VIP table/minimum spend significantly higher",
+  "tableBookingUrl": "wa.me/6281139619892",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://example.com/ticket"
+}
