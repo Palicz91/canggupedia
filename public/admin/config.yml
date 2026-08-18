@@ -21,7 +21,7 @@ collections:
       - { label: ID, name: id, widget: string, hint: "Unique ID like canggu-brunch-1" }
       - { label: Name, name: name, widget: string }
       - { label: Description, name: description, widget: text }
-      - { label: Image URL, name: imageUrl, widget: string, hint: "Full URL to venue image" }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
       - label: Category
         name: category
         widget: select
@@ -90,7 +90,7 @@ collections:
                 options:
                   - { label: Canggu, value: canggu }
                   - { label: Uluwatu, value: uluwatu }
-              - { label: Image URL, name: imageUrl, widget: string }
+              - { label: Image, name: imageUrl, widget: image }
               - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
               - { label: Price, name: price, widget: string }
               - { label: Venue, name: venue, widget: string }
@@ -120,7 +120,7 @@ collections:
                 options:
                   - { label: Canggu, value: canggu }
                   - { label: Uluwatu, value: uluwatu }
-              - { label: Image URL, name: imageUrl, widget: string }
+              - { label: Image, name: imageUrl, widget: image }
               - { label: Google Maps URL, name: googleMapsUrl, widget: string }
               - { label: Instagram URL, name: instagramUrl, widget: string }
 
@@ -142,7 +142,7 @@ collections:
               - { label: Title, name: title, widget: string }
               - { label: Venue, name: venue, widget: string }
               - { label: Description, name: description, widget: text }
-              - { label: Image URL, name: imageUrl, widget: string }
+              - { label: Image, name: imageUrl, widget: image }
               - label: Location
                 name: location
                 widget: select
