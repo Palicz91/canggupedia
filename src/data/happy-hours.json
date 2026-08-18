@@ -1,0 +1,68 @@
+[
+  {
+    "id": "hh-1",
+    "venue": "Pretty Poison",
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "time": "5PM - 7PM",
+    "offer": "50% off all cocktails",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=Pretty+Poison+Canggu+Bali",
+    "instagramUrl": "https://instagram.com/prettypoisonbali"
+  },
+  {
+    "id": "hh-2",
+    "venue": "La Brisa",
+    "days": ["Daily"],
+    "time": "4PM - 6PM",
+    "offer": "Buy 1 Get 1 on selected drinks",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=La+Brisa+Bali+Canggu",
+    "instagramUrl": "https://instagram.com/labrisabali"
+  },
+  {
+    "id": "hh-3",
+    "venue": "Single Fin",
+    "days": ["Daily"],
+    "time": "3PM - 6PM",
+    "offer": "30% off all drinks",
+    "location": "uluwatu",
+    "imageUrl": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali",
+    "instagramUrl": "https://instagram.com/singlefinbali"
+  },
+  {
+    "id": "hh-4",
+    "venue": "The Shack",
+    "days": ["Monday", "Wednesday", "Friday"],
+    "time": "5PM - 8PM",
+    "offer": "2-for-1 beers and house cocktails",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=The+Shack+Canggu+Bali",
+    "instagramUrl": "https://instagram.com/theshackcanggu"
+  },
+  {
+    "id": "hh-5",
+    "venue": "Rock Bar",
+    "days": ["Daily"],
+    "time": "5PM - 7PM",
+    "offer": "40% off signature cocktails",
+    "location": "uluwatu",
+    "imageUrl": "https://images.pexels.com/photos/941864/pexels-photo-941864.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=Rock+Bar+Uluwatu+Bali",
+    "instagramUrl": "https://instagram.com/rockbaruluwatu"
+  },
+  {
+    "id": "hh-6",
+    "venue": "Deus Ex Machina",
+    "days": ["Tuesday", "Thursday", "Saturday", "Sunday"],
+    "time": "4PM - 7PM",
+    "offer": "Special beer buckets and shooter deals",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/2923034/pexels-photo-2923034.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "googleMapsUrl": "https://maps.google.com/?q=Deus+Ex+Machina+Canggu+Bali",
+    "instagramUrl": "https://instagram.com/deuscanggu"
+  }
+]

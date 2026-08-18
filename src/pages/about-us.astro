@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OurPartners from '../components/OurPartners.astro';
+---
+
+<BaseLayout
+  title="About Us - The Story Behind Canggupedia | Bali Guide"
+  description="Meet the storytellers behind Bali's most vibrant digital community. Canggupedia has been helping local businesses shine since December 2021."
+>
+  <div class="min-h-screen bg-gradient-sunset font-sans">
+    <div class="container mx-auto px-4 py-16">
+      <div class="text-center mb-16 pt-8">
+        <h1 class="font-display text-5xl md:text-6xl font-black text-white text-shadow-lg mb-6 animate-fade-in">
+          About Us
+        </h1>
+        <p class="font-display text-3xl font-bold text-white text-shadow mb-4">
+          The Story Behind Canggupedia
+        </p>
+        <p class="font-sans text-lg font-medium text-white text-shadow max-w-2xl mx-auto">
+          Meet the storytellers behind Bali's most vibrant digital community
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-10 md:p-14 text-center relative overflow-hidden mb-20">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
+        <div class="relative z-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-dark mx-auto mb-6"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+
+          <p class="font-sans text-lg text-brand-dark leading-relaxed mb-6">
+            Welcome to <span class="font-bold text-brand-dark">Canggupedia</span> —
+            <br />
+            your go-to social media storytellers based right here in sunny Canggu, Bali
+          </p>
+
+          <p class="font-sans text-lg text-brand-dark leading-relaxed mb-6">
+            We started back in <span class="font-bold">December 2021</span>, during the tough Covid days, with one simple goal: to help local businesses survive and shine online
+          </p>
+
+          <p class="font-sans text-lg text-brand-dark leading-relaxed mb-6">
+            What began as a small passion project has now grown into a thriving creative hub — proudly collaborating with some of Bali's hottest restaurants, beach clubs, and bars.
+          </p>
+
+          <p class="font-sans text-lg text-brand-dark leading-relaxed mb-6">
+            Since the island reopened, we've continued to bridge the gap between brands and their audiences, helping each business tell its story in a fun, authentic way that connects.
+          </p>
+
+          <p class="font-sans text-lg text-brand-dark leading-relaxed">
+            At <span class="font-bold text-brand-dark">Canggupedia</span>, we don't just promote — we create vibes, spark conversations, and celebrate the Bali lifestyle one post at a time
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center mb-28">
+        <div class="relative h-96 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+          <img
+            src="https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_5803%202.jpg"
+            alt="Canggupedia Team in Bali"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+        </div>
+
+        <div class="p-4 md:p-10 text-center md:text-left text-white">
+          <h2 class="font-display text-4xl font-extrabold mb-4 text-shadow-lg">
+            Our Mission
+          </h2>
+          <p class="font-sans text-lg font-bold leading-relaxed mb-6 text-white">
+            At <span class="font-extrabold text-white">Canggupedia</span>, our mission is to uplift local Bali businesses through storytelling that resonates.
+            We believe every restaurant, bar, and brand has a unique voice — we just help amplify it.
+          </p>
+          <p class="font-sans text-lg font-bold leading-relaxed mb-6 text-white">
+            From creative campaigns to digital strategy and community engagement, we make sure each story captures the true spirit of the island.
+          </p>
+          <p class="font-sans text-lg font-bold leading-relaxed text-white">
+            Our team lives and breathes the Bali lifestyle — passionate, creative, and always connected to what's happening in paradise
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mb-2">
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+          Our Partners
+        </h2>
+        <div class="w-24 h-1 bg-white mx-auto mb-10 rounded-full"></div>
+      </div>
+    </div>
+
+    <OurPartners />
+
+    <div class="text-center mt-20 pb-20">
+      <a
+        href="/"
+        class="inline-block bg-gradient-tropical text-white font-display font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all"
+      >
+        &larr; Back to Home
+      </a>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.tsx';
+---
+
+<BaseLayout
+  title="Contact Us - The Canggupedia | Bali Guide"
+  description="Have questions or want to list your venue on The Canggupedia? Get in touch with us!"
+>
+  <div class="min-h-screen bg-gradient-sunset">
+    <div class="container mx-auto px-4 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-display font-bold text-white text-shadow-lg mb-4">
+          Get in Touch
+        </h1>
+        <p class="text-xl text-white text-shadow">
+          Have questions or want to list your venue? We'd love to hear from you!
+        </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+        <ContactForm client:visible />
+
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-display font-bold text-gray-800 mb-6">
+              Contact Information
+            </h3>
+
+            <div class="space-y-4">
+              <a
+                href="mailto:hello@thecanggupedia.com"
+                class="flex items-center space-x-3 text-gray-700 hover:text-sunset-orange transition-colors"
+              >
+                <div class="bg-gradient-sunset p-3 rounded-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold">Email</p>
+                  <p class="text-sm">hello@thecanggupedia.com</p>
+                </div>
+              </a>
+
+              <a
+                href="https://instagram.com/thecanggupedia"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center space-x-3 text-gray-700 hover:text-pink-500 transition-colors"
+              >
+                <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-3 rounded-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold">Instagram</p>
+                  <p class="text-sm">@thecanggupedia</p>
+                </div>
+              </a>
+
+              <div class="flex items-center space-x-3 text-gray-700">
+                <div class="bg-gradient-to-br from-green-400 to-teal-500 p-3 rounded-xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold">Location</p>
+                  <p class="text-sm">Bali, Indonesia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-display font-bold text-gray-800 mb-4">
+              Want to be featured?
+            </h3>
+            <p class="text-gray-600 mb-4">
+              If you own a venue, host events, or know of amazing spots in Canggu or Uluwatu,
+              we'd love to feature you on The Canggupedia!
+            </p>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start">
+                <span class="text-sunset-orange mr-2">&bull;</span>
+                <span>Restaurants & cafes</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-sunset-orange mr-2">&bull;</span>
+                <span>Bars & clubs</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-sunset-orange mr-2">&bull;</span>
+                <span>Wellness studios</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-sunset-orange mr-2">&bull;</span>
+                <span>Events & parties</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

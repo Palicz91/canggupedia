@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import dailyPromos from '../data/daily-promos.json';
+
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+---
+
+<BaseLayout
+  title="Daily Promos & Deals in Bali | The Canggupedia"
+  description="Find the best daily promos and special deals in Canggu and Uluwatu. Margarita Mondays, Taco Tuesdays, and more."
+>
+  <div class="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100">
+    <div class="container mx-auto px-4 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-4">
+          What's On
+        </h1>
+        <p class="text-xl text-gray-600">
+          Daily Promos & Special Deals
+        </p>
+      </div>
+
+      {daysOfWeek.map((day) => {
+        const dayPromos = dailyPromos.filter((promo) => promo.day === day);
+        if (dayPromos.length === 0) return null;
+
+        return (
+          <div class="mb-12">
+            <h2 class="text-3xl font-display font-bold text-gray-800 mb-6 text-center">
+              {day}
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+              {dayPromos.map((promo) => (
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                  <div class="relative h-48">
+                    <img
+                      src={promo.imageUrl}
+                      alt={promo.title}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-6">
+                    <h3 class="font-display font-bold text-2xl text-gray-800 mb-2">
+                      {promo.title}
+                    </h3>
+                    <p class="text-sunset-orange font-bold text-lg mb-3">
+                      {promo.venue}
+                    </p>
+                    <p class="text-gray-600 mb-6">{promo.description}</p>
+                    {promo.venueInstagram && (
+                      <a
+                        href={promo.venueInstagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center space-x-2 bg-pink-500 text-white py-2 px-4 rounded-xl hover:bg-pink-600 transition-colors font-semibold"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                        <span>View Venue</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+      {dailyPromos.length === 0 && (
+        <div class="text-center py-16">
+          <p class="text-xl text-gray-600 mb-4">No daily promos available yet.</p>
+          <p class="text-gray-500">Check back soon for great deals!</p>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

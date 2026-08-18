@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sunsetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fb923c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f87171;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="100" cy="100" r="95" fill="url(#sunsetGradient)"/>
+
+  <circle cx="100" cy="60" r="25" fill="#fef3c7"/>
+
+  <path d="M 30 120 Q 50 100 70 120 Q 90 100 100 120 Q 110 100 130 120 Q 150 100 170 120 L 170 200 L 30 200 Z" fill="#0ea5e9" opacity="0.7"/>
+
+  <ellipse cx="100" cy="120" rx="60" ry="15" fill="#10b981" opacity="0.8"/>
+  <ellipse cx="80" cy="125" rx="40" ry="10" fill="#059669" opacity="0.6"/>
+  <ellipse cx="120" cy="125" rx="40" ry="10" fill="#059669" opacity="0.6"/>
+
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">TC</text>
+</svg>

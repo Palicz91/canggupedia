@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | The Canggupedia"
+  description="The page you're looking for doesn't exist."
+>
+  <div class="min-h-screen bg-gradient-sunset flex items-center justify-center">
+    <div class="text-center px-4">
+      <h1 class="font-display text-8xl font-black text-white text-shadow-lg mb-6">404</h1>
+      <p class="font-display text-3xl font-bold text-white text-shadow mb-4">
+        Page Not Found
+      </p>
+      <p class="font-sans text-lg text-white text-shadow max-w-md mx-auto mb-8">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <a
+        href="/"
+        class="inline-block bg-white text-brand-dark font-display font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:shadow-2xl transition-all hover:scale-105"
+      >
+        &larr; Back to Home
+      </a>
+    </div>
+  </div>
+</BaseLayout>

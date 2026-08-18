@@ -1,0 +1,68 @@
+[
+  {
+    "id": "event-1",
+    "title": "New Year’s Eve celebration at Morabito Art Villa",
+    "description": "A Celebration Beneath the Stars: Ringing in 2026 at Morabito Art Villa, where Music, Art, and the Ocean Meet",
+    "date": "2025-12-31",
+    "location": "canggu",
+    "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_4902.jpg",
+    "ticketUrl": "https://megatix.com.au/events/morabito-new-years-eve",
+    "price": "300K IDR",
+    "venue": "Morabito Art Villa"
+  },
+  {
+    "id": "event-2",
+    "title": "Bali Wellness Festival",
+    "description": "Three days of yoga, meditation, sound healing, and holistic workshops with renowned international instructors",
+    "date": "2025-11-20",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "ticketUrl": "https://example.com/tickets/wellness-festival",
+    "price": "From 500K IDR",
+    "venue": "The Practice"
+  },
+  {
+    "id": "event-3",
+    "title": "Sunset DJ Sessions",
+    "description": "Weekly sunset parties with rotating international DJs spinning house, techno, and tropical beats",
+    "date": "2025-11-22",
+    "location": "uluwatu",
+    "imageUrl": "https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "ticketUrl": "https://example.com/tickets/sunset-dj",
+    "price": "Free Entry",
+    "venue": "Single Fin"
+  },
+  {
+    "id": "event-4",
+    "title": "Art & Design Exhibition",
+    "description": "Curated exhibition featuring local and international artists showcasing contemporary art, design, and installations",
+    "date": "2025-12-01",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/1616403/pexels-photo-1616403.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "ticketUrl": "https://example.com/tickets/art-exhibition",
+    "price": "100K IDR",
+    "venue": "Deus Ex Machina"
+  },
+  {
+    "id": "event-5",
+    "title": "Bali Food Festival",
+    "description": "Culinary celebration featuring top chefs, food stalls, cooking demonstrations, and wine pairings",
+    "date": "2025-12-10",
+    "location": "canggu",
+    "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "ticketUrl": "https://example.com/tickets/food-festival",
+    "price": "250K IDR",
+    "venue": "La Brisa"
+  },
+  {
+    "id": "event-6",
+    "title": "New Year's Eve Beach Bash",
+    "description": "Ring in the new year with an epic beachfront celebration, fireworks, live bands, and champagne toasts",
+    "date": "2025-12-31",
+    "location": "uluwatu",
+    "imageUrl": "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "ticketUrl": "https://example.com/tickets/nye-bash",
+    "price": "1,500K IDR",
+    "venue": "Sundays Beach Club"
+  }
+]

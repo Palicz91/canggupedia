@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VenueGrid from '../../components/VenueGrid.tsx';
+import venues from '../../data/venues.json';
+import { categoryConfigs } from '../../data/category-config';
+
+export function getStaticPaths() {
+  const categories = Object.keys(categoryConfigs.canggu);
+  return categories.map((category) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.params;
+const config = categoryConfigs.canggu[category];
+const categoryVenues = venues.filter(
+  (v) => v.location === 'canggu' && v.category === category
+);
+---
+
+<BaseLayout
+  title={`${config.title} in Canggu - ${config.description} | The Canggupedia`}
+  description={`${config.description}. Find the best ${category} spots in Canggu, Bali.`}
+>
+  <VenueGrid
+    client:load
+    venues={categoryVenues}
+    config={config}
+    category={category}
+    location="canggu"
+    backHref="/canggu"
+    backLabel="Back to Canggu"
+    bgGradient="from-amber-50 to-orange-50"
+  />
+</BaseLayout>

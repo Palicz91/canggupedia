@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "The Canggupedia",
+  "url": "https://canggupedia.netlify.app",
+  "description": "Your ultimate insider guide to the best restaurants, bars, wellness spots, and events in Canggu and Uluwatu, Bali.",
+};
+---
+
+<BaseLayout
+  title="The Canggupedia - Your Ultimate Bali Guide"
+  description="Discover the best restaurants, bars, wellness spots, and events in Canggu and Uluwatu. Your insider guide to Bali."
+  structuredData={structuredData}
+>
+  <div class="min-h-screen bg-gradient-sunset font-sans">
+    <div class="container mx-auto px-4 py-16">
+      <div class="text-center mb-16 pt-8">
+        <h1 class="font-display text-5xl md:text-6xl font-black text-white text-shadow-lg mb-6 animate-fade-in">
+          The Canggupedia
+        </h1>
+        <p class="font-display text-3xl font-bold text-white text-shadow mb-4">
+          Your Ultimate Bali Guide
+        </p>
+        <p class="font-sans text-lg font-medium text-white text-shadow max-w-2xl mx-auto">
+          Discover the best restaurants, bars, wellness spots, and events in Bali's most vibrant locations
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+        <a href="/canggu" class="group">
+          <div class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover h-96 relative">
+            <div
+              class="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 ease-out group-hover:scale-105"
+              style="background-image: url('https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/ChatGPT%20Image%20Oct%2022,%202025,%2008_13_45%20PM.png');"
+            >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            </div>
+            <div class="relative h-full flex flex-col items-center justify-end p-8 text-center">
+              <div class="font-display bg-gradient-tropical text-white px-8 py-3 rounded-full font-bold group-hover:shadow-2xl transition-all">
+                Explore Canggu →
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="/uluwatu" class="group">
+          <div class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover h-96 relative">
+            <div
+              class="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 ease-out group-hover:scale-105"
+              style="background-image: url('https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/ChatGPT%20Image%20Oct%2022,%202025,%2008_15_29%20PM.png');"
+            >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            </div>
+            <div class="relative h-full flex flex-col items-center justify-end p-8 text-center">
+              <div class="font-display bg-gradient-tropical text-white px-8 py-3 rounded-full font-bold group-hover:shadow-2xl transition-all">
+                Explore Uluwatu →
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <a href="/events" class="group">
+          <div class="bg-white rounded-2xl shadow-xl p-6 card-hover text-center">
+            <div class="bg-gradient-tropical w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+            </div>
+            <h3 class="font-display text-3xl font-bold text-brand-dark mb-2">Events</h3>
+            <p class="font-sans text-brand-gray font-medium">Upcoming parties, festivals & conferences</p>
+          </div>
+        </a>
+
+        <a href="/daily-promos" class="group">
+          <div class="bg-white rounded-2xl shadow-xl p-6 card-hover text-center">
+            <div class="bg-gradient-sunset w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </div>
+            <h3 class="font-display text-3xl font-bold text-brand-dark mb-2">Daily Promos</h3>
+            <p class="font-sans text-brand-gray font-medium">Special deals every day of the week</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

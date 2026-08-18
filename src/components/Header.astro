@@ -1,0 +1,47 @@
+---
+import MobileNav from './MobileNav.tsx';
+---
+
+<header class="bg-white/90 backdrop-blur-sm shadow-md sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-4 relative">
+    <div class="flex items-center justify-between">
+      <a
+        href="/"
+        class="flex items-center space-x-3 hover:scale-105 transition-transform"
+      >
+        <div class="hidden md:block w-10 h-10">
+          <img
+            src="https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/pediafamlogo.jpeg"
+            alt="The Canggupedia Logo"
+            class="w-full h-full object-contain rounded-full"
+            width="40"
+            height="40"
+          />
+        </div>
+      </a>
+
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href="/"
+          class="text-gray-700 hover:text-sunset-orange font-semibold transition-colors"
+        >
+          Home
+        </a>
+        <a
+          href="/about-us"
+          class="text-gray-700 hover:text-sunset-orange font-semibold transition-colors"
+        >
+          About Us
+        </a>
+        <a
+          href="/contact"
+          class="bg-gradient-tropical text-white px-6 py-2 rounded-full font-bold hover:shadow-lg transition-all hover:scale-105"
+        >
+          Contact Us
+        </a>
+      </div>
+
+      <MobileNav client:load />
+    </div>
+  </nav>
+</header>
