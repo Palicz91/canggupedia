@@ -2,7 +2,7 @@
   "id": "canggu-dinner-2",
   "name": "The Lawn Canggu",
   "description": "Beachfront restaurant with contemporary cuisine and a relaxed atmosphere, offering sun-beds, ocean-view lounging, and casual dining by the sea.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20lawn.jpg",
+  "imageUrl": "/images/the-lawn.webp",
   "category": "food",
   "subcategory": [
     "dinner"

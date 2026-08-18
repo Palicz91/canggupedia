@@ -2,7 +2,7 @@
   "id": "canggu-brunch-15",
   "name": "ACME Bakehouse & Coffee Roasters Pererenan",
   "description": "is a Bali-based cafe, artisanal bakehouse, and boutique coffee roaster. It is known for its freshly baked sourdough, pastries, and house-roasted specialty coffee beans.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/acme.jpg",
+  "imageUrl": "/images/acme.webp",
   "category": "food",
   "subcategory": [
     "brunch"

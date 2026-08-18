@@ -2,7 +2,7 @@
   "id": "canggu-party-4",
   "name": "Morabito Art Villa",
   "description": "is an exclusive beachfront hotel and event venue in the trendy Berawa Beach area of Canggu, Bali. It is a unique estate envisioned by the avant-garde French jeweler and sculptor Pascal Morabito, blending contemporary art, design, and luxury accommodation.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Morabito-Party-Night-in-the-Venue.jpg",
+  "imageUrl": "/images/morabito-party-night-in-the-venue.webp",
   "category": "hangout",
   "subcategory": [
     "party"

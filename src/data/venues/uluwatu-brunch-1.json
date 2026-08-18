@@ -2,7 +2,7 @@
   "id": "uluwatu-brunch-1",
   "name": "Single Fin",
   "description": "Clifftop cafe with amazing views and healthy breakfast options overlooking the ocean",
-  "imageUrl": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "imageUrl": "/images/pexels-photo-1639562.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "uluwatu",

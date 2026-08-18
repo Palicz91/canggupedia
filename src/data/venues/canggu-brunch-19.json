@@ -2,7 +2,7 @@
   "id": "canggu-brunch-19",
   "name": "Woods Bali",
   "description": "is an upscale restaurant and café located in the Pererenan neighborhood of Bali, near Canggu, known for its Mediterranean-inspired menu, rustic wooden décor, and cozy garden atmosphere.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/woods%20bali%20brunch.jpg",
+  "imageUrl": "/images/woods-bali-brunch.webp",
   "category": "food",
   "subcategory": [
     "brunch"

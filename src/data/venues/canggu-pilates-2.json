@@ -2,7 +2,7 @@
   "id": "canggu-pilates-2",
   "name": "Ritual Pilates",
   "description": "Dedicated pilates studio with reformer classes and mat work",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/ritual.webp",
+  "imageUrl": "/images/ritual.webp",
   "category": "wellness",
   "subcategory": "pilates",
   "location": "canggu",

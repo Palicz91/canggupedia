@@ -2,7 +2,7 @@
   "id": "canggu-family-1",
   "name": "Splash Waterpark",
   "description": "Family-friendly waterpark with slides, pools, and activities for all ages",
-  "imageUrl": "https://images.pexels.com/photos/2524368/pexels-photo-2524368.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "imageUrl": "/images/pexels-photo-2524368.webp",
   "category": "fun-family",
   "subcategory": "waterpark",
   "location": "canggu",

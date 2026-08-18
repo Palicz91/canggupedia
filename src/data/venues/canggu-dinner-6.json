@@ -2,7 +2,7 @@
   "id": "canggu-dinner-6",
   "name": "Woods Bali",
   "description": "Woods Bali is a nature-inspired restaurant in Pererenan, Bali, crafted from reclaimed wood with trees integrated into its design. It offers a serene and rustic ambiance, making it a popular spot for both breakfast and romantic dinners.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/woods%20dinner.jpg",
+  "imageUrl": "/images/woods-dinner.webp",
   "category": "food",
   "subcategory": [
     "dinner"

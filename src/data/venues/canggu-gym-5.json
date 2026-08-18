@@ -2,7 +2,7 @@
   "id": "canggu-gym-5",
   "name": "BYND Fitness Club",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bnyd.webp",
+  "imageUrl": "/images/bnyd.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

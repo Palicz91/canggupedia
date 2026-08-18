@@ -2,7 +2,7 @@
   "id": "canggu-dinner-3",
   "name": "MASON",
   "description": "Elegant fine dining experience with creative fusion cuisine in Canggu — Mediterranean-inspired, wood-fired cuisine in a stylish setting.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/saturday-night-vibe.jpg",
+  "imageUrl": "/images/saturday-night-vibe.webp",
   "category": "food",
   "subcategory": [
     "dinner"

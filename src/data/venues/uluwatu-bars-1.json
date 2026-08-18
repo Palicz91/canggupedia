@@ -2,7 +2,7 @@
   "id": "uluwatu-bars-1",
   "name": "Rock Bar",
   "description": "Iconic clifftop bar with panoramic ocean views and signature cocktails",
-  "imageUrl": "https://images.pexels.com/photos/941864/pexels-photo-941864.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "imageUrl": "/images/pexels-photo-941864.webp",
   "category": "hangout",
   "subcategory": "bars",
   "location": "uluwatu",

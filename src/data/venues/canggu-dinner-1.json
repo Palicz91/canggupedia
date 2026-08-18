@@ -2,7 +2,7 @@
   "id": "canggu-dinner-1",
   "name": "Numero Quattro",
   "description": "Beachfront dining with stunning sunset views, fresh seafood, and bohemian vibes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/restaurants-in-canggu-32-1024x738.webp",
+  "imageUrl": "/images/restaurants-in-canggu-32-1024x738.webp",
   "category": "food",
   "subcategory": [
     "dinner",

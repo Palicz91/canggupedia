@@ -2,7 +2,7 @@
   "id": "canggu-spa-3",
   "name": "AMO Spa",
   "description": "Serene spa retreat offering holistic treatments and rejuvenation",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/amo%20spa.jpg",
+  "imageUrl": "/images/amo-spa.webp",
   "category": "wellness",
   "subcategory": "spa",
   "location": "canggu",

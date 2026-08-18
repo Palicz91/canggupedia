@@ -2,7 +2,7 @@
   "id": "canggu-padel-1",
   "name": "Bali Social Club",
   "description": "Modern padel tennis courts with equipment rental and coaching",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bsc%20padel.webp",
+  "imageUrl": "/images/bsc-padel.webp",
   "category": "wellness",
   "subcategory": "padel",
   "location": "canggu",

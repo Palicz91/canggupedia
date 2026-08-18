@@ -2,7 +2,7 @@
   "id": "canggu-party-21",
   "name": "Attika",
   "description": "is a large, upscale beachfront venue in Canggu, Bali, known for its luxury pools, multiple bars, restaurants, and daily entertainment. It is a popular spot for day parties, sunset cocktails, and nightlife, with attractions like multiple swimming pools, numerous bars and kitchens, and live DJs and vocalists.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Attika-Minyak-Dec-Online-1.jpg",
+  "imageUrl": "/images/attika-minyak-dec-online-1.webp",
   "category": "hangout",
   "subcategory": [
     "party"

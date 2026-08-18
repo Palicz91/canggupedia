@@ -2,7 +2,7 @@
   "id": "canggu-yoga-2",
   "name": "Samadi Bali",
   "description": "Holistic yoga center with multiple styles, workshops, and teacher training",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/samadi.webp",
+  "imageUrl": "/images/samadi.webp",
   "category": "wellness",
   "subcategory": "yoga",
   "location": "canggu",

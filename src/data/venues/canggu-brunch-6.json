@@ -2,7 +2,7 @@
   "id": "canggu-brunch-6",
   "name": "Crate Cafe",
   "description": "is a highly popular and affordable cafe in Canggu, Bali, known for its creative breakfast and brunch dishes, generous portions, and lively, communal atmosphere. It has a trendy, industrial-chic style and is a well-established hub for surfers, digital nomads, and foodies",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/crate%20cafe.jpg",
+  "imageUrl": "/images/crate-cafe.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "canggu",

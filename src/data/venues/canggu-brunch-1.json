@@ -2,7 +2,7 @@
   "id": "canggu-brunch-1",
   "name": "Avocado Factory",
   "description": "Healthy brunch spot with amazing smoothie bowls, fresh juices, and Instagram-worthy presentations",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/kursi-makan-avocado-factory-bali-lead.jpeg",
+  "imageUrl": "/images/kursi-makan-avocado-factory-bali-lead.webp",
   "category": "food",
   "subcategory": [
     "brunch",

@@ -2,7 +2,7 @@
   "id": "canggu-boxing-2",
   "name": "The Block Bali",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20block%20bali.jpg",
+  "imageUrl": "/images/the-block-bali.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

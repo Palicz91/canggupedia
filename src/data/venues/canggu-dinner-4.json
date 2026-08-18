@@ -2,7 +2,7 @@
   "id": "canggu-dinner-4",
   "name": "One Eyed Jack",
   "description": "One Eyed Jack is a popular modern Japanese izakaya and sake bar located in the heart of Berawa, Canggu, Bali. It is known for offering an innovative, contemporary twist on traditional Japanese cuisine, with an emphasis on shared small plates in a vibrant, gastropub-style atmosphere.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/One-Eyed-Jack_acd9754acd05ee34deb624e6a46adfb8.jpg",
+  "imageUrl": "/images/one-eyed-jack_acd9754acd05ee34deb624e6a46adfb8.webp",
   "category": "food",
   "subcategory": [
     "dinner",

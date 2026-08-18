@@ -2,7 +2,7 @@
   "id": "canggu-brunch-2",
   "name": "Terra Eats Bali",
   "description": "A health-focused eatery and meal delivery service located in the Berawa-Canggu area, offering nutritious and customizable meals, snacks, and beverages.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/WhatsApp-Image-2024-12-10-at-13.16.07-1024x768.jpeg",
+  "imageUrl": "/images/whatsapp-image-2024-12-10-at-13-16-07-1024x768.webp",
   "category": "food",
   "subcategory": [
     "brunch",

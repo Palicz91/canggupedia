@@ -2,7 +2,7 @@
   "id": "canggu-brunch-9",
   "name": "Milk and Madu Berawa",
   "description": "is a popular and family-friendly cafe and restaurant with locations across Bali, Indonesia, known for its gourmet food, excellent coffee, and relaxed atmosphere",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/mm-berawa-gallery-frontview.jpg",
+  "imageUrl": "/images/mm-berawa-gallery-frontview.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "canggu",

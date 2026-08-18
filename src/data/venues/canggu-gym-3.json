@@ -2,7 +2,7 @@
   "id": "canggu-gym-3",
   "name": "Top Gym Batu Bolong",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/top%20gym.jpg",
+  "imageUrl": "/images/top-gym.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

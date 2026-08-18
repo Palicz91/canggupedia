@@ -2,7 +2,7 @@
   "id": "canggu-boxing-1",
   "name": "Soma Fight Club",
   "description": "a martial arts gym in Bali that offers training in boxing, Muay Thai, kickboxing, and other disciplines. It also refers to SOMA Fight Series, an event held at the gym featuring professional and amateur fights.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/soma.jpg",
+  "imageUrl": "/images/soma.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

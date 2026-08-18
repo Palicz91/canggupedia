@@ -2,7 +2,7 @@
   "id": "canggu-brunch-14",
   "name": "Deus Café",
   "description": "is a popular, multi-concept venue and restaurant located in Canggu, Bali, part of the larger Deus Ex Machina Temple of Enthusiasm. It blends custom motorcycles, surf culture, art and apparel with all-day dining from breakfast through dinner in a vibrant, creative setting.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/deus-ex-machina-canggu20191108102656.jpg",
+  "imageUrl": "/images/deus-ex-machina-canggu20191108102656.webp",
   "category": "food",
   "subcategory": [
     "brunch",

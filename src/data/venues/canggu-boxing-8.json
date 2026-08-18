@@ -2,7 +2,7 @@
   "id": "canggu-boxing-8",
   "name": "Surya Gym Fight Club Bali",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/surya%20%20fight.webp",
+  "imageUrl": "/images/surya-fight.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

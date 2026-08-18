@@ -2,7 +2,7 @@
   "id": "canggu-boxing-3",
   "name": "Bali Boxing Center",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bali%20boxing.webp",
+  "imageUrl": "/images/bali-boxing.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

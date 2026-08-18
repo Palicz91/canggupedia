@@ -2,7 +2,7 @@
   "id": "canggu-dinner-7",
   "name": "Ibu Kota Bar & Grilled",
   "description": "A newly opened Indonesian restaurant in Canggu, Bali, capturing the vibrant dining and entertainment spirit of Jakarta. The venue offers a refined menu of traditional Indonesian dishes alongside crafted cocktails, in a bar & grill setting.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_1754.jpg",
+  "imageUrl": "/images/img_1754.webp",
   "category": "food",
   "subcategory": [
     "dinner",

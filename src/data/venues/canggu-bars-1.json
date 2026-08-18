@@ -2,7 +2,7 @@
   "id": "canggu-bars-1",
   "name": "The Barn",
   "description": "is a modern British gastropub and sports bar in Canggu, Bali, known for its London-inspired vintage decor, extensive drinks menu, and classic pub fare like Fish & Chips and Sunday Roast. It features live sports shown on multiple screens, bar games like pool and shuffleboard, a sophisticated upstairs cocktail bar, and an air-conditioned interior.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the-barn-canggu.webp",
+  "imageUrl": "/images/the-barn-canggu.webp",
   "category": "hangout",
   "subcategory": "bars",
   "location": "canggu",

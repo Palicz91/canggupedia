@@ -2,7 +2,7 @@
   "id": "canggu-brunch-5",
   "name": "Copenhagen Canggu",
   "description": "a popular, Nordic-inspired café and bakery located in the trendy Canggu area of Bali, Indonesia.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/IMG_9302.JPG",
+  "imageUrl": "/images/img_9302.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "canggu",

@@ -2,7 +2,7 @@
   "id": "canggu-party-2",
   "name": "Desa Kitsune",
   "description": "is a unique lifestyle village and hospitality concept located in the heart of Canggu, Bali. It is a world-first destination by the French-Japanese lifestyle brand Kitsuné, which seamlessly blends food, fashion, culture, and music into an immersive experience. Every Tuesday and Friday, Desa Kitsuné hosts its signature soirée — a lively night featuring Bali’s top DJs and international guest artists, creating one of the island’s most iconic party experiences.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/desa-kitsune-aerial.jpg",
+  "imageUrl": "/images/desa-kitsune-aerial.webp",
   "category": "hangout",
   "subcategory": [
     "party"

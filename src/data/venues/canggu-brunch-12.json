@@ -2,7 +2,7 @@
   "id": "canggu-brunch-12",
   "name": "Passo by Nook",
   "description": "is a stylish restaurant in Canggu, Bali, offering a mix of Indonesian and Western cuisine in a spacious setting overlooking beautiful rice paddies. Known for its relaxing atmosphere, swimming pool, and diverse menu with vegan and vegetarian options, Passo by Nook is perfect for brunch, lunch, or dinner in a scenic environment.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/passobynook.jpg",
+  "imageUrl": "/images/passobynook.webp",
   "category": "food",
   "subcategory": [
     "brunch",

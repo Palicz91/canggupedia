@@ -2,7 +2,7 @@
   "id": "canggu-party-7",
   "name": "Old Mans",
   "description": "is an iconic beachfront bar, restaurant, and social hub located right on Batu Bolong Beach. It is well-known for its relaxed surf-centric atmosphere during the day, which transforms into a lively nightlife spot with music and events after sunset.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/oldmans%20canggu.webp",
+  "imageUrl": "/images/oldmans-canggu.webp",
   "category": "hangout",
   "subcategory": [
     "party"

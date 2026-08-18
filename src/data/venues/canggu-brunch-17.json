@@ -2,7 +2,7 @@
   "id": "canggu-brunch-17",
   "name": "Cafe Kitsuné",
   "description": "is a stylish French bakery and coffee shop located in Canggu, known for its quality coffee, French pastries, and a charming atmosphere. It is part of the larger Desa Kitsuné complex, which includes a restaurant, nightclub, and Maison Kitsuné boutique. The café offers a fusion of Japanese and French influences, serving items like specialty lattes, ube drinks, and cakes.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/cafe%20kitsune.webp",
+  "imageUrl": "/images/cafe-kitsune.webp",
   "category": "food",
   "subcategory": [
     "brunch"

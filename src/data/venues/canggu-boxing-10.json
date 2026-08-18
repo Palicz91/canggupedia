@@ -2,7 +2,7 @@
   "id": "canggu-boxing-10",
   "name": "The Canggu Studio",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20cangghu%20studio.jpeg",
+  "imageUrl": "/images/the-cangghu-studio.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

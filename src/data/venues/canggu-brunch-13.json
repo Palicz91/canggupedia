@@ -2,7 +2,7 @@
   "id": "canggu-brunch-13",
   "name": "Times Beach Warung",
   "description": "is a popular, relaxed beachfront cafe and bar located in Canggu, Bali. It's known for its chill atmosphere, beautiful sunset views, and good-value food and drinks — a casual alternative to the area’s upscale beach clubs.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Times-Beach-Warung-in-Canggu.jpg",
+  "imageUrl": "/images/times-beach-warung-in-canggu.webp",
   "category": "food",
   "subcategory": [
     "brunch",

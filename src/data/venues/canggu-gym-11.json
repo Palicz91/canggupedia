@@ -2,7 +2,7 @@
   "id": "canggu-gym-11",
   "name": "Surya Gym",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/surya.png",
+  "imageUrl": "/images/surya.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

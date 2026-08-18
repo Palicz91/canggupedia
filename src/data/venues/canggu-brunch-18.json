@@ -2,7 +2,7 @@
   "id": "canggu-brunch-18",
   "name": "Th Goat Father Coffee",
   "description": "a specialty coffee shop in Canggu, Bali, known for its artisanal coffee and fresh baked goods. The cafe offers a variety of coffee, including creative signature drinks like the Iced Charcoal Latte and traditional options like pour-overs, alongside a selection of pastries like croissants. ",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/the%20goat%20father.jpg",
+  "imageUrl": "/images/the-goat-father.webp",
   "category": "food",
   "subcategory": [
     "brunch"

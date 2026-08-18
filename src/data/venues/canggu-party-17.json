@@ -2,7 +2,7 @@
   "id": "canggu-party-17",
   "name": "Motel Mexicola Canggu",
   "description": "is a vibrant Mexican restaurant, bar, and party venue located near Batu Bolong beach in Canggu, Bali. It features a colorful and detailed interior design inspired by different eras of Mexican history, offers a menu of tacos and other Mexican dishes, and hosts events like themed parties and DJ nights that turn into a high-energy dance spot later in the evening.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Motel-Mexicola.jpg",
+  "imageUrl": "/images/motel-mexicola.webp",
   "category": "hangout",
   "subcategory": [
     "party"

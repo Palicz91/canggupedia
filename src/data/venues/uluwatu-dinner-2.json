@@ -2,7 +2,7 @@
   "id": "uluwatu-dinner-2",
   "name": "Sundays Beach Club",
   "description": "Beachfront fine dining with fresh seafood and elegant ambiance",
-  "imageUrl": "https://images.pexels.com/photos/696218/pexels-photo-696218.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "imageUrl": "/images/pexels-photo-696218.webp",
   "category": "food",
   "subcategory": "dinner",
   "location": "uluwatu",

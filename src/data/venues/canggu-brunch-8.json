@@ -2,7 +2,7 @@
   "id": "canggu-brunch-8",
   "name": "Two Face by Suka",
   "description": "An all-day café concept by the By/Suka Collective that serves specialty coffee, brunch, and lunch in Bali, Indonesia. It has a relaxed atmosphere and a blend of American and Australian breakfast and lunch dishes.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/TWOFACE+HEADER+WEB.webp",
+  "imageUrl": "/images/twoface-header-web.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "canggu",

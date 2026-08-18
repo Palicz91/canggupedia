@@ -2,7 +2,7 @@
   "id": "canggu-gym-4",
   "name": "Wrong Gym",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/wrong%20gym.jpg",
+  "imageUrl": "/images/wrong-gym.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

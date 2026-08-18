@@ -2,7 +2,7 @@
   "id": "canggu-party-8",
   "name": "Alternative Beach",
   "description": "is not a natural beach but an all-inclusive day club and hostel in the heart of Canggu, Bali, offering a pool, swim-up bar, cafe, and accommodation. It provides a beach club atmosphere with a large pool, sun loungers, a waterslide, DJs, cocktails, and both hostel and private room lodging on-site.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Alternative-Beach-Canggu-Bali.jpg",
+  "imageUrl": "/images/alternative-beach-canggu-bali.webp",
   "category": "hangout",
   "subcategory": [
     "party"

@@ -2,7 +2,7 @@
   "id": "canggu-party-10",
   "name": "Atlas Super Club",
   "description": "is Bali's largest nightclub, located at Atlas Beach Fest in Canggu. It is a premium, three-level venue with a high-energy atmosphere, known for its industrial design, massive lighting and sound systems, and top DJs. The club operates seven days a week and features different themed nights.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/atlas%20super%20club.webp",
+  "imageUrl": "/images/atlas-super-club.webp",
   "category": "hangout",
   "subcategory": [
     "party"

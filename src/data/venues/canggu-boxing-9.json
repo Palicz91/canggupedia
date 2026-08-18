@@ -2,7 +2,7 @@
   "id": "canggu-boxing-9",
   "name": "Lions MMA Bali",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/lions%20mms.jpeg",
+  "imageUrl": "/images/lions-mms.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

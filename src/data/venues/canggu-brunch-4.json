@@ -2,7 +2,7 @@
   "id": "canggu-brunch-4",
   "name": "The Common",
   "description": "It is a popular, laid-back spot known for its fresh, healthy meals, Californian- and Mexican-inspired dishes, and coffee",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/thecommon.webp",
+  "imageUrl": "/images/thecommon.webp",
   "category": "food",
   "subcategory": "brunch",
   "location": "canggu",

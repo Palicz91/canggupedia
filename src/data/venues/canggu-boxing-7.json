@@ -2,7 +2,7 @@
   "id": "canggu-boxing-7",
   "name": "Bali MMA",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bali%20mma.webp",
+  "imageUrl": "/images/bali-mma.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

@@ -2,7 +2,7 @@
   "id": "canggu-gym-8",
   "name": "Avenue Fitness",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/avenue.webp",
+  "imageUrl": "/images/avenue.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

@@ -2,7 +2,7 @@
   "id": "canggu-boxing-11",
   "name": "Alpha Fight Club - Bali",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/alpha%20fight.webp",
+  "imageUrl": "/images/alpha-fight.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

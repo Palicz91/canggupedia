@@ -13,7 +13,7 @@
       "time": "5PM - 7PM",
       "offer": "50% off all cocktails",
       "location": "canggu",
-      "imageUrl": "https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-1089930.webp",
       "googleMapsUrl": "https://maps.google.com/?q=Pretty+Poison+Canggu+Bali",
       "instagramUrl": "https://instagram.com/prettypoisonbali"
     },
@@ -26,7 +26,7 @@
       "time": "4PM - 6PM",
       "offer": "Buy 1 Get 1 on selected drinks",
       "location": "canggu",
-      "imageUrl": "https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-260922.webp",
       "googleMapsUrl": "https://maps.google.com/?q=La+Brisa+Bali+Canggu",
       "instagramUrl": "https://instagram.com/labrisabali"
     },
@@ -39,7 +39,7 @@
       "time": "3PM - 6PM",
       "offer": "30% off all drinks",
       "location": "uluwatu",
-      "imageUrl": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-1639562.webp",
       "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali",
       "instagramUrl": "https://instagram.com/singlefinbali"
     },
@@ -54,7 +54,7 @@
       "time": "5PM - 8PM",
       "offer": "2-for-1 beers and house cocktails",
       "location": "canggu",
-      "imageUrl": "https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-1267696.webp",
       "googleMapsUrl": "https://maps.google.com/?q=The+Shack+Canggu+Bali",
       "instagramUrl": "https://instagram.com/theshackcanggu"
     },
@@ -67,7 +67,7 @@
       "time": "5PM - 7PM",
       "offer": "40% off signature cocktails",
       "location": "uluwatu",
-      "imageUrl": "https://images.pexels.com/photos/941864/pexels-photo-941864.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-941864.webp",
       "googleMapsUrl": "https://maps.google.com/?q=Rock+Bar+Uluwatu+Bali",
       "instagramUrl": "https://instagram.com/rockbaruluwatu"
     },
@@ -83,7 +83,7 @@
       "time": "4PM - 7PM",
       "offer": "Special beer buckets and shooter deals",
       "location": "canggu",
-      "imageUrl": "https://images.pexels.com/photos/2923034/pexels-photo-2923034.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "imageUrl": "/images/pexels-photo-2923034.webp",
       "googleMapsUrl": "https://maps.google.com/?q=Deus+Ex+Machina+Canggu+Bali",
       "instagramUrl": "https://instagram.com/deuscanggu"
     }

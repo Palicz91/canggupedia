@@ -2,7 +2,7 @@
   "id": "canggu-party-16",
   "name": "Motel Mexicola Seminyak",
   "description": "is a vibrant Mexican restaurant, bar, and party venue located in Seminyak, Bali. Known for its colorful decor, lively atmosphere, and nightly parties, it serves classic Mexican dishes like tacos, quesadillas, and shared plates, while turning into a high-energy dance spot with DJs and crowd interaction later in the evening.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Copy-of-MEXICOLA_PRESS-9-of-35-jpg.webp",
+  "imageUrl": "/images/copy-of-mexicola_press-9-of-35-jpg.webp",
   "category": "hangout",
   "subcategory": [
     "party"

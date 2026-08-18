@@ -2,7 +2,7 @@
   "id": "canggu-authentic-1",
   "name": "Hoian by Mevui",
   "description": "a Vietnamese restaurant chain with a location in Canggu, Bali, called Hoi An by Mevui. It offers authentic Vietnamese cuisine like pho (noodle soup) and banh mi (sandwiches), using fresh, local ingredients. The Canggu restaurant is a popular spot, especially with international tourists, and provides a dining experience that includes rice paddies and sunset views",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/mevui%20canggu.jpg",
+  "imageUrl": "/images/mevui-canggu.webp",
   "category": "food",
   "subcategory": "authentic",
   "location": "canggu",

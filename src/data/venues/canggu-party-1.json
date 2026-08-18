@@ -2,7 +2,7 @@
   "id": "canggu-party-1",
   "name": "Savaya",
   "description": "a luxury cliffside beach club and nightclub located in Uluwatu, Bali, known for its stunning ocean views and world-class electronic music events. It has been ranked the #1 club in Asia for 2024 and 2025, and the top club in the world, attracting major international DJs and artists. The venue is a destination for both daytime relaxation and nighttime parties, featuring an immersive atmosphere and high-end hospitality.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/Savaya-Bali-1.jpg",
+  "imageUrl": "/images/savaya-bali-1.webp",
   "category": "hangout",
   "discountCode": "CANGGUPEDIA",
   "subcategory": [

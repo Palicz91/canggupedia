@@ -2,7 +2,7 @@
   "id": "canggu-gym-1",
   "name": "Bali Social Club",
   "description": "is a premium sports and recreation venue in Canggu, Bali, that combines a padel club with a wellness center and a community hangout. It offers facilities like multiple padel courts, a state-of-the-art gym, a swimming pool, and a recovery area with a sauna, ice baths, and steam room. In addition to fitness and wellness, the club has a restaurant and bar, aiming to be a social hub for like-minded people to connect and enjoy active living.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bsc.jpg",
+  "imageUrl": "/images/bsc.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",

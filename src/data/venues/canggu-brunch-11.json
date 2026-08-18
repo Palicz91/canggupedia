@@ -2,7 +2,7 @@
   "id": "canggu-brunch-11",
   "name": "Nude Cafe Babakan",
   "description": "is a trendy and popular cafe and restaurant located in the heart of Canggu, Bali, serving healthy, fresh, and delicious meals for breakfast, brunch, lunch, and dinner. Known for its wholesome and natural ingredients, Nude offers a relaxed atmosphere from morning coffee to casual evening dining.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/nude%20babakan.jpg",
+  "imageUrl": "/images/nude-babakan.webp",
   "category": "food",
   "subcategory": [
     "brunch",

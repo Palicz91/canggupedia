@@ -2,7 +2,7 @@
   "id": "canggu-spa-1",
   "name": "Bodyworks Spa",
   "description": "Luxurious spa with traditional Balinese massage and wellness treatments",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/bodyworks_pink_pool_venue_woman_palm_trees.jpg",
+  "imageUrl": "/images/bodyworks_pink_pool_venue_woman_palm_trees.webp",
   "category": "wellness",
   "subcategory": "spa",
   "location": "canggu",

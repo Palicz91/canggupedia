@@ -2,7 +2,7 @@
   "id": "canggu-boxing-4",
   "name": "Alpha Force Canggu",
   "description": "Combat sports gym offering boxing, kickboxing, and Muay Thai classes",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/alpha%20force.webp",
+  "imageUrl": "/images/alpha-force.webp",
   "category": "wellness",
   "subcategory": "boxing",
   "location": "canggu",

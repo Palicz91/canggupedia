@@ -2,7 +2,7 @@
   "id": "canggu-party-5",
   "name": "Vault Bali",
   "description": "is an underground nightclub located in the Berawa/Canggu area of Bali, known for its exclusive atmosphere, top-tier sound system, and a mix of music genres like Hip-Hop, R&B, and electronic music. It features a hidden entrance, a bunker-style design, and regularly hosts Bali’s top DJs and international guests.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/vault%20bali.png",
+  "imageUrl": "/images/vault-bali.webp",
   "category": "hangout",
   "subcategory": [
     "party"

@@ -2,7 +2,7 @@
   "id": "canggu-party-3",
   "name": "The Shady Pig",
   "description": "a 1920s-themed speakeasy bar in Canggu, Bali, known for its experimental cocktails and mobster syndicate-inspired atmosphere. It offers a menu of refined bites and canapés to accompany its signature and classic drinks.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/The-Shady-Pig-Venue-3.jpg",
+  "imageUrl": "/images/the-shady-pig-venue-3.webp",
   "category": "hangout",
   "subcategory": [
     "party",

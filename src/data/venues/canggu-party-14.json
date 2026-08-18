@@ -2,7 +2,7 @@
   "id": "canggu-party-14",
   "name": "Shihi Bali",
   "description": "is a three-story nightlife venue in Seminyak that combines an upscale Japanese-inspired restaurant with multi-level nightclubs. The ground floor features the Izakaya Lounge for dining and cocktails, while the second floor is a high-energy club playing EDM and the top floor is an R&B and Hip Hop room. The venue is known for its top DJs, elaborate light shows, and premium sound system.",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/shishi.jpg",
+  "imageUrl": "/images/shishi.webp",
   "category": "hangout",
   "subcategory": [
     "party"

@@ -2,7 +2,7 @@
   "id": "canggu-pilates-1",
   "name": "Luna and Sol",
   "description": "Dedicated pilates studio with reformer classes and mat work",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/luna%20and%20sol.webp",
+  "imageUrl": "/images/luna-and-sol.webp",
   "category": "wellness",
   "subcategory": "pilates",
   "location": "canggu",

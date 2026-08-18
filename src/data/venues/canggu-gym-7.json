@@ -2,7 +2,7 @@
   "id": "canggu-gym-7",
   "name": "Brother Gym",
   "description": "Boutique fitness studio with holistic approach to health and wellness",
-  "imageUrl": "https://yltgnuauemngtddujata.supabase.co/storage/v1/object/public/website/brother.jpeg",
+  "imageUrl": "/images/brother.webp",
   "category": "wellness",
   "subcategory": "gym",
   "location": "canggu",
