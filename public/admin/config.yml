@@ -16,8 +16,7 @@ collections:
     slug: "{{id}}"
     identifier_field: name
     summary: "{{name}} — {{location}} / {{category}}"
-    sortable_fields:
-      fields: [name, location, category]
+    sortable_fields: [name, location, category]
     fields:
       - { label: ID, name: id, widget: string, hint: "Unique ID like canggu-brunch-1" }
       - { label: Name, name: name, widget: string }
