@@ -16,11 +16,38 @@ const config = categoryConfigs.uluwatu[category];
 const categoryVenues = venues.filter(
   (v) => v.location === 'uluwatu' && v.category === category
 );
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${config.title} in Uluwatu`,
+  "description": `${config.description}. Find the best ${category} spots in Uluwatu, Bali.`,
+  "numberOfItems": categoryVenues.length,
+  "itemListElement": categoryVenues.map((venue, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "LocalBusiness",
+      "name": venue.name,
+      "description": venue.description,
+      "image": venue.imageUrl,
+      "url": venue.googleMapsUrl,
+      ...(venue.priceRange && { "priceRange": venue.priceRange }),
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Uluwatu",
+        "addressRegion": "Bali",
+        "addressCountry": "ID",
+      },
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title={`${config.title} in Uluwatu - ${config.description} | The Canggupedia`}
   description={`${config.description}. Find the best ${category} spots in Uluwatu, Bali.`}
+  structuredData={structuredData}
 >
   <VenueGrid
     client:load

@@ -16,11 +16,38 @@ const config = categoryConfigs.canggu[category];
 const categoryVenues = venues.filter(
   (v) => v.location === 'canggu' && v.category === category
 );
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${config.title} in Canggu`,
+  "description": `${config.description}. Find the best ${category} spots in Canggu, Bali.`,
+  "numberOfItems": categoryVenues.length,
+  "itemListElement": categoryVenues.map((venue, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "LocalBusiness",
+      "name": venue.name,
+      "description": venue.description,
+      "image": venue.imageUrl,
+      "url": venue.googleMapsUrl,
+      ...(venue.priceRange && { "priceRange": venue.priceRange }),
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Canggu",
+        "addressRegion": "Bali",
+        "addressCountry": "ID",
+      },
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title={`${config.title} in Canggu - ${config.description} | The Canggupedia`}
   description={`${config.description}. Find the best ${category} spots in Canggu, Bali.`}
+  structuredData={structuredData}
 >
   <VenueGrid
     client:load

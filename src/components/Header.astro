@@ -1,5 +1,4 @@
 ---
-import MobileNav from './MobileNav.tsx';
 ---
 
 <header class="bg-white/90 backdrop-blur-sm shadow-md sticky top-0 z-50">
@@ -41,7 +40,51 @@ import MobileNav from './MobileNav.tsx';
         </a>
       </div>
 
-      <MobileNav client:load />
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden text-gray-700 cursor-pointer"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden absolute top-full left-0 right-0 bg-white shadow-lg pb-4 px-4 space-y-3">
+      <a
+        href="/"
+        class="block text-gray-700 hover:text-sunset-orange font-semibold py-2"
+      >
+        Home
+      </a>
+      <a
+        href="/about-us"
+        class="block text-gray-700 hover:text-sunset-orange font-semibold py-2"
+      >
+        About Us
+      </a>
+      <a
+        href="/contact"
+        class="block bg-gradient-tropical text-white px-6 py-2 rounded-full font-bold text-center"
+      >
+        Contact Us
+      </a>
     </div>
   </nav>
 </header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>

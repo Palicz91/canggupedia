@@ -1,0 +1,36 @@
+# The Canggupedia
+
+> Your ultimate insider guide to the best restaurants, bars, wellness spots, and events in Canggu and Uluwatu, Bali.
+
+## About
+
+The Canggupedia is a curated venue directory for two of Bali's most popular areas: Canggu and Uluwatu. We cover food & dining, hangout spots (bars & parties), wellness & fitness, and family-friendly activities. The site also lists upcoming events, daily promos, and happy hour deals.
+
+## Content Structure
+
+- `/` — Home page with destination picker (Canggu or Uluwatu)
+- `/canggu` — Canggu area categories
+- `/canggu/food` — Restaurants and cafes in Canggu (brunch, dinner, healthy, authentic)
+- `/canggu/hangout` — Bars and party venues in Canggu
+- `/canggu/wellness` — Gyms, yoga, boxing, pilates, spas in Canggu
+- `/canggu/fun-family` — Family activities in Canggu (waterparks, zoos, activities)
+- `/uluwatu` — Uluwatu area categories
+- `/uluwatu/food` — Restaurants and cafes in Uluwatu
+- `/uluwatu/hangout` — Bars and party venues in Uluwatu
+- `/uluwatu/wellness` — Wellness and fitness in Uluwatu
+- `/uluwatu/fun-family` — Family activities in Uluwatu
+- `/events` — Upcoming events, parties, and festivals
+- `/happy-hour` — Happy hour deals across venues
+- `/daily-promos` — Special daily promotions
+- `/about-us` — About The Canggupedia team
+- `/contact` — Contact form
+
+## Venue Information
+
+Each venue listing includes: name, description, category, subcategory, location (Canggu or Uluwatu), Google Maps link, Instagram link, opening hours, price range, and optional table booking/guestlist/ticket links.
+
+## Contact
+
+- Instagram: @thecanggupedia
+- Website: https://canggupedia.netlify.app
+- Linktree: https://linktr.ee/thecanggupedia
