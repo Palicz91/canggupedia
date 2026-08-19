@@ -2,6 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
+publish_mode: editorial_workflow
+
 media_folder: public/images
 public_folder: /images
 
@@ -18,11 +20,9 @@ collections:
     summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
     sortable_fields: [name, location, featured]
     fields:
-      - { label: ID, name: id, widget: string, hint: "e.g. canggu-brunch-1" }
       - { label: Name, name: name, widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
-      - { label: Category, name: category, widget: hidden, default: food }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false, hint: "Featured venues appear first with 'Our Top Pick' badge" }
       - label: Subcategory
         name: subcategory
         widget: select
@@ -32,20 +32,23 @@ collections:
           - { label: Dinner, value: dinner }
           - { label: Healthy, value: healthy }
           - { label: Authentic, value: authentic }
+      - { label: ID, name: id, widget: string, hint: "Format: location-subcategory-number, e.g. canggu-brunch-1" }
+      - { label: Category, name: category, widget: hidden, default: food }
+      - { label: Description, name: description, widget: text }
       - label: Location
         name: location
         widget: select
+        default: canggu
         options:
           - { label: Canggu, value: canggu }
           - { label: Uluwatu, value: uluwatu }
           - { label: Seminyak, value: seminyak }
-      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
-      - { label: Instagram URL, name: instagramUrl, widget: string }
-      - { label: Opening Hours, name: openingHours, widget: string, required: false }
-      - { label: Price Range, name: priceRange, widget: string, required: false }
-      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string, hint: "Paste the full Google Maps link" }
+      - { label: Instagram URL, name: instagramUrl, widget: string, hint: "e.g. https://instagram.com/venuename" }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false, hint: "e.g. 8AM - 10PM" }
+      - { label: Price Range, name: priceRange, widget: string, required: false, hint: "e.g. $$$ or 150k-300k IDR" }
       - { label: Discount Code, name: discountCode, widget: string, required: false }
-      - { label: Note, name: note, widget: text, required: false }
+      - { label: Note, name: note, widget: text, required: false, hint: "Shown as a yellow info box on the venue card" }
       - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
       - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
       - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
@@ -62,11 +65,9 @@ collections:
     summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
     sortable_fields: [name, location, featured]
     fields:
-      - { label: ID, name: id, widget: string, hint: "e.g. canggu-party-1" }
       - { label: Name, name: name, widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
-      - { label: Category, name: category, widget: hidden, default: hangout }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false, hint: "Featured venues appear first with 'Our Top Pick' badge" }
       - label: Subcategory
         name: subcategory
         widget: select
@@ -74,20 +75,23 @@ collections:
         options:
           - { label: Party, value: party }
           - { label: Bars, value: bars }
+      - { label: ID, name: id, widget: string, hint: "Format: location-subcategory-number, e.g. canggu-party-1" }
+      - { label: Category, name: category, widget: hidden, default: hangout }
+      - { label: Description, name: description, widget: text }
       - label: Location
         name: location
         widget: select
+        default: canggu
         options:
           - { label: Canggu, value: canggu }
           - { label: Uluwatu, value: uluwatu }
           - { label: Seminyak, value: seminyak }
-      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
-      - { label: Instagram URL, name: instagramUrl, widget: string }
-      - { label: Opening Hours, name: openingHours, widget: string, required: false }
-      - { label: Price Range, name: priceRange, widget: string, required: false }
-      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string, hint: "Paste the full Google Maps link" }
+      - { label: Instagram URL, name: instagramUrl, widget: string, hint: "e.g. https://instagram.com/venuename" }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false, hint: "e.g. 5PM - 2AM" }
+      - { label: Price Range, name: priceRange, widget: string, required: false, hint: "e.g. $$$ or 150k-300k IDR" }
       - { label: Discount Code, name: discountCode, widget: string, required: false }
-      - { label: Note, name: note, widget: text, required: false }
+      - { label: Note, name: note, widget: text, required: false, hint: "Shown as a yellow info box on the venue card" }
       - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
       - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
       - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
@@ -104,11 +108,9 @@ collections:
     summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
     sortable_fields: [name, location, featured]
     fields:
-      - { label: ID, name: id, widget: string, hint: "e.g. canggu-gym-1" }
       - { label: Name, name: name, widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
-      - { label: Category, name: category, widget: hidden, default: wellness }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false, hint: "Featured venues appear first with 'Our Top Pick' badge" }
       - label: Subcategory
         name: subcategory
         widget: select
@@ -120,20 +122,23 @@ collections:
           - { label: Yoga, value: yoga }
           - { label: Pilates, value: pilates }
           - { label: Spa / Massage, value: spa }
+      - { label: ID, name: id, widget: string, hint: "Format: location-subcategory-number, e.g. canggu-gym-1" }
+      - { label: Category, name: category, widget: hidden, default: wellness }
+      - { label: Description, name: description, widget: text }
       - label: Location
         name: location
         widget: select
+        default: canggu
         options:
           - { label: Canggu, value: canggu }
           - { label: Uluwatu, value: uluwatu }
           - { label: Seminyak, value: seminyak }
-      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
-      - { label: Instagram URL, name: instagramUrl, widget: string }
-      - { label: Opening Hours, name: openingHours, widget: string, required: false }
-      - { label: Price Range, name: priceRange, widget: string, required: false }
-      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string, hint: "Paste the full Google Maps link" }
+      - { label: Instagram URL, name: instagramUrl, widget: string, hint: "e.g. https://instagram.com/venuename" }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false, hint: "e.g. 6AM - 10PM" }
+      - { label: Price Range, name: priceRange, widget: string, required: false, hint: "e.g. $$ or 80k-200k IDR" }
       - { label: Discount Code, name: discountCode, widget: string, required: false }
-      - { label: Note, name: note, widget: text, required: false }
+      - { label: Note, name: note, widget: text, required: false, hint: "Shown as a yellow info box on the venue card" }
       - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
       - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
       - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
@@ -150,11 +155,9 @@ collections:
     summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
     sortable_fields: [name, location, featured]
     fields:
-      - { label: ID, name: id, widget: string, hint: "e.g. canggu-family-1" }
       - { label: Name, name: name, widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
-      - { label: Category, name: category, widget: hidden, default: fun-family }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false, hint: "Featured venues appear first with 'Our Top Pick' badge" }
       - label: Subcategory
         name: subcategory
         widget: select
@@ -163,20 +166,23 @@ collections:
           - { label: Waterpark, value: waterpark }
           - { label: Zoo, value: zoo }
           - { label: Activities, value: activities }
+      - { label: ID, name: id, widget: string, hint: "Format: location-subcategory-number, e.g. canggu-family-1" }
+      - { label: Category, name: category, widget: hidden, default: fun-family }
+      - { label: Description, name: description, widget: text }
       - label: Location
         name: location
         widget: select
+        default: canggu
         options:
           - { label: Canggu, value: canggu }
           - { label: Uluwatu, value: uluwatu }
           - { label: Seminyak, value: seminyak }
-      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
-      - { label: Instagram URL, name: instagramUrl, widget: string }
-      - { label: Opening Hours, name: openingHours, widget: string, required: false }
-      - { label: Price Range, name: priceRange, widget: string, required: false }
-      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string, hint: "Paste the full Google Maps link" }
+      - { label: Instagram URL, name: instagramUrl, widget: string, hint: "e.g. https://instagram.com/venuename" }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false, hint: "e.g. 9AM - 6PM" }
+      - { label: Price Range, name: priceRange, widget: string, required: false, hint: "e.g. $$ or 100k-250k IDR" }
       - { label: Discount Code, name: discountCode, widget: string, required: false }
-      - { label: Note, name: note, widget: text, required: false }
+      - { label: Note, name: note, widget: text, required: false, hint: "Shown as a yellow info box on the venue card" }
       - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
       - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
       - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
@@ -194,20 +200,21 @@ collections:
             widget: list
             summary: "{{fields.title}} — {{fields.date}}"
             fields:
-              - { label: ID, name: id, widget: string }
               - { label: Title, name: title, widget: string }
-              - { label: Description, name: description, widget: text }
+              - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
               - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - { label: Venue, name: venue, widget: string }
               - label: Location
                 name: location
                 widget: select
+                default: canggu
                 options:
                   - { label: Canggu, value: canggu }
                   - { label: Uluwatu, value: uluwatu }
-              - { label: Image, name: imageUrl, widget: image }
+              - { label: Price, name: price, widget: string, hint: "e.g. Free, 150k IDR" }
+              - { label: Description, name: description, widget: text }
               - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
-              - { label: Price, name: price, widget: string }
-              - { label: Venue, name: venue, widget: string }
+              - { label: ID, name: id, widget: string }
 
       - name: happy-hours
         label: Happy Hours
@@ -219,24 +226,25 @@ collections:
             widget: list
             summary: "{{fields.venue}} — {{fields.time}}"
             fields:
-              - { label: ID, name: id, widget: string }
               - { label: Venue, name: venue, widget: string }
+              - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
               - label: Days
                 name: days
                 widget: select
                 multiple: true
                 options: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Daily]
               - { label: Time, name: time, widget: string, hint: "e.g. 5PM - 7PM" }
-              - { label: Offer, name: offer, widget: string }
+              - { label: Offer, name: offer, widget: string, hint: "e.g. 2-for-1 cocktails, 50% off beer" }
               - label: Location
                 name: location
                 widget: select
+                default: canggu
                 options:
                   - { label: Canggu, value: canggu }
                   - { label: Uluwatu, value: uluwatu }
-              - { label: Image, name: imageUrl, widget: image }
               - { label: Google Maps URL, name: googleMapsUrl, widget: string }
               - { label: Instagram URL, name: instagramUrl, widget: string }
+              - { label: ID, name: id, widget: string }
 
       - name: daily-promos
         label: Daily Promos
@@ -248,19 +256,20 @@ collections:
             widget: list
             summary: "{{fields.title}} — {{fields.day}}"
             fields:
-              - { label: ID, name: id, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Image, name: imageUrl, widget: image, hint: "Upload as WebP for best performance" }
               - label: Day
                 name: day
                 widget: select
                 options: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
-              - { label: Title, name: title, widget: string }
               - { label: Venue, name: venue, widget: string }
               - { label: Description, name: description, widget: text }
-              - { label: Image, name: imageUrl, widget: image }
               - label: Location
                 name: location
                 widget: select
+                default: canggu
                 options:
                   - { label: Canggu, value: canggu }
                   - { label: Uluwatu, value: uluwatu }
-              - { label: Venue Instagram, name: venueInstagram, widget: string }
+              - { label: Venue Instagram, name: venueInstagram, widget: string, hint: "e.g. https://instagram.com/venuename" }
+              - { label: ID, name: id, widget: string }
