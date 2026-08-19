@@ -15,8 +15,8 @@ collections:
     delete: true
     slug: "{{id}}"
     identifier_field: name
-    summary: "{{name}} — {{location}} / {{category}}"
-    sortable_fields: [name, location, category]
+    summary: "{{name}} — {{location}} / {{category}} {{#if featured}}⭐{{/if}}"
+    sortable_fields: [name, location, category, featured]
     fields:
       - { label: ID, name: id, widget: string, hint: "Unique ID like canggu-brunch-1" }
       - { label: Name, name: name, widget: string }
@@ -34,28 +34,30 @@ collections:
         name: subcategory
         widget: select
         multiple: true
+        hint: "Pick subcategories that match the main category above. Food = brunch/dinner/healthy/authentic. Hangout = bars/party. Wellness = gym/boxing/padel/yoga/pilates/spa. Fun & Family = waterpark/zoo/activities."
         options:
-          - brunch
-          - dinner
-          - healthy
-          - authentic
-          - bars
-          - party
-          - gym
-          - boxing
-          - padel
-          - yoga
-          - pilates
-          - spa
-          - waterpark
-          - zoo
-          - activities
+          - { label: "Brunch (Food)", value: brunch }
+          - { label: "Dinner (Food)", value: dinner }
+          - { label: "Healthy (Food)", value: healthy }
+          - { label: "Authentic (Food)", value: authentic }
+          - { label: "Bars (Hangout)", value: bars }
+          - { label: "Party (Hangout)", value: party }
+          - { label: "Gym (Wellness)", value: gym }
+          - { label: "Boxing (Wellness)", value: boxing }
+          - { label: "Padel (Wellness)", value: padel }
+          - { label: "Yoga (Wellness)", value: yoga }
+          - { label: "Pilates (Wellness)", value: pilates }
+          - { label: "Spa (Wellness)", value: spa }
+          - { label: "Waterpark (Fun & Family)", value: waterpark }
+          - { label: "Zoo (Fun & Family)", value: zoo }
+          - { label: "Activities (Fun & Family)", value: activities }
       - label: Location
         name: location
         widget: select
         options:
           - { label: Canggu, value: canggu }
           - { label: Uluwatu, value: uluwatu }
+          - { label: Seminyak, value: seminyak }
       - { label: Google Maps URL, name: googleMapsUrl, widget: string }
       - { label: Instagram URL, name: instagramUrl, widget: string }
       - { label: Opening Hours, name: openingHours, widget: string, required: false }

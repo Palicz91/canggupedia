@@ -59,12 +59,17 @@ export default function VenueGrid({
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
 
-  const filteredVenues = activeSubcategory
+  const filteredVenues = (activeSubcategory
     ? venues.filter((v) => {
         const subs = Array.isArray(v.subcategory) ? v.subcategory : [v.subcategory];
         return subs.includes(activeSubcategory);
       })
-    : venues;
+    : venues
+  ).sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${bgGradient}`}>

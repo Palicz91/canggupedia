@@ -11,6 +11,6 @@
   "googleMapsUrl": "https://maps.app.goo.gl/G3aeeooY3d7QgEQL9",
   "instagramUrl": "https://instagram.com/woodsbali",
   "featured": false,
-  "openingHours": "Daily: 08:00 – 23:00 (food & drinks available; kitchen may pause 17:00–18:00) :contentReference[oaicite:0]{index=0}",
-  "priceRange": "Approx. IDR 60.000 – 500.000 per person (coffee, pastries & small plates ~IDR 60.000–135.000; mains ~IDR 125.000–325.000; cocktails & drinks ~IDR 130.000–160.000) :contentReference[oaicite:1]{index=1}"
+  "openingHours": "Daily: 08:00 – 23:00 (food & drinks available; kitchen may pause 17:00–18:00)",
+  "priceRange": "Approx. IDR 60.000 – 500.000 per person (coffee, pastries & small plates ~IDR 60.000–135.000; mains ~IDR 125.000–325.000; cocktails & drinks ~IDR 130.000–160.000)"
 }

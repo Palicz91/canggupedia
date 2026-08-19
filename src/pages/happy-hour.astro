@@ -14,7 +14,7 @@ const happyHours = happyHoursData.happy_hours;
         <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-4">
           Happy Hour
         </h1>
-        <p class="text-xl text-gray-600">
+        <p id="hh-subtitle" class="text-xl text-gray-600">
           Best drink deals around town
         </p>
       </div>
@@ -22,7 +22,7 @@ const happyHours = happyHoursData.happy_hours;
       {happyHours.length > 0 ? (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {happyHours.map((hh) => (
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover hh-card" data-location={hh.location}>
               <div class="relative h-48">
                 <img
                   src={hh.imageUrl}
@@ -85,3 +85,19 @@ const happyHours = happyHoursData.happy_hours;
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const location = params.get('location');
+  if (location) {
+    const name = location.charAt(0).toUpperCase() + location.slice(1);
+    const subtitle = document.getElementById('hh-subtitle');
+    if (subtitle) subtitle.textContent = `${name} - Best drink deals around town`;
+
+    document.querySelectorAll('.hh-card').forEach((card) => {
+      if (card.getAttribute('data-location') !== location) {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+  }
+</script>

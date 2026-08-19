@@ -1,0 +1,20 @@
+{
+  "id": "canggu-party-19",
+  "name": "Mrs Sippy",
+  "description": "is a large, stylish pool club and restaurant in Seminyak, known for its massive lagoon-style pool, day-to-night atmosphere, and Mediterranean-inspired cuisine. It features a relaxed tropical vibe with sunbeds, a sports bar, and a Kids Corner, making it suitable for both adults and families. The venue is also popular for events and parties and has a history of hosting international DJs.",
+  "imageUrl": "/images/mrs-sippy-bali.webp",
+  "category": "hangout",
+  "subcategory": [
+    "party"
+  ],
+  "location": "canggu",
+  "googleMapsUrl": "https://maps.app.goo.gl/tJ7yHYFwe9XZo5DR7",
+  "instagramUrl": "https://instagram.com/mrssippybali",
+  "featured": true,
+  "note": "This place is famous for its day-party which typically runs from midday into the evening.",
+  "openingHours": "Daily: 09:00 – 22:00",
+  "priceRange": "Rp 250.000+ per person",
+  "tableBookingUrl": "https://www.tablecheck.com/en/mrs-sippy-bali-daybed/reserve/landing",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "ticketUrl": "https://example.com/ticket"
+}

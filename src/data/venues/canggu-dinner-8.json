@@ -9,6 +9,6 @@
   "googleMapsUrl": "https://maps.app.goo.gl/Gw1H1s6AsP3WXe2p8",
   "instagramUrl": "https://instagram.com/skoolkitchen",
   "featured": true,
-  "openingHours": "Daily: from 17:00 until late :contentReference[oaicite:0]{index=0}",
-  "priceRange": "Approx. IDR 300.000–500.000 per person (based on mains, cocktails, and higher-end dishes) :contentReference[oaicite:1]{index=1}"
+  "openingHours": "Daily: from 17:00 until late",
+  "priceRange": "Approx. IDR 300.000–500.000 per person (based on mains, cocktails, and higher-end dishes)"
 }

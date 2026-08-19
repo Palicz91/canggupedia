@@ -16,7 +16,7 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
         <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-4">
           What's On
         </h1>
-        <p class="text-xl text-gray-600">
+        <p id="promos-subtitle" class="text-xl text-gray-600">
           Daily Promos & Special Deals
         </p>
       </div>
@@ -26,13 +26,13 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
         if (dayPromos.length === 0) return null;
 
         return (
-          <div class="mb-12">
+          <div class="mb-12 day-section" data-day={day}>
             <h2 class="text-3xl font-display font-bold text-gray-800 mb-6 text-center">
               {day}
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {dayPromos.map((promo) => (
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover promo-card" data-location={promo.location}>
                   <div class="relative h-48">
                     <img
                       src={promo.imageUrl}
@@ -77,3 +77,26 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const location = params.get('location');
+  if (location) {
+    const name = location.charAt(0).toUpperCase() + location.slice(1);
+    const subtitle = document.getElementById('promos-subtitle');
+    if (subtitle) subtitle.textContent = `${name} - Daily Promos & Special Deals`;
+
+    document.querySelectorAll('.promo-card').forEach((card) => {
+      if (card.getAttribute('data-location') !== location) {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    document.querySelectorAll('.day-section').forEach((section) => {
+      const visible = section.querySelectorAll('.promo-card:not([style*="display: none"])');
+      if (visible.length === 0) {
+        (section as HTMLElement).style.display = 'none';
+      }
+    });
+  }
+</script>

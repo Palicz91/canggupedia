@@ -12,8 +12,8 @@
   "instagramUrl": "https://instagram.com/finnsbeachclub",
   "featured": true,
   "note": "This place is famous for its day-party which typically runs from midday into the evening.",
-  "openingHours": "Daily: 10:00 – 24:00 :contentReference[oaicite:1]{index=1}",
-  "priceRange": "Free entry; minimum spend applies for day-beds (from ~IDR 3,200,000 and up) :contentReference[oaicite:2]{index=2}",
+  "openingHours": "Daily: 10:00 – 24:00",
+  "priceRange": "Free entry; minimum spend applies for day-beds (from ~IDR 3,200,000 and up)",
   "tableBookingUrl": "https://bookings.finnsbeachclub.com/",
   "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
   "ticketUrl": "https://example.com/ticket"
