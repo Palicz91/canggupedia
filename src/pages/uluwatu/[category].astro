@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VenueGrid from '../../components/VenueGrid.tsx';
-const venueModules = import.meta.glob('../../data/venues/*.json', { eager: true, import: 'default' });
+const venueModules = import.meta.glob('../../data/venues/**/*.json', { eager: true, import: 'default' });
 const venues = Object.values(venueModules) as any[];
 import { categoryConfigs } from '../../data/category-config';
 

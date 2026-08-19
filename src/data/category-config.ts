@@ -24,8 +24,8 @@ export const categoryConfigs: Record<
       title: 'Hangout Spots',
       description: 'Explore bars and party venues',
       subcategories: [
-        { name: 'Bars', value: 'bars' },
         { name: 'Party', value: 'party' },
+        { name: 'Bars', value: 'bars' },
       ],
     },
     wellness: {
@@ -64,8 +64,8 @@ export const categoryConfigs: Record<
       title: 'Hangout Spots',
       description: 'Explore bars and party venues',
       subcategories: [
-        { name: 'Bars', value: 'bars' },
         { name: 'Party', value: 'party' },
+        { name: 'Bars', value: 'bars' },
       ],
     },
     wellness: {

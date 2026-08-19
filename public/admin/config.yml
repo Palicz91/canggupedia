@@ -6,51 +6,163 @@ media_folder: public/images
 public_folder: /images
 
 collections:
-  - name: venues
-    label: Venues
-    label_singular: Venue
-    folder: src/data/venues
+  - name: food-venues
+    label: "Food & Dining"
+    label_singular: "Food Venue"
+    folder: src/data/venues/food
     format: json
     create: true
     delete: true
     slug: "{{id}}"
     identifier_field: name
-    summary: "{{name}} — {{location}} / {{category}} {{#if featured}}⭐{{/if}}"
-    sortable_fields: [name, location, category, featured]
+    summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
+    sortable_fields: [name, location, featured]
     fields:
-      - { label: ID, name: id, widget: string, hint: "Unique ID like canggu-brunch-1" }
+      - { label: ID, name: id, widget: string, hint: "e.g. canggu-brunch-1" }
       - { label: Name, name: name, widget: string }
       - { label: Description, name: description, widget: text }
       - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
-      - label: Category
-        name: category
-        widget: select
-        options:
-          - { label: "Food & Dining", value: food }
-          - { label: "Hangout Spots", value: hangout }
-          - { label: "Wellness & Fitness", value: wellness }
-          - { label: "Fun & Family", value: fun-family }
+      - { label: Category, name: category, widget: hidden, default: food }
       - label: Subcategory
         name: subcategory
         widget: select
         multiple: true
-        hint: "Pick subcategories that match the main category above. Food = brunch/dinner/healthy/authentic. Hangout = bars/party. Wellness = gym/boxing/padel/yoga/pilates/spa. Fun & Family = waterpark/zoo/activities."
         options:
-          - { label: "Brunch (Food)", value: brunch }
-          - { label: "Dinner (Food)", value: dinner }
-          - { label: "Healthy (Food)", value: healthy }
-          - { label: "Authentic (Food)", value: authentic }
-          - { label: "Bars (Hangout)", value: bars }
-          - { label: "Party (Hangout)", value: party }
-          - { label: "Gym (Wellness)", value: gym }
-          - { label: "Boxing (Wellness)", value: boxing }
-          - { label: "Padel (Wellness)", value: padel }
-          - { label: "Yoga (Wellness)", value: yoga }
-          - { label: "Pilates (Wellness)", value: pilates }
-          - { label: "Spa (Wellness)", value: spa }
-          - { label: "Waterpark (Fun & Family)", value: waterpark }
-          - { label: "Zoo (Fun & Family)", value: zoo }
-          - { label: "Activities (Fun & Family)", value: activities }
+          - { label: Brunch, value: brunch }
+          - { label: Dinner, value: dinner }
+          - { label: Healthy, value: healthy }
+          - { label: Authentic, value: authentic }
+      - label: Location
+        name: location
+        widget: select
+        options:
+          - { label: Canggu, value: canggu }
+          - { label: Uluwatu, value: uluwatu }
+          - { label: Seminyak, value: seminyak }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
+      - { label: Instagram URL, name: instagramUrl, widget: string }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false }
+      - { label: Price Range, name: priceRange, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Discount Code, name: discountCode, widget: string, required: false }
+      - { label: Note, name: note, widget: text, required: false }
+      - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
+      - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
+      - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
+
+  - name: hangout-venues
+    label: "Hangout Spots"
+    label_singular: "Hangout Venue"
+    folder: src/data/venues/hangout
+    format: json
+    create: true
+    delete: true
+    slug: "{{id}}"
+    identifier_field: name
+    summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
+    sortable_fields: [name, location, featured]
+    fields:
+      - { label: ID, name: id, widget: string, hint: "e.g. canggu-party-1" }
+      - { label: Name, name: name, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
+      - { label: Category, name: category, widget: hidden, default: hangout }
+      - label: Subcategory
+        name: subcategory
+        widget: select
+        multiple: true
+        options:
+          - { label: Party, value: party }
+          - { label: Bars, value: bars }
+      - label: Location
+        name: location
+        widget: select
+        options:
+          - { label: Canggu, value: canggu }
+          - { label: Uluwatu, value: uluwatu }
+          - { label: Seminyak, value: seminyak }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
+      - { label: Instagram URL, name: instagramUrl, widget: string }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false }
+      - { label: Price Range, name: priceRange, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Discount Code, name: discountCode, widget: string, required: false }
+      - { label: Note, name: note, widget: text, required: false }
+      - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
+      - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
+      - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
+
+  - name: wellness-venues
+    label: "Wellness & Fitness"
+    label_singular: "Wellness Venue"
+    folder: src/data/venues/wellness
+    format: json
+    create: true
+    delete: true
+    slug: "{{id}}"
+    identifier_field: name
+    summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
+    sortable_fields: [name, location, featured]
+    fields:
+      - { label: ID, name: id, widget: string, hint: "e.g. canggu-gym-1" }
+      - { label: Name, name: name, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
+      - { label: Category, name: category, widget: hidden, default: wellness }
+      - label: Subcategory
+        name: subcategory
+        widget: select
+        multiple: true
+        options:
+          - { label: Gym, value: gym }
+          - { label: Boxing, value: boxing }
+          - { label: Padel, value: padel }
+          - { label: Yoga, value: yoga }
+          - { label: Pilates, value: pilates }
+          - { label: Spa / Massage, value: spa }
+      - label: Location
+        name: location
+        widget: select
+        options:
+          - { label: Canggu, value: canggu }
+          - { label: Uluwatu, value: uluwatu }
+          - { label: Seminyak, value: seminyak }
+      - { label: Google Maps URL, name: googleMapsUrl, widget: string }
+      - { label: Instagram URL, name: instagramUrl, widget: string }
+      - { label: Opening Hours, name: openingHours, widget: string, required: false }
+      - { label: Price Range, name: priceRange, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Discount Code, name: discountCode, widget: string, required: false }
+      - { label: Note, name: note, widget: text, required: false }
+      - { label: Table Booking URL, name: tableBookingUrl, widget: string, required: false }
+      - { label: Guestlist URL, name: guestlistUrl, widget: string, required: false }
+      - { label: Ticket URL, name: ticketUrl, widget: string, required: false }
+
+  - name: fun-family-venues
+    label: "Fun & Family"
+    label_singular: "Fun & Family Venue"
+    folder: src/data/venues/fun-family
+    format: json
+    create: true
+    delete: true
+    slug: "{{id}}"
+    identifier_field: name
+    summary: "{{name}} — {{location}} {{#if featured}}⭐{{/if}}"
+    sortable_fields: [name, location, featured]
+    fields:
+      - { label: ID, name: id, widget: string, hint: "e.g. canggu-family-1" }
+      - { label: Name, name: name, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: imageUrl, widget: image, hint: "Upload venue image (WebP preferred)" }
+      - { label: Category, name: category, widget: hidden, default: fun-family }
+      - label: Subcategory
+        name: subcategory
+        widget: select
+        multiple: true
+        options:
+          - { label: Waterpark, value: waterpark }
+          - { label: Zoo, value: zoo }
+          - { label: Activities, value: activities }
       - label: Location
         name: location
         widget: select
