@@ -59,6 +59,8 @@ export default function VenueGrid({
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
 
+  const subOrder = config.subcategories.map((s) => s.value);
+
   const filteredVenues = (activeSubcategory
     ? venues.filter((v) => {
         const subs = Array.isArray(v.subcategory) ? v.subcategory : [v.subcategory];
@@ -68,7 +70,13 @@ export default function VenueGrid({
   ).sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
-    return a.name.localeCompare(b.name);
+    const aSub = Array.isArray(a.subcategory) ? a.subcategory[0] : a.subcategory;
+    const bSub = Array.isArray(b.subcategory) ? b.subcategory[0] : b.subcategory;
+    const subDiff = subOrder.indexOf(aSub) - subOrder.indexOf(bSub);
+    if (subDiff !== 0) return subDiff;
+    const aNum = parseInt(a.id.match(/-(\d+)$/)?.[1] || '0', 10);
+    const bNum = parseInt(b.id.match(/-(\d+)$/)?.[1] || '0', 10);
+    return aNum - bNum;
   });
 
   return (
