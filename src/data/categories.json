@@ -5,10 +5,26 @@
       "title": "Food & Dining",
       "description": "Discover the best restaurants and cafes",
       "subcategories": [
-        { "name": "Brunch", "value": "brunch" },
-        { "name": "Dinner", "value": "dinner" },
-        { "name": "Healthy", "value": "healthy" },
-        { "name": "Authentic", "value": "authentic" }
+        {
+          "name": "Brunch",
+          "value": "brunch"
+        },
+        {
+          "name": "Dinner",
+          "value": "dinner"
+        },
+        {
+          "name": "Healthy",
+          "value": "healthy"
+        },
+        {
+          "name": "Authentic",
+          "value": "authentic"
+        },
+        {
+          "name": "Rooftop",
+          "value": "rooftop"
+        }
       ]
     },
     {
@@ -16,8 +32,14 @@
       "title": "Hangout Spots",
       "description": "Explore bars and party venues",
       "subcategories": [
-        { "name": "Party", "value": "party" },
-        { "name": "Bars", "value": "bars" }
+        {
+          "name": "Party",
+          "value": "party"
+        },
+        {
+          "name": "Bars",
+          "value": "bars"
+        }
       ]
     },
     {
@@ -25,12 +47,30 @@
       "title": "Wellness & Fitness",
       "description": "Find your perfect wellness spot",
       "subcategories": [
-        { "name": "Gym", "value": "gym" },
-        { "name": "Boxing", "value": "boxing" },
-        { "name": "Padel", "value": "padel" },
-        { "name": "Yoga", "value": "yoga" },
-        { "name": "Pilates", "value": "pilates" },
-        { "name": "Spa & Massage", "value": "spa" }
+        {
+          "name": "Gym",
+          "value": "gym"
+        },
+        {
+          "name": "Boxing",
+          "value": "boxing"
+        },
+        {
+          "name": "Padel",
+          "value": "padel"
+        },
+        {
+          "name": "Yoga",
+          "value": "yoga"
+        },
+        {
+          "name": "Pilates",
+          "value": "pilates"
+        },
+        {
+          "name": "Spa & Massage",
+          "value": "spa"
+        }
       ]
     },
     {
@@ -38,9 +78,18 @@
       "title": "Fun & Family",
       "description": "Family-friendly activities and attractions",
       "subcategories": [
-        { "name": "Waterpark", "value": "waterpark" },
-        { "name": "Zoo", "value": "zoo" },
-        { "name": "Activities", "value": "activities" }
+        {
+          "name": "Waterpark",
+          "value": "waterpark"
+        },
+        {
+          "name": "Zoo",
+          "value": "zoo"
+        },
+        {
+          "name": "Activities",
+          "value": "activities"
+        }
       ]
     }
   ]
