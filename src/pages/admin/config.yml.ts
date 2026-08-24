@@ -153,7 +153,7 @@ const categoriesCollection = {
     name: 'categories', label: 'Categories & types', file: 'src/data/categories.json', format: 'json',
     fields: [{
       label: 'Sections', name: 'categories', label_singular: 'section', widget: 'list',
-      allow_add: false, collapsed: false, summary: '{{fields.title}}',
+      allow_add: false, allow_delete: false, collapsed: false, summary: '{{fields.title}}',
       hint: 'The four main sections of the website. To add a whole new section, ask Adam. Types inside each one you can manage yourself.',
       fields: [
         { label: 'Section name', name: 'title', widget: 'string' },

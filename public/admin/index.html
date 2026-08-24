@@ -1,13 +1,247 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Canggupedia Admin</title>
+  <link rel="icon" href="/favicon.svg" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    [class*="-ToolbarDropdown"] [role="menuitem"]:nth-child(n + 2) { display: none !important; }
+
+    :root {
+      --cp-ink: #1f2937; --cp-muted: #6b7280; --cp-line: #e5e7eb;
+      --cp-orange: #ff7849; --cp-warm: #fffbeb; --cp-warm-line: #fde68a; --cp-green: #059669;
+      --cp-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    #cp-help-btn {
+      position: fixed; right: 20px; bottom: 20px; z-index: 9999; display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 18px; border: 0; border-radius: 999px; cursor: pointer; background: var(--cp-ink); color: #fff;
+      font: 600 14px/1 var(--cp-font); box-shadow: 0 8px 24px rgba(31,41,55,.25);
+    }
+    #cp-help-btn:hover { background: #111827; }
+    #cp-help-btn:focus-visible, #cp-help .cp-x:focus-visible, .cp-banner a:focus-visible, .cp-banner button:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
+    #cp-help-btn svg { width: 16px; height: 16px; }
+    #cp-help {
+      position: fixed; right: 20px; bottom: 76px; z-index: 9999; width: min(380px, calc(100vw - 40px));
+      max-height: calc(100vh - 110px); overflow: auto; background: #fff; color: var(--cp-ink);
+      border: 1px solid var(--cp-line); border-radius: 16px; box-shadow: 0 20px 50px rgba(31,41,55,.22); font: 14px/1.45 var(--cp-font);
+    }
+    #cp-help[hidden] { display: none; }
+    #cp-help header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--cp-line); }
+    #cp-help header strong { font-size: 15px; }
+    #cp-help .cp-x { border: 0; background: transparent; cursor: pointer; font-size: 20px; line-height: 1; color: var(--cp-muted); padding: 4px 6px; }
+    #cp-help section { padding: 12px 16px; border-bottom: 1px solid var(--cp-line); }
+    #cp-help section:last-child { border-bottom: 0; }
+    #cp-help h4 { margin: 0 0 4px; font-size: 14px; }
+    #cp-help p { margin: 0; color: #374151; }
+    #cp-help kbd { font: inherit; font-weight: 600; color: var(--cp-ink); background: #f3f4f6; border: 1px solid var(--cp-line); border-radius: 6px; padding: 0 6px; }
+    #cp-help .cp-tip { background: var(--cp-warm); border-top: 1px solid var(--cp-warm-line); }
+    #cp-help .cp-tip h4 { color: #92400e; }
+
+    .cp-banner {
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 9998; width: min(560px, calc(100vw - 40px));
+      background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(31,41,55,.25);
+      font: 14px/1.4 var(--cp-font); color: var(--cp-ink); animation: cp-rise 240ms ease-out;
+    }
+    @keyframes cp-rise { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    @media (prefers-reduced-motion: reduce) { .cp-banner { animation: none; } }
+    .cp-banner .cp-top { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: linear-gradient(135deg,#fb923c 0%,#f97316 50%,#f87171 100%); color: #fff; }
+    .cp-banner .cp-time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 26px; letter-spacing: .02em; min-width: 78px; }
+    .cp-banner .cp-msg { flex: 1; }
+    .cp-banner .cp-msg strong { display: block; font-size: 15px; }
+    .cp-banner .cp-msg span { opacity: .92; }
+    .cp-banner .cp-bar { height: 4px; background: #fde8dc; }
+    .cp-banner .cp-bar i { display: block; height: 100%; width: 100%; background: var(--cp-orange); transition: width 1s linear; }
+    .cp-banner .cp-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; }
+    .cp-banner .cp-actions a { color: var(--cp-ink); font-weight: 600; text-decoration: none; padding: 8px 12px; border: 1px solid var(--cp-line); border-radius: 10px; }
+    .cp-banner .cp-actions a:hover { border-color: var(--cp-ink); }
+    .cp-banner .cp-actions button { border: 0; background: transparent; color: var(--cp-muted); cursor: pointer; font: inherit; padding: 8px; }
+    .cp-banner.cp-live .cp-top { background: var(--cp-green); }
+    .cp-banner.cp-live .cp-bar i { background: var(--cp-green); }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
+  <script src="/admin/helpers.js"></script>
+
+  <button id="cp-help-btn" type="button" aria-expanded="false" aria-controls="cp-help">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+    Help
+  </button>
+
+  <div id="cp-help" role="dialog" aria-label="How to use the admin" hidden>
+    <header><strong>How to use this</strong><button class="cp-x" type="button" aria-label="Close help">&times;</button></header>
+    <section><h4>Add a venue</h4><p>Pick a section on the left (Food, Hangout, Wellness, Fun &amp; Family) &rarr; <kbd>New</kbd> &rarr; fill in the form &rarr; <kbd>Publish</kbd>.</p></section>
+    <section><h4>Change a venue</h4><p>Type its name in the search box at the top, click it, change what you want &rarr; <kbd>Publish</kbd>.</p></section>
+    <section><h4>Change a photo</h4><p>Click <kbd>Choose an image</kbd> &rarr; <kbd>Upload</kbd> &rarr; pick a photo from your computer. No links needed.</p></section>
+    <section><h4>Uluwatu (or Seminyak) venues</h4><p>Same as Canggu. Just set <kbd>Area</kbd> to Uluwatu inside the venue. It shows up on the Uluwatu page automatically.</p></section>
+    <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p>Left menu &rarr; <kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Publish</kbd>. After 2 minutes, reload this page and you can pick it on any venue.</p></section>
+    <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>It&rsquo;s the switch called <kbd>Show &ldquo;Our Top Pick&rdquo; badge</kbd> on each venue. Use the <kbd>Filter</kbd> button &rarr; Top picks only to see which ones have it.</p></section>
+    <section class="cp-tip"><h4>After you press Publish</h4><p>The website rebuilds itself. It takes about 2 minutes. A timer shows at the bottom of the screen. When it hits zero, reload the website.</p></section>
+  </div>
+
+  <script>
+    (function () {
+      var SITE = window.location.origin;
+      var BUILD_SECONDS = window.__CP_BUILD_SECONDS || 120;
+      var H = window.CpHelpers;
+
+      CMS.registerEventListener({
+        name: 'preSave',
+        handler: function (ctx) {
+          var data = ctx.entry.get('data');
+          if (!data || typeof data.get !== 'function') return data;
+
+          if (data.has('name') && data.has('location')) {
+            if (!data.get('id')) data = data.set('id', H.slugify(data.get('location')) + '-' + H.slugify(data.get('name')));
+            if (data.get('featured') === undefined || data.get('featured') === null) data = data.set('featured', false);
+            var sub = data.get('subcategory');
+            if (typeof sub === 'string') data = data.set('subcategory', [sub]);
+            data = H.fixLinks(data, ['googleMapsUrl', 'tableBookingUrl', 'guestlistUrl', 'ticketUrl'], ['instagramUrl']);
+          }
+
+          if (data.has('categories')) {
+            data = data.update('categories', function (cats) {
+              if (!cats) return cats;
+              return cats.map(function (cat) {
+                if (!cat.get('value')) cat = cat.set('value', H.slugify(cat.get('title')));
+                var subs = cat.get('subcategories');
+                return subs ? cat.set('subcategories', subs.map(function (s) {
+                  return s.get('value') ? s : s.set('value', H.slugify(s.get('name')));
+                })) : cat;
+              });
+            });
+          }
+
+          [['happy_hours', 'venue'], ['daily_promos', 'title'], ['events', 'title']].forEach(function (pair) {
+            var key = pair[0], nameField = pair[1];
+            if (!data.has(key) || !data.get(key)) return;
+            data = data.update(key, function (items) {
+              return items.map(function (item) {
+                if (!item.get('id')) item = item.set('id', H.slugify(item.get(nameField)) + '-' + Date.now().toString(36));
+                return H.fixLinks(item, ['googleMapsUrl', 'ticketUrl'], ['instagramUrl', 'venueInstagram']);
+              });
+            });
+          });
+          return data;
+        }
+      });
+
+      var btn = document.getElementById('cp-help-btn'), panel = document.getElementById('cp-help');
+      function toggle(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', String(open)); }
+      btn.addEventListener('click', function () { toggle(panel.hidden); });
+      panel.querySelector('.cp-x').addEventListener('click', function () { toggle(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
+
+      var banner = null, timer = null;
+      function pageFor(data) {
+        var loc = data.get('location'), cat = data.get('category');
+        if (loc && cat && (loc === 'canggu' || loc === 'uluwatu')) return SITE + '/' + loc + '/' + cat;
+        if (data.has('happy_hours')) return SITE + '/happy-hour';
+        if (data.has('daily_promos')) return SITE + '/daily-promos';
+        if (data.has('events')) return SITE + '/events';
+        return SITE;
+      }
+      function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+      function showBanner(link) {
+        if (banner) { banner.remove(); clearInterval(timer); }
+        banner = document.createElement('div');
+        banner.className = 'cp-banner';
+        banner.setAttribute('role', 'status');
+        banner.innerHTML =
+          '<div class="cp-top"><div class="cp-time"></div><div class="cp-msg"><strong>Published. Going live…</strong><span>The website is rebuilding itself. No need to press anything.</span></div></div>' +
+          '<div class="cp-bar"><i></i></div>' +
+          '<div class="cp-actions"><a href="' + link + '" target="_blank" rel="noopener">Open the website ↗</a><button type="button">Hide</button></div>';
+        document.body.appendChild(banner);
+        var left = BUILD_SECONDS;
+        var timeEl = banner.querySelector('.cp-time'), barEl = banner.querySelector('.cp-bar i'), msgEl = banner.querySelector('.cp-msg');
+        timeEl.textContent = fmt(left);
+        banner.querySelector('button').onclick = function () { banner.remove(); clearInterval(timer); banner = null; };
+        timer = setInterval(function () {
+          left -= 1;
+          if (left > 0) { timeEl.textContent = fmt(left); barEl.style.width = (left / BUILD_SECONDS * 100) + '%'; return; }
+          clearInterval(timer);
+          banner.classList.add('cp-live');
+          timeEl.textContent = '✓';
+          barEl.style.width = '100%';
+          msgEl.innerHTML = '<strong>Should be live now.</strong><span>Open the website and reload the page. Still old? Give it one more minute.</span>';
+        }, 1000);
+      }
+      CMS.registerEventListener({ name: 'postPublish', handler: function (ctx) { showBanner(pageFor(ctx.entry.get('data'))); } });
+
+      var previewCss = [
+        '@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Montserrat:wght@400;600;700&display=swap");',
+        '.cp-wrap{font-family:Montserrat,system-ui,sans-serif;color:#1f2937;padding:20px;background:linear-gradient(135deg,#fffbeb,#fff7ed);min-height:100%}',
+        '.cp-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin:0 0 10px}',
+        '.cp-card{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.10);overflow:hidden;max-width:420px;margin-bottom:28px}',
+        '.cp-img{position:relative;height:192px;background:#f3f4f6}.cp-img img{width:100%;height:100%;object-fit:cover;display:block}',
+        '.cp-noimg{display:flex;align-items:center;justify-content:center;height:100%;color:#9ca3af;font-weight:600}',
+        '.cp-badge{position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:999px;color:#fff;font-size:13px;font-weight:700;background:linear-gradient(135deg,#fb923c,#f97316 50%,#f87171)}',
+        '.cp-body{padding:24px}.cp-meta{font-size:12px;color:#6b7280;margin:0 0 6px;text-transform:capitalize}',
+        '.cp-body h3{font-family:Fredoka,sans-serif;font-weight:700;font-size:24px;margin:0 0 8px;color:#1f2937}',
+        '.cp-desc{color:#4b5563;margin:0 0 20px;white-space:pre-line}.cp-desc.cp-empty{color:#9ca3af;font-style:italic}',
+        '.cp-btns{display:flex;gap:8px;margin-bottom:8px}.cp-btns span{flex:1;text-align:center;padding:8px 16px;border-radius:12px;color:#fff;font-weight:600}',
+        '.cp-map{background:#ff7849}.cp-ig{background:#ec4899}.cp-more{display:block;text-align:center;padding:8px;border-radius:12px;background:#e5e7eb;color:#374151;font-weight:600}',
+        '.cp-box{background:#f9fafb;border-radius:12px;padding:16px;margin-bottom:16px;color:#374151}.cp-box b{color:#1f2937}',
+        '.cp-note{background:#fefce8;border:1px solid #fef08a;color:#854d0e;border-radius:12px;padding:16px;margin-bottom:16px;font-weight:700;white-space:pre-line}',
+        '.cp-extra{display:flex;flex-wrap:wrap;gap:8px}.cp-extra span{flex:1;text-align:center;padding:8px 16px;border-radius:12px;color:#fff;font-weight:600}',
+        '.cp-book{background:#10b981}.cp-guest{background:#3b82f6}.cp-ticket{background:#a855f7}',
+        '.cp-hint{font-size:12px;color:#6b7280;margin:-16px 0 0}'
+      ].join('\n');
+      CMS.registerPreviewStyle(previewCss, { raw: true });
+
+      function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+      var VenuePreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var d = function (k) { return entry.getIn(['data', k]); };
+          var img = d('imageUrl'), src = '';
+          if (img) { var asset = this.props.getAsset(img); src = asset ? asset.toString() : ''; }
+          var subs = d('subcategory');
+          subs = subs && typeof subs.toJS === 'function' ? subs.toJS() : (subs ? [subs] : []);
+          var meta = [cap(d('location')), subs.map(cap).join(', ')].filter(Boolean).join('  ·  ');
+          var hasBox = d('openingHours') || d('priceRange');
+          var extra = [
+            d('tableBookingUrl') ? h('span', { className: 'cp-book', key: 'b' }, 'Table Booking') : null,
+            d('guestlistUrl') ? h('span', { className: 'cp-guest', key: 'g' }, 'Guestlist') : null,
+            d('ticketUrl') ? h('span', { className: 'cp-ticket', key: 't' }, 'Ticket') : null
+          ].filter(Boolean);
+
+          return h('div', { className: 'cp-wrap' },
+            h('p', { className: 'cp-eyebrow' }, 'On the website'),
+            h('div', { className: 'cp-card' },
+              h('div', { className: 'cp-img' },
+                src ? h('img', { src: src, alt: '' }) : h('div', { className: 'cp-noimg' }, 'Add a photo'),
+                d('featured') ? h('span', { className: 'cp-badge' }, 'Our Top Pick') : null),
+              h('div', { className: 'cp-body' },
+                meta ? h('p', { className: 'cp-meta' }, meta) : null,
+                h('h3', {}, d('name') || 'Venue name'),
+                h('p', { className: 'cp-desc' + (d('description') ? '' : ' cp-empty') }, d('description') || 'The short description goes here.'),
+                h('div', { className: 'cp-btns' }, h('span', { className: 'cp-map' }, 'Map'), h('span', { className: 'cp-ig' }, 'IG')),
+                h('span', { className: 'cp-more' }, 'MORE'))),
+            h('p', { className: 'cp-eyebrow' }, 'After clicking MORE'),
+            h('div', { className: 'cp-card' },
+              h('div', { className: 'cp-body' },
+                h('h3', {}, d('name') || 'Venue name'),
+                h('p', { className: 'cp-desc' + (d('description') ? '' : ' cp-empty') },
+                  d('description') || 'The short description goes here.',
+                  d('discountCode') ? h('span', {}, h('br'), h('br'), h('b', {}, 'TICKETS DISCOUNT CODE: ' + d('discountCode'))) : null),
+                hasBox ? h('div', { className: 'cp-box' },
+                  d('openingHours') ? h('p', { style: { margin: '0 0 8px' } }, h('b', {}, 'Opening Hours: '), d('openingHours')) : null,
+                  d('priceRange') ? h('p', { style: { margin: 0 } }, h('b', {}, 'Price Range: '), d('priceRange')) : null) : null,
+                d('note') ? h('div', { className: 'cp-note' }, 'Note: ' + d('note')) : null,
+                h('div', { className: 'cp-btns' }, h('span', { className: 'cp-map' }, 'Map'), h('span', { className: 'cp-ig' }, 'Instagram')),
+                extra.length ? h('div', { className: 'cp-extra' }, extra) : null)),
+            h('p', { className: 'cp-hint' }, 'This preview updates as you type. The real website updates about 2 minutes after you press Publish.'));
+        }
+      });
+      ['food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues'].forEach(function (name) {
+        CMS.registerPreviewTemplate(name, VenuePreview);
+      });
+    })();
+  </script>
 </body>
 </html>
