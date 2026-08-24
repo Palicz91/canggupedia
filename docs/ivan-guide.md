@@ -12,4 +12,4 @@ The "Our Top Pick" badge is a switch on each venue. Use the Filter button and pi
 
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, and Publish. After about 2 minutes reload the admin page and the new type appears in every venue form.
 
-After you press Publish, the website rebuilds itself. A timer shows at the bottom of the screen. When it reaches zero, open the website and reload the page. If nothing changed yet, give it one more minute.
+Publish saves it. Put online puts it on the website. Press Put online once when you're done, not after every change.

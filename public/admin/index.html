@@ -60,6 +60,8 @@
     .cp-banner .cp-actions button { border: 0; background: transparent; color: var(--cp-muted); cursor: pointer; font: inherit; padding: 8px; }
     .cp-banner.cp-live .cp-top { background: var(--cp-green); }
     .cp-banner.cp-live .cp-bar i { background: var(--cp-green); }
+    .cp-banner .cp-actions .cp-go { background: var(--cp-orange); color: #fff; border: 0; border-radius: 10px; padding: 9px 14px; font-weight: 700; cursor: pointer; }
+    .cp-banner .cp-actions .cp-go[disabled] { opacity: .6; cursor: default; }
   </style>
 </head>
 <body>
@@ -79,7 +81,11 @@
     <section><h4>Uluwatu (or Seminyak) venues</h4><p>Same as Canggu. Just set <kbd>Area</kbd> to Uluwatu inside the venue. It shows up on the Uluwatu page automatically.</p></section>
     <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p>Left menu &rarr; <kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Publish</kbd>. After 2 minutes, reload this page and you can pick it on any venue.</p></section>
     <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>It&rsquo;s the switch called <kbd>Show &ldquo;Our Top Pick&rdquo; badge</kbd> on each venue. Use the <kbd>Filter</kbd> button &rarr; Top picks only to see which ones have it.</p></section>
-    <section class="cp-tip"><h4>After you press Publish</h4><p>The website rebuilds itself. It takes about 2 minutes. A timer shows at the bottom of the screen. When it hits zero, reload the website.</p></section>
+    <section class="cp-tip">
+      <h4>After you press Publish</h4>
+      <p>Publish saves your change. It is not on the website yet. When you're done for the day, press <kbd>Put online now</kbd> in the bar at the bottom. That takes about 2 minutes. Press it once at the end, not after every change.</p>
+      <p style="margin-top:8px">No bar showing but you removed something? <a href="#" onclick="window.cpPutOnline(); return false;">Put online now</a></p>
+    </section>
   </div>
 
   <script>
@@ -135,7 +141,9 @@
       panel.querySelector('.cp-x').addEventListener('click', function () { toggle(false); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
 
-      var banner = null, timer = null;
+      var KEY = 'cp-pending', banner = null, timer = null, lastLink = SITE;
+      function pending() { return parseInt(localStorage.getItem(KEY) || '0', 10) || 0; }
+      function setPending(n) { localStorage.setItem(KEY, String(n)); }
       function pageFor(data) {
         var loc = data.get('location'), cat = data.get('category');
         if (loc && cat && (loc === 'canggu' || loc === 'uluwatu')) return SITE + '/' + loc + '/' + cat;
@@ -145,20 +153,55 @@
         return SITE;
       }
       function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
-      function showBanner(link) {
-        if (banner) { banner.remove(); clearInterval(timer); }
-        banner = document.createElement('div');
-        banner.className = 'cp-banner';
-        banner.setAttribute('role', 'status');
-        banner.innerHTML =
-          '<div class="cp-top"><div class="cp-time"></div><div class="cp-msg"><strong>Published. Going live…</strong><span>The website is rebuilding itself. No need to press anything.</span></div></div>' +
+      function el(html) { var d = document.createElement('div'); d.className = 'cp-banner'; d.setAttribute('role', 'status'); d.innerHTML = html; return d; }
+      function clear() { if (banner) banner.remove(); banner = null; clearInterval(timer); }
+
+      function showPending() {
+        clear();
+        var n = pending();
+        if (!n) return;
+        banner = el(
+          '<div class="cp-top"><div class="cp-time">' + n + '</div><div class="cp-msg"><strong>Saved. Not on the website yet.</strong><span>' +
+          (n === 1 ? '1 change is' : n + ' changes are') + ' waiting. Press the button when you\'re done for the day.</span></div></div>' +
+          '<div class="cp-actions"><button type="button" class="cp-go">Put online now</button><button type="button" class="cp-hide">Hide</button></div>');
+        document.body.appendChild(banner);
+        banner.querySelector('.cp-hide').onclick = clear;
+        banner.querySelector('.cp-go').onclick = putOnline;
+      }
+
+      function putOnline() {
+        var btn = banner && banner.querySelector('.cp-go');
+        if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
+        var user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+        var token = user ? user.jwt() : Promise.resolve('');
+        token.then(function (jwt) {
+          return fetch('/.netlify/functions/deploy', { method: 'POST', headers: { Authorization: 'Bearer ' + jwt } });
+        }).then(function (res) { return res.json().catch(function () { return {}; }); }).then(function (out) {
+          if (!out || out.deployed !== true) { showNotice('Nothing happened: this is a preview site, not the real one.'); return; }
+          setPending(0);
+          showCountdown();
+        }).catch(function () { showNotice('Could not start. Check your internet and try again.'); });
+      }
+
+      function showNotice(text) {
+        clear();
+        banner = el('<div class="cp-top"><div class="cp-time">!</div><div class="cp-msg"><strong>' + text + '</strong></div></div>' +
+          '<div class="cp-actions"><button type="button" class="cp-hide">OK</button></div>');
+        document.body.appendChild(banner);
+        banner.querySelector('.cp-hide').onclick = showPending;
+      }
+
+      function showCountdown() {
+        clear();
+        banner = el(
+          '<div class="cp-top"><div class="cp-time"></div><div class="cp-msg"><strong>Going live…</strong><span>The website is rebuilding itself. No need to press anything.</span></div></div>' +
           '<div class="cp-bar"><i></i></div>' +
-          '<div class="cp-actions"><a href="' + link + '" target="_blank" rel="noopener">Open the website ↗</a><button type="button">Hide</button></div>';
+          '<div class="cp-actions"><a href="' + lastLink + '" target="_blank" rel="noopener">Open the website ↗</a><button type="button" class="cp-hide">Hide</button></div>');
         document.body.appendChild(banner);
         var left = BUILD_SECONDS;
         var timeEl = banner.querySelector('.cp-time'), barEl = banner.querySelector('.cp-bar i'), msgEl = banner.querySelector('.cp-msg');
         timeEl.textContent = fmt(left);
-        banner.querySelector('button').onclick = function () { banner.remove(); clearInterval(timer); banner = null; };
+        banner.querySelector('.cp-hide').onclick = clear;
         timer = setInterval(function () {
           left -= 1;
           if (left > 0) { timeEl.textContent = fmt(left); barEl.style.width = (left / BUILD_SECONDS * 100) + '%'; return; }
@@ -169,7 +212,13 @@
           msgEl.innerHTML = '<strong>Should be live now.</strong><span>Open the website and reload the page. Still old? Give it one more minute.</span>';
         }, 1000);
       }
-      CMS.registerEventListener({ name: 'postPublish', handler: function (ctx) { showBanner(pageFor(ctx.entry.get('data'))); } });
+
+      CMS.registerEventListener({
+        name: 'postPublish',
+        handler: function (ctx) { lastLink = pageFor(ctx.entry.get('data')); setPending(pending() + 1); showPending(); }
+      });
+      window.cpPutOnline = function () { if (!banner) { setPending(Math.max(pending(), 1)); showPending(); } putOnline(); };
+      showPending();
 
       var previewCss = [
         '@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Montserrat:wght@400;600;700&display=swap");',
