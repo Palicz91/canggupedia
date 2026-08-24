@@ -4,7 +4,9 @@
   "description": "Beachfront fine dining with fresh seafood and elegant ambiance",
   "imageUrl": "/images/pexels-photo-696218.webp",
   "category": "food",
-  "subcategory": "dinner",
+  "subcategory": [
+    "dinner"
+  ],
   "location": "uluwatu",
   "googleMapsUrl": "https://maps.google.com/?q=Sundays+Beach+Club+Uluwatu+Bali",
   "instagramUrl": "https://instagram.com/sundaysbeachclub",

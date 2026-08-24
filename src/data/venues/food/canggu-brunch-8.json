@@ -4,7 +4,9 @@
   "description": "An all-day café concept by the By/Suka Collective that serves specialty coffee, brunch, and lunch in Bali, Indonesia. It has a relaxed atmosphere and a blend of American and Australian breakfast and lunch dishes.",
   "imageUrl": "/images/twoface-header-web.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/xbSsW7j2eNdCkKJm9",
   "instagramUrl": "https://instagram.com/twofacecoffee",

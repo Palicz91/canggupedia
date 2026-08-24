@@ -4,7 +4,9 @@
   "description": "Creative play space with activities, workshops, and entertainment for children",
   "imageUrl": "/images/pexels-photo-8613089.webp",
   "category": "fun-family",
-  "subcategory": "activities",
+  "subcategory": [
+    "activities"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Kids+Club+Canggu+Bali",
   "instagramUrl": "https://instagram.com/kidsclubcanggu",

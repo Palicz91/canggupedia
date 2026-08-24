@@ -4,7 +4,9 @@
   "description": "Holistic yoga center with multiple styles, workshops, and teacher training",
   "imageUrl": "/images/samadi.webp",
   "category": "wellness",
-  "subcategory": "yoga",
+  "subcategory": [
+    "yoga"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Samadi+Bali+Canggu",
   "instagramUrl": "https://instagram.com/samadibali",

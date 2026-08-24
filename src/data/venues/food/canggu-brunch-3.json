@@ -4,7 +4,9 @@
   "description": "Cozy neighborhood cafe with wholesome brunch classics and excellent coffee",
   "imageUrl": "/images/machinery-cafe-canggu-1.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/akpJnNU1Jd5K8QZX9",
   "instagramUrl": "https://instagram.com/machinerycafe",

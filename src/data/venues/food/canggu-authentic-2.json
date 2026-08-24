@@ -4,7 +4,9 @@
   "description": "Authentic Thai cuisine with bold flavors and traditional recipes",
   "imageUrl": "/images/pexels-photo-1624487.webp",
   "category": "food",
-  "subcategory": "authentic",
+  "subcategory": [
+    "authentic"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Thai+Away+Canggu+Bali",
   "instagramUrl": "https://instagram.com/thaiaway",

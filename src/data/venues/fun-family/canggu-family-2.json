@@ -4,7 +4,9 @@
   "description": "Interactive zoo experience with exotic animals and feeding opportunities",
   "imageUrl": "/images/south-africa-hluhluwe-giraffes-pattern.webp",
   "category": "fun-family",
-  "subcategory": "zoo",
+  "subcategory": [
+    "zoo"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Bali+Zoo",
   "instagramUrl": "https://instagram.com/balizoo",

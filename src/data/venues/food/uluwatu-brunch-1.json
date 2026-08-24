@@ -4,7 +4,9 @@
   "description": "Clifftop cafe with amazing views and healthy breakfast options overlooking the ocean",
   "imageUrl": "/images/pexels-photo-1639562.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "uluwatu",
   "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali",
   "instagramUrl": "https://instagram.com/singlefinbali",

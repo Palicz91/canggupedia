@@ -4,7 +4,9 @@
   "description": "Stunning clifftop dining with Mediterranean-inspired cuisine and sunset views",
   "imageUrl": "/images/pexels-photo-958545.webp",
   "category": "food",
-  "subcategory": "dinner",
+  "subcategory": [
+    "dinner"
+  ],
   "location": "uluwatu",
   "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali",
   "instagramUrl": "https://instagram.com/ulucliffhouse",

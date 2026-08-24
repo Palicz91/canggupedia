@@ -4,7 +4,9 @@
   "description": "Iconic clifftop bar with panoramic ocean views and signature cocktails",
   "imageUrl": "/images/pexels-photo-941864.webp",
   "category": "hangout",
-  "subcategory": "bars",
+  "subcategory": [
+    "bars"
+  ],
   "location": "uluwatu",
   "googleMapsUrl": "https://maps.google.com/?q=Rock+Bar+Uluwatu+Bali",
   "instagramUrl": "https://instagram.com/rockbaruluwatu",

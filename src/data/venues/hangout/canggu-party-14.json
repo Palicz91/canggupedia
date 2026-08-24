@@ -12,6 +12,7 @@
   "instagramUrl": "https://instagram.com/shishibali",
   "openingHours": "Daily: 17:00 – 04:00 (kitchen/lounge opens 17:00, club goes late until ~04:00)",
   "priceRange": "Free entry / no cover (for lounge/restaurant early). Night-club entry for men often ~IDR 200.000–250.000 (redeemable for drinks); drinks IDR 100.000–150.000; typical dinner + drink IDR 300.000–400.000 per person",
-  "tableBookingUrl": "wa.me/6281139619892",
-  "ticketUrl": "https://example.com/ticket"
+  "tableBookingUrl": "https://wa.me/6281139619892",
+  "ticketUrl": "https://example.com/ticket",
+  "featured": false
 }

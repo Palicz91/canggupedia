@@ -4,7 +4,9 @@
   "description": "a popular, Nordic-inspired café and bakery located in the trendy Canggu area of Bali, Indonesia.",
   "imageUrl": "/images/img_9302.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/oyYDssHQu8KzaRt79",
   "instagramUrl": "https://instagram.com/copenhagencafe.bali",

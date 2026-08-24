@@ -4,7 +4,9 @@
   "description": "is a modern restaurant in Canggu, Bali, that blends primitive cooking with a modern dining experience. It features an open-flame kitchen using natural wood and charcoal to cook all its dishes, from appetizers to desserts, and even cocktails. Located above The Lawn, the restaurant offers a fine-dining experience with ocean views and a focus on high-quality, produce-driven cuisine.",
   "imageUrl": "/images/skool-yak-online.webp",
   "category": "food",
-  "subcategory": "dinner",
+  "subcategory": [
+    "dinner"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/Gw1H1s6AsP3WXe2p8",
   "instagramUrl": "https://instagram.com/skoolkitchen",
