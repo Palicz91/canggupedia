@@ -178,8 +178,11 @@ export const GET: APIRoute = ({ site }) => {
           name: 'git-gateway',
           branch: process.env.HEAD || 'main',
           commit_messages: {
-            create: 'Add {{collection}}: {{slug}}', update: 'Update {{collection}}: {{slug}}',
-            delete: 'Remove {{collection}}: {{slug}}', uploadMedia: 'Upload photo: {{path}}', deleteMedia: 'Delete photo: {{path}}',
+            create: 'Add {{collection}}: {{slug}} [skip netlify]',
+            update: 'Update {{collection}}: {{slug}} [skip netlify]',
+            delete: 'Remove {{collection}}: {{slug}} [skip netlify]',
+            uploadMedia: 'Upload photo: {{path}} [skip netlify]',
+            deleteMedia: 'Delete photo: {{path}} [skip netlify]',
           },
         };
 

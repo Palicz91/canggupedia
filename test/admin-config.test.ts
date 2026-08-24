@@ -100,4 +100,14 @@ describe('admin config', () => {
     const config = await getConfig({ HEAD: 'feat/x' });
     expect(config.backend.branch).toBe('feat/x');
   });
+
+  it('all 5 commit_messages end with [skip netlify]', async () => {
+    const config = await getConfig();
+    const msgs = config.backend.commit_messages;
+    const keys = ['create', 'update', 'delete', 'uploadMedia', 'deleteMedia'];
+    for (const k of keys) {
+      expect(msgs[k], `${k} missing [skip netlify]`).toMatch(/\[skip netlify\]$/);
+    }
+    expect(keys.length).toBe(5);
+  });
 });
