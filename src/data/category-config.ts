@@ -1,93 +1,38 @@
-export const categoryConfigs: Record<
-  string,
-  Record<
-    string,
-    {
-      title: string;
-      description: string;
-      subcategories: { name: string; value: string }[];
-    }
-  >
-> = {
-  canggu: {
-    food: {
-      title: 'Food & Dining',
-      description: 'Discover the best restaurants and cafes in Canggu',
-      subcategories: [
-        { name: 'Brunch', value: 'brunch' },
-        { name: 'Dinner', value: 'dinner' },
-        { name: 'Healthy', value: 'healthy' },
-        { name: 'Authentic', value: 'authentic' },
-      ],
-    },
-    hangout: {
-      title: 'Hangout Spots',
-      description: 'Explore bars and party venues',
-      subcategories: [
-        { name: 'Party', value: 'party' },
-        { name: 'Bars', value: 'bars' },
-      ],
-    },
-    wellness: {
-      title: 'Wellness & Fitness',
-      description: 'Find your perfect wellness spot',
-      subcategories: [
-        { name: 'Gym', value: 'gym' },
-        { name: 'Boxing', value: 'boxing' },
-        { name: 'Padel', value: 'padel' },
-        { name: 'Yoga', value: 'yoga' },
-        { name: 'Pilates', value: 'pilates' },
-        { name: 'Spa/Massage', value: 'spa' },
-      ],
-    },
-    'fun-family': {
-      title: 'Fun & Family',
-      description: 'Family-friendly activities and attractions',
-      subcategories: [
-        { name: 'Waterpark', value: 'waterpark' },
-        { name: 'Zoo', value: 'zoo' },
-        { name: 'Activities', value: 'activities' },
-      ],
-    },
-  },
-  uluwatu: {
-    food: {
-      title: 'Food & Dining',
-      description: 'Discover the best restaurants and cafes in Uluwatu',
-      subcategories: [
-        { name: 'Brunch', value: 'brunch' },
-        { name: 'Dinner', value: 'dinner' },
-        { name: 'Authentic', value: 'authentic' },
-      ],
-    },
-    hangout: {
-      title: 'Hangout Spots',
-      description: 'Explore bars and party venues',
-      subcategories: [
-        { name: 'Party', value: 'party' },
-        { name: 'Bars', value: 'bars' },
-      ],
-    },
-    wellness: {
-      title: 'Wellness & Fitness',
-      description: 'Find your perfect wellness spot',
-      subcategories: [
-        { name: 'Gym', value: 'gym' },
-        { name: 'Boxing', value: 'boxing' },
-        { name: 'Padel', value: 'padel' },
-        { name: 'Yoga', value: 'yoga' },
-        { name: 'Pilates', value: 'pilates' },
-        { name: 'Spa', value: 'spa' },
-      ],
-    },
-    'fun-family': {
-      title: 'Fun & Family',
-      description: 'Family-friendly activities and attractions',
-      subcategories: [
-        { name: 'Waterpark', value: 'waterpark' },
-        { name: 'Zoo', value: 'zoo' },
-        { name: 'Activities', value: 'activities' },
-      ],
-    },
-  },
-};
+import categoriesData from './categories.json';
+
+export interface SubcategoryConfig { name: string; value: string }
+export interface CategoryConfig { title: string; description: string; subcategories: SubcategoryConfig[] }
+
+export const locations: Record<string, string> = { canggu: 'Canggu', uluwatu: 'Uluwatu' };
+
+export function slugify(input: string): string {
+  return String(input || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+export const categories = categoriesData.categories.map((c) => ({
+  value: c.value || slugify(c.title),
+  title: c.title,
+  description: c.description,
+  subcategories: (c.subcategories || [])
+    .filter((s) => s && s.name)
+    .map((s) => ({ name: s.name, value: s.value || slugify(s.name) })),
+}));
+
+function buildFor(locationLabel: string): Record<string, CategoryConfig> {
+  return Object.fromEntries(
+    categories.map((c) => [
+      c.value,
+      { title: c.title, description: `${c.description} in ${locationLabel}`, subcategories: c.subcategories },
+    ]),
+  );
+}
+
+export const categoryConfigs: Record<string, Record<string, CategoryConfig>> = Object.fromEntries(
+  Object.entries(locations).map(([key, label]) => [key, buildFor(label)]),
+);
