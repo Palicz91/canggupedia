@@ -8,84 +8,98 @@
   <link rel="icon" href="/favicon.svg" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
+    /* One choice under Save instead of three. Cosmetic: if a CMS update renames the class, the options just come back. */
     [class*="-ToolbarDropdown"] [role="menuitem"]:nth-child(n + 2) { display: none !important; }
+    /* Room for the status strip so the last field is never hidden behind it. */
+    [class*="-ControlPaneContainer"], [class*="-CollectionMain"], [class*="-PreviewPaneContainer"] { padding-bottom: 72px !important; }
 
     :root {
       --cp-ink: #1f2937; --cp-muted: #6b7280; --cp-line: #e5e7eb;
-      --cp-orange: #ff7849; --cp-warm: #fffbeb; --cp-warm-line: #fde68a; --cp-green: #059669;
+      --cp-orange: #ff7849; --cp-orange-deep: #f97316; --cp-warm: #fff7ed; --cp-warm-line: #fed7aa;
+      --cp-green: #059669; --cp-green-bg: #ecfdf5; --cp-green-line: #a7f3d0;
       --cp-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    #cp-help-btn {
-      position: fixed; right: 20px; bottom: 20px; z-index: 9999; display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 18px; border: 0; border-radius: 999px; cursor: pointer; background: var(--cp-ink); color: #fff;
-      font: 600 14px/1 var(--cp-font); box-shadow: 0 8px 24px rgba(31,41,55,.25);
+
+    /* ---------- status strip (always present) ---------- */
+    #cp-strip {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 250; height: 56px;
+      display: flex; align-items: center; gap: 14px; padding: 0 20px;
+      background: #fff; border-top: 1px solid var(--cp-line); color: var(--cp-ink);
+      font: 15px/1.3 var(--cp-font); box-shadow: 0 -6px 24px rgba(31,41,55,.08);
     }
-    #cp-help-btn:hover { background: #111827; }
-    #cp-help-btn:focus-visible, #cp-help .cp-x:focus-visible, .cp-banner a:focus-visible, .cp-banner button:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
-    #cp-help-btn svg { width: 16px; height: 16px; }
+    #cp-strip .cp-lead { flex: 0 0 auto; font-variant-numeric: tabular-nums; font-weight: 700; font-size: 20px; min-width: 2ch; text-align: center; }
+    #cp-strip .cp-text { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #cp-strip .cp-text strong { font-weight: 700; }
+    #cp-strip .cp-text span { color: var(--cp-muted); }
+    #cp-strip .cp-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
+    #cp-strip button, #cp-strip a.cp-btn {
+      font: 600 14px/1 var(--cp-font); border-radius: 10px; padding: 10px 14px; cursor: pointer; text-decoration: none;
+      border: 1px solid var(--cp-line); background: #fff; color: var(--cp-ink);
+    }
+    #cp-strip .cp-go { background: var(--cp-orange); border-color: var(--cp-orange); color: #fff; font-weight: 700; }
+    #cp-strip .cp-go:hover { background: var(--cp-orange-deep); border-color: var(--cp-orange-deep); }
+    #cp-strip .cp-go[disabled] { opacity: .6; cursor: default; }
+    #cp-strip .cp-quiet { border: 0; background: transparent; color: var(--cp-muted); }
+    #cp-strip .cp-quiet:hover { color: var(--cp-ink); }
+    #cp-strip .cp-progress { position: absolute; left: 0; top: -1px; height: 3px; width: 0; background: var(--cp-orange); transition: width 1s linear; }
+    #cp-strip button:focus-visible, #cp-strip a:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
+
+    #cp-strip.is-pending { background: var(--cp-warm); border-top-color: var(--cp-warm-line); }
+    #cp-strip.is-pending .cp-lead { color: var(--cp-orange-deep); }
+    #cp-strip.is-building .cp-lead { color: var(--cp-orange-deep); }
+    #cp-strip.is-live { background: var(--cp-green-bg); border-top-color: var(--cp-green-line); }
+    #cp-strip.is-live .cp-lead { color: var(--cp-green); }
+    #cp-strip.is-live .cp-progress { background: var(--cp-green); }
+    #cp-strip.is-notice { background: var(--cp-warm); border-top-color: var(--cp-warm-line); }
+
+    /* ---------- help panel ---------- */
     #cp-help {
-      position: fixed; right: 20px; bottom: 76px; z-index: 9999; width: min(380px, calc(100vw - 40px));
-      max-height: calc(100vh - 110px); overflow: auto; background: #fff; color: var(--cp-ink);
+      position: fixed; right: 16px; bottom: 68px; z-index: 250; width: min(400px, calc(100vw - 32px));
+      max-height: calc(100vh - 140px); overflow: auto; background: #fff; color: var(--cp-ink);
       border: 1px solid var(--cp-line); border-radius: 16px; box-shadow: 0 20px 50px rgba(31,41,55,.22); font: 14px/1.45 var(--cp-font);
     }
     #cp-help[hidden] { display: none; }
-    #cp-help header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--cp-line); }
+    #cp-help header { position: sticky; top: 0; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--cp-line); }
     #cp-help header strong { font-size: 15px; }
-    #cp-help .cp-x { border: 0; background: transparent; cursor: pointer; font-size: 20px; line-height: 1; color: var(--cp-muted); padding: 4px 6px; }
+    #cp-help .cp-x { border: 0; background: transparent; cursor: pointer; font-size: 22px; line-height: 1; color: var(--cp-muted); padding: 2px 6px; }
     #cp-help section { padding: 12px 16px; border-bottom: 1px solid var(--cp-line); }
     #cp-help section:last-child { border-bottom: 0; }
     #cp-help h4 { margin: 0 0 4px; font-size: 14px; }
     #cp-help p { margin: 0; color: #374151; }
-    #cp-help kbd { font: inherit; font-weight: 600; color: var(--cp-ink); background: #f3f4f6; border: 1px solid var(--cp-line); border-radius: 6px; padding: 0 6px; }
-    #cp-help .cp-tip { background: var(--cp-warm); border-top: 1px solid var(--cp-warm-line); }
-    #cp-help .cp-tip h4 { color: #92400e; }
-
-    .cp-banner {
-      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 9998; width: min(560px, calc(100vw - 40px));
-      background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(31,41,55,.25);
-      font: 14px/1.4 var(--cp-font); color: var(--cp-ink); animation: cp-rise 240ms ease-out;
-    }
-    @keyframes cp-rise { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
-    @media (prefers-reduced-motion: reduce) { .cp-banner { animation: none; } }
-    .cp-banner .cp-top { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: linear-gradient(135deg,#fb923c 0%,#f97316 50%,#f87171 100%); color: #fff; }
-    .cp-banner .cp-time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 26px; letter-spacing: .02em; min-width: 78px; }
-    .cp-banner .cp-msg { flex: 1; }
-    .cp-banner .cp-msg strong { display: block; font-size: 15px; }
-    .cp-banner .cp-msg span { opacity: .92; }
-    .cp-banner .cp-bar { height: 4px; background: #fde8dc; }
-    .cp-banner .cp-bar i { display: block; height: 100%; width: 100%; background: var(--cp-orange); transition: width 1s linear; }
-    .cp-banner .cp-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; }
-    .cp-banner .cp-actions a { color: var(--cp-ink); font-weight: 600; text-decoration: none; padding: 8px 12px; border: 1px solid var(--cp-line); border-radius: 10px; }
-    .cp-banner .cp-actions a:hover { border-color: var(--cp-ink); }
-    .cp-banner .cp-actions button { border: 0; background: transparent; color: var(--cp-muted); cursor: pointer; font: inherit; padding: 8px; }
-    .cp-banner.cp-live .cp-top { background: var(--cp-green); }
-    .cp-banner.cp-live .cp-bar i { background: var(--cp-green); }
-    .cp-banner .cp-actions .cp-go { background: var(--cp-orange); color: #fff; border: 0; border-radius: 10px; padding: 9px 14px; font-weight: 700; cursor: pointer; }
-    .cp-banner .cp-actions .cp-go[disabled] { opacity: .6; cursor: default; }
+    #cp-help p + p { margin-top: 6px; }
+    #cp-help kbd { font: inherit; font-weight: 600; color: var(--cp-ink); background: #f3f4f6; border: 1px solid var(--cp-line); border-radius: 6px; padding: 0 6px; white-space: nowrap; }
+    #cp-help .cp-tip { background: var(--cp-warm); }
+    #cp-help .cp-tip h4 { color: #9a3412; }
+    #cp-help .cp-link { border: 0; background: transparent; color: var(--cp-orange-deep); font: inherit; font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; }
+    #cp-help .cp-x:focus-visible, #cp-help .cp-link:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
   </style>
 </head>
 <body>
+  <!-- Pinned on purpose. Bump it in its own task and re-test the admin. -->
   <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
   <script src="/admin/helpers.js"></script>
 
-  <button id="cp-help-btn" type="button" aria-expanded="false" aria-controls="cp-help">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-    Help
-  </button>
+  <div id="cp-strip" role="status" aria-live="polite">
+    <i class="cp-progress" aria-hidden="true"></i>
+    <div class="cp-lead" aria-hidden="true"></div>
+    <div class="cp-text"></div>
+    <div class="cp-actions"></div>
+  </div>
 
   <div id="cp-help" role="dialog" aria-label="How to use the admin" hidden>
     <header><strong>How to use this</strong><button class="cp-x" type="button" aria-label="Close help">&times;</button></header>
-    <section><h4>Add a venue</h4><p>Pick a section on the left (Food, Hangout, Wellness, Fun &amp; Family) &rarr; <kbd>New</kbd> &rarr; fill in the form &rarr; <kbd>Publish</kbd>.</p></section>
-    <section><h4>Change a venue</h4><p>Type its name in the search box at the top, click it, change what you want &rarr; <kbd>Publish</kbd>.</p></section>
-    <section><h4>Change a photo</h4><p>Click <kbd>Choose an image</kbd> &rarr; <kbd>Upload</kbd> &rarr; pick a photo from your computer. No links needed.</p></section>
-    <section><h4>Uluwatu (or Seminyak) venues</h4><p>Same as Canggu. Just set <kbd>Area</kbd> to Uluwatu inside the venue. It shows up on the Uluwatu page automatically.</p></section>
-    <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p>Left menu &rarr; <kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Publish</kbd>. After 2 minutes, reload this page and you can pick it on any venue.</p></section>
-    <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>It&rsquo;s the switch called <kbd>Show &ldquo;Our Top Pick&rdquo; badge</kbd> on each venue. Use the <kbd>Filter</kbd> button &rarr; Top picks only to see which ones have it.</p></section>
     <section class="cp-tip">
-      <h4>After you press Publish</h4>
-      <p>Publish saves your change. It is not on the website yet. When you're done for the day, press <kbd>Put online now</kbd> in the bar at the bottom. That takes about 2 minutes. Press it once at the end, not after every change.</p>
-      <p style="margin-top:8px">No bar showing but you removed something? <a href="#" onclick="window.cpPutOnline(); return false;">Put online now</a></p>
+      <h4>Save is not the same as online</h4>
+      <p><kbd>Save</kbd> keeps your change. The website doesn't know yet. When you're done for the day, press <kbd>Put online now</kbd> in the bar at the bottom. About 2 minutes later, reload the website.</p>
+      <p>Press it once at the end, not after every change.</p>
     </section>
+    <section><h4>Add a venue</h4><p>Pick a section on the left &rarr; <kbd>New</kbd> &rarr; fill in the form &rarr; <kbd>Save</kbd>.</p></section>
+    <section><h4>Change a venue</h4><p>Type its name in the search box at the top &rarr; click it &rarr; change what you want &rarr; <kbd>Save</kbd>.</p></section>
+    <section><h4>Change a photo</h4><p><kbd>Choose an image</kbd> &rarr; <kbd>Upload</kbd> &rarr; pick a photo from your computer. No links needed.</p></section>
+    <section><h4>Uluwatu or Seminyak</h4><p>Same as Canggu. Set <kbd>Area</kbd> to Uluwatu inside the venue. That's all.</p></section>
+    <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p><kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Save</kbd> &rarr; <kbd>Put online now</kbd>. After 2 minutes, reload this page and the new type is in every venue's Type list.</p></section>
+    <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>A switch on each venue. <kbd>Filter</kbd> &rarr; Top picks only shows which venues have it.</p></section>
+    <section><h4>Removed something?</h4><p>Deleting doesn't show in the bar. <button type="button" class="cp-link" id="cp-help-go">Put online now</button> to send it to the website.</p></section>
   </div>
 
   <script>
@@ -93,6 +107,37 @@
       var SITE = window.location.origin;
       var BUILD_SECONDS = window.__CP_BUILD_SECONDS || 120;
       var H = window.CpHelpers;
+
+      /* ---------- words Ivan reads on the CMS's own buttons ---------- */
+      (function renameStrings() {
+        if (!CMS.getLocale) return;
+        var en = CMS.getLocale('en');
+        if (!en) return;
+        function merge(target, patch) {
+          Object.keys(patch).forEach(function (k) {
+            if (patch[k] && typeof patch[k] === 'object') { target[k] = merge(Object.assign({}, target[k] || {}), patch[k]); }
+            else target[k] = patch[k];
+          });
+          return target;
+        }
+        CMS.registerLocale('en', merge(JSON.parse(JSON.stringify(en)), {
+          collection: { sidebar: { searchAll: 'Search by name' } },
+          editor: {
+            editorToolbar: {
+              publish: 'Save', publishing: 'Saving…', published: 'Saved', publishNow: 'Save now',
+              publishAndCreateNew: 'Save and add another', publishAndDuplicate: 'Save and duplicate',
+              deleteEntry: 'Delete', backCollection: 'Editing in %{collectionLabel}',
+              unsavedChanges: 'Not saved yet', changesSaved: 'Saved', deployButtonLabel: 'Open the website'
+            },
+            editor: {
+              onLeavePage: 'You have changes that are not saved. Leave anyway?',
+              onDeletePublishedEntry: 'Delete this from the website? This cannot be undone.',
+              onDeleteWithUnsavedChanges: 'Delete this from the website, including your changes that are not saved? This cannot be undone.'
+            }
+          },
+          ui: { toast: { entrySaved: 'Saved. Not on the website yet.', entryPublished: 'Saved. Not on the website yet.' } }
+        }));
+      })();
 
       CMS.registerEventListener({
         name: 'preSave',
@@ -135,13 +180,10 @@
         }
       });
 
-      var btn = document.getElementById('cp-help-btn'), panel = document.getElementById('cp-help');
-      function toggle(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', String(open)); }
-      btn.addEventListener('click', function () { toggle(panel.hidden); });
-      panel.querySelector('.cp-x').addEventListener('click', function () { toggle(false); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
 
-      var KEY = 'cp-pending', banner = null, timer = null, lastLink = SITE;
+      /* ---------- status strip: saved ≠ online ---------- */
+      var KEY = 'cp-pending', strip = document.getElementById('cp-strip'), timer = null, lastLink = SITE;
+      var lead = strip.querySelector('.cp-lead'), text = strip.querySelector('.cp-text'), actions = strip.querySelector('.cp-actions'), progress = strip.querySelector('.cp-progress');
       function pending() { return parseInt(localStorage.getItem(KEY) || '0', 10) || 0; }
       function setPending(n) { localStorage.setItem(KEY, String(n)); }
       function pageFor(data) {
@@ -153,71 +195,64 @@
         return SITE;
       }
       function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
-      function el(html) { var d = document.createElement('div'); d.className = 'cp-banner'; d.setAttribute('role', 'status'); d.innerHTML = html; return d; }
-      function clear() { if (banner) banner.remove(); banner = null; clearInterval(timer); }
-
-      function showPending() {
-        clear();
-        var n = pending();
-        if (!n) return;
-        banner = el(
-          '<div class="cp-top"><div class="cp-time">' + n + '</div><div class="cp-msg"><strong>Saved. Not on the website yet.</strong><span>' +
-          (n === 1 ? '1 change is' : n + ' changes are') + ' waiting. Press the button when you\'re done for the day.</span></div></div>' +
-          '<div class="cp-actions"><button type="button" class="cp-go">Put online now</button><button type="button" class="cp-hide">Hide</button></div>');
-        document.body.appendChild(banner);
-        banner.querySelector('.cp-hide').onclick = clear;
-        banner.querySelector('.cp-go').onclick = putOnline;
+      function btn(label, cls, onClick) { var b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = label; b.onclick = onClick; return b; }
+      function render(state, leadText, html, buttons) {
+        clearInterval(timer);
+        strip.className = state; lead.textContent = leadText; text.innerHTML = html;
+        actions.innerHTML = ''; buttons.forEach(function (b) { actions.appendChild(b); });
+        actions.appendChild(btn('Help', 'cp-quiet', function () { toggle(panel.hidden); }));
+        progress.style.width = '0';
       }
 
+      function showIdle() { render('is-idle', '✓', '<span>Nothing waiting to go online.</span>', []); }
+      function showPending() {
+        var n = pending();
+        if (!n) return showIdle();
+        render('is-pending', String(n), '<strong>' + (n === 1 ? '1 change saved.' : n + ' changes saved.') + '</strong> <span>Not on the website yet. Press the button when you\'re done for the day.</span>',
+          [btn('Put online now', 'cp-go', putOnline)]);
+      }
+      function showNotice(msg) { render('is-notice', '!', '<strong>' + msg + '</strong>', [btn('OK', 'cp-quiet', showPending)]); }
+      function showBuilding() {
+        var left = BUILD_SECONDS;
+        render('is-building', fmt(left), '<strong>Going live…</strong> <span>The website is rebuilding itself. No need to press anything.</span>', []);
+        progress.style.width = '0%';
+        timer = setInterval(function () {
+          left -= 1;
+          if (left > 0) { lead.textContent = fmt(left); progress.style.width = ((BUILD_SECONDS - left) / BUILD_SECONDS * 100) + '%'; return; }
+          clearInterval(timer); showLive();
+        }, 1000);
+      }
+      function showLive() {
+        var a = document.createElement('a'); a.className = 'cp-btn'; a.href = lastLink; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Open the website ↗';
+        render('is-live', '✓', '<strong>Should be live now.</strong> <span>Open the website and reload it. Still old? Give it one more minute.</span>', [a, btn('OK', 'cp-quiet', showIdle)]);
+        progress.style.width = '100%';
+        timer = setTimeout(showIdle, 5 * 60 * 1000);
+      }
       function putOnline() {
-        var btn = banner && banner.querySelector('.cp-go');
-        if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
+        var go = actions.querySelector('.cp-go');
+        if (go) { go.disabled = true; go.textContent = 'Starting…'; }
         var user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
         var token = user ? user.jwt() : Promise.resolve('');
         token.then(function (jwt) {
           return fetch('/.netlify/functions/deploy', { method: 'POST', headers: { Authorization: 'Bearer ' + jwt } });
         }).then(function (res) { return res.json().catch(function () { return {}; }); }).then(function (out) {
-          if (!out || out.deployed !== true) { showNotice('Nothing happened: this is a preview site, not the real one.'); return; }
-          setPending(0);
-          showCountdown();
+          if (!out || out.deployed !== true) { showNotice('Nothing happened: this is a test copy of the admin, not the real one.'); return; }
+          setPending(0); showBuilding();
         }).catch(function () { showNotice('Could not start. Check your internet and try again.'); });
       }
-
-      function showNotice(text) {
-        clear();
-        banner = el('<div class="cp-top"><div class="cp-time">!</div><div class="cp-msg"><strong>' + text + '</strong></div></div>' +
-          '<div class="cp-actions"><button type="button" class="cp-hide">OK</button></div>');
-        document.body.appendChild(banner);
-        banner.querySelector('.cp-hide').onclick = showPending;
-      }
-
-      function showCountdown() {
-        clear();
-        banner = el(
-          '<div class="cp-top"><div class="cp-time"></div><div class="cp-msg"><strong>Going live…</strong><span>The website is rebuilding itself. No need to press anything.</span></div></div>' +
-          '<div class="cp-bar"><i></i></div>' +
-          '<div class="cp-actions"><a href="' + lastLink + '" target="_blank" rel="noopener">Open the website ↗</a><button type="button" class="cp-hide">Hide</button></div>');
-        document.body.appendChild(banner);
-        var left = BUILD_SECONDS;
-        var timeEl = banner.querySelector('.cp-time'), barEl = banner.querySelector('.cp-bar i'), msgEl = banner.querySelector('.cp-msg');
-        timeEl.textContent = fmt(left);
-        banner.querySelector('.cp-hide').onclick = clear;
-        timer = setInterval(function () {
-          left -= 1;
-          if (left > 0) { timeEl.textContent = fmt(left); barEl.style.width = (left / BUILD_SECONDS * 100) + '%'; return; }
-          clearInterval(timer);
-          banner.classList.add('cp-live');
-          timeEl.textContent = '✓';
-          barEl.style.width = '100%';
-          msgEl.innerHTML = '<strong>Should be live now.</strong><span>Open the website and reload the page. Still old? Give it one more minute.</span>';
-        }, 1000);
-      }
-
       CMS.registerEventListener({
         name: 'postPublish',
         handler: function (ctx) { lastLink = pageFor(ctx.entry.get('data')); setPending(pending() + 1); showPending(); }
       });
-      window.cpPutOnline = function () { if (!banner) { setPending(Math.max(pending(), 1)); showPending(); } putOnline(); };
+
+      /* ---------- help panel ---------- */
+      var panel = document.getElementById('cp-help');
+      function toggle(open) { panel.hidden = !open; }
+      panel.querySelector('.cp-x').addEventListener('click', function () { toggle(false); });
+      document.getElementById('cp-help-go').addEventListener('click', function () { toggle(false); if (!pending()) setPending(1); showPending(); putOnline(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
+      document.addEventListener('click', function (e) { if (!panel.hidden && !panel.contains(e.target) && !strip.contains(e.target)) toggle(false); });
+
       showPending();
 
       var previewCss = [
@@ -284,7 +319,7 @@
                 d('note') ? h('div', { className: 'cp-note' }, 'Note: ' + d('note')) : null,
                 h('div', { className: 'cp-btns' }, h('span', { className: 'cp-map' }, 'Map'), h('span', { className: 'cp-ig' }, 'Instagram')),
                 extra.length ? h('div', { className: 'cp-extra' }, extra) : null)),
-            h('p', { className: 'cp-hint' }, 'This preview updates as you type. The real website updates about 2 minutes after you press Publish.'));
+            h('p', { className: 'cp-hint' }, 'This preview updates as you type. The website changes after you press Put online now.'));
         }
       });
       ['food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues'].forEach(function (name) {

@@ -84,7 +84,7 @@ const areaSelect = {
 const dealsCollection = {
   name: 'deals',
   label: 'Deals & events',
-  description: 'Happy hours, daily promos and upcoming events. Open one, add or change an item, then Publish.',
+  description: 'Happy hours, daily promos and upcoming events. Open one, add or change an item, then Save. Press Put online now when you are done.',
   editor: { preview: false },
   files: [
     {
@@ -147,14 +147,14 @@ const dealsCollection = {
 const categoriesCollection = {
   name: 'settings',
   label: 'Categories & types',
-  description: 'The types you can pick on a venue (Brunch, Padel, Yoga…). Add or rename them here. New types show up in venue forms about 2 minutes after you Publish (reload the page).',
+  description: 'The types you can pick on a venue (Brunch, Padel, Yoga…). Add or rename them here. A new type shows up in venue forms about 2 minutes after you press Put online now (reload this page).',
   editor: { preview: false },
   files: [{
     name: 'categories', label: 'Categories & types', file: 'src/data/categories.json', format: 'json',
     fields: [{
       label: 'Sections', name: 'categories', label_singular: 'section', widget: 'list',
-      allow_add: false, allow_delete: false, collapsed: false, summary: '{{fields.title}}',
-      hint: 'The four main sections of the website. To add a whole new section, ask Adam. Types inside each one you can manage yourself.',
+      allow_add: false, allow_remove: false, collapsed: true, summary: '{{fields.title}}',
+      hint: 'The four main sections of the website. Open one to add or rename its types. To add a whole new section, ask Adam.',
       fields: [
         { label: 'Section name', name: 'title', widget: 'string' },
         { label: 'Subtitle', name: 'description', widget: 'string', hint: 'Shows under the section name on the website.' },
