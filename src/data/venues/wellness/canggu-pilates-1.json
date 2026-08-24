@@ -4,7 +4,9 @@
   "description": "Dedicated pilates studio with reformer classes and mat work",
   "imageUrl": "/images/luna-and-sol.webp",
   "category": "wellness",
-  "subcategory": "pilates",
+  "subcategory": [
+    "pilates"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Pilates+Paradise+Canggu+Bali",
   "instagramUrl": "https://instagram.com/pilatesparadisebali",

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { MapPin, ArrowLeft, X } from 'lucide-react';
+import { toHref } from '../lib/links';
+import { subsOf, sortVenues, visibleSubcategories } from '../lib/venues';
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
@@ -13,6 +15,7 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
 
 interface Venue {
   id: string;
+  slug?: string;
   name: string;
   description: string;
   imageUrl: string;
@@ -60,24 +63,12 @@ export default function VenueGrid({
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
 
   const subOrder = config.subcategories.map((s) => s.value);
+  const pills = visibleSubcategories(config.subcategories, venues);
 
-  const filteredVenues = (activeSubcategory
-    ? venues.filter((v) => {
-        const subs = Array.isArray(v.subcategory) ? v.subcategory : [v.subcategory];
-        return subs.includes(activeSubcategory);
-      })
-    : venues
-  ).sort((a, b) => {
-    if (a.featured && !b.featured) return -1;
-    if (!a.featured && b.featured) return 1;
-    const aSub = Array.isArray(a.subcategory) ? a.subcategory[0] : a.subcategory;
-    const bSub = Array.isArray(b.subcategory) ? b.subcategory[0] : b.subcategory;
-    const subDiff = subOrder.indexOf(aSub) - subOrder.indexOf(bSub);
-    if (subDiff !== 0) return subDiff;
-    const aNum = parseInt(a.id.match(/-(\d+)$/)?.[1] || '0', 10);
-    const bNum = parseInt(b.id.match(/-(\d+)$/)?.[1] || '0', 10);
-    return aNum - bNum;
-  });
+  const base = activeSubcategory
+    ? venues.filter((v) => subsOf(v).includes(activeSubcategory))
+    : venues;
+  const filteredVenues = sortVenues(base, subOrder);
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${bgGradient}`}>
@@ -108,7 +99,7 @@ export default function VenueGrid({
           >
             All
           </button>
-          {config.subcategories.map((sub) => (
+          {pills.map((sub) => (
             <button
               key={sub.value}
               onClick={() => setActiveSubcategory(sub.value)}
@@ -127,7 +118,7 @@ export default function VenueGrid({
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {filteredVenues.map((venue) => (
               <div
-                key={venue.id}
+                key={venue.slug || venue.id}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden card-hover"
               >
                 <div className="relative h-48">
@@ -151,8 +142,9 @@ export default function VenueGrid({
                     {venue.description}
                   </p>
                   <div className="flex space-x-2 mb-2">
+                    {toHref(venue.googleMapsUrl) && (
                     <a
-                      href={venue.googleMapsUrl}
+                      href={toHref(venue.googleMapsUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center space-x-2 bg-sunset-orange text-white py-2 px-4 rounded-xl hover:bg-sunset-coral transition-colors font-semibold"
@@ -160,8 +152,10 @@ export default function VenueGrid({
                       <MapPin size={16} />
                       <span>Map</span>
                     </a>
+                    )}
+                    {toHref(venue.instagramUrl, 'instagram') && (
                     <a
-                      href={venue.instagramUrl}
+                      href={toHref(venue.instagramUrl, 'instagram')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center space-x-2 bg-pink-500 text-white py-2 px-4 rounded-xl hover:bg-pink-600 transition-colors font-semibold"
@@ -169,6 +163,7 @@ export default function VenueGrid({
                       <InstagramIcon size={16} />
                       <span>IG</span>
                     </a>
+                    )}
                   </div>
                   <button
                     onClick={() => setSelectedVenue(venue)}
@@ -248,8 +243,9 @@ export default function VenueGrid({
               )}
 
               <div className="flex space-x-2 mb-3">
+                {toHref(selectedVenue.googleMapsUrl) && (
                 <a
-                  href={selectedVenue.googleMapsUrl}
+                  href={toHref(selectedVenue.googleMapsUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center space-x-2 bg-sunset-orange text-white py-2 px-4 rounded-xl hover:bg-sunset-coral transition"
@@ -257,8 +253,10 @@ export default function VenueGrid({
                   <MapPin size={18} />
                   <span>Map</span>
                 </a>
+                )}
+                {toHref(selectedVenue.instagramUrl, 'instagram') && (
                 <a
-                  href={selectedVenue.instagramUrl}
+                  href={toHref(selectedVenue.instagramUrl, 'instagram')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center space-x-2 bg-pink-500 text-white py-2 px-4 rounded-xl hover:bg-pink-600 transition"
@@ -266,12 +264,13 @@ export default function VenueGrid({
                   <InstagramIcon size={18} />
                   <span>Instagram</span>
                 </a>
+                )}
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {selectedVenue.tableBookingUrl && (
+                {toHref(selectedVenue.tableBookingUrl) && (
                   <a
-                    href={selectedVenue.tableBookingUrl}
+                    href={toHref(selectedVenue.tableBookingUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center bg-emerald-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-emerald-600 transition"
@@ -279,9 +278,9 @@ export default function VenueGrid({
                     Table Booking
                   </a>
                 )}
-                {selectedVenue.guestlistUrl && (
+                {toHref(selectedVenue.guestlistUrl) && (
                   <a
-                    href={selectedVenue.guestlistUrl}
+                    href={toHref(selectedVenue.guestlistUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center bg-blue-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-blue-600 transition"
@@ -289,9 +288,9 @@ export default function VenueGrid({
                     Guestlist
                   </a>
                 )}
-                {selectedVenue.ticketUrl && (
+                {toHref(selectedVenue.ticketUrl) && (
                   <a
-                    href={selectedVenue.ticketUrl}
+                    href={toHref(selectedVenue.ticketUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center bg-purple-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-purple-600 transition"

@@ -4,7 +4,9 @@
   "description": "It is a popular, laid-back spot known for its fresh, healthy meals, Californian- and Mexican-inspired dishes, and coffee",
   "imageUrl": "/images/thecommon.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/cMK1BopsLSwRr7f88",
   "instagramUrl": "https://instagram.com/thecommonbali",

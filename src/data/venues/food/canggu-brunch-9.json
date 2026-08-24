@@ -4,7 +4,9 @@
   "description": "is a popular and family-friendly cafe and restaurant with locations across Bali, Indonesia, known for its gourmet food, excellent coffee, and relaxed atmosphere",
   "imageUrl": "/images/mm-berawa-gallery-frontview.webp",
   "category": "food",
-  "subcategory": "brunch",
+  "subcategory": [
+    "brunch"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.app.goo.gl/9dNcWZGe8y2BwtSR8",
   "instagramUrl": "https://instagram.com/milkandmadu",

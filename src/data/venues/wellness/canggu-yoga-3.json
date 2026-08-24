@@ -4,7 +4,9 @@
   "description": "Peaceful yoga studio offering beginner to advanced classes in serene surroundings",
   "imageUrl": "/images/pexels-photo-3822622.webp",
   "category": "wellness",
-  "subcategory": "yoga",
+  "subcategory": [
+    "yoga"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Serenity+Yoga+Canggu+Bali",
   "instagramUrl": "https://instagram.com/serenityyogabali",

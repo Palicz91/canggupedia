@@ -4,7 +4,9 @@
   "description": "Luxurious spa with traditional Balinese massage and wellness treatments",
   "imageUrl": "/images/bodyworks_pink_pool_venue_woman_palm_trees.webp",
   "category": "wellness",
-  "subcategory": "spa",
+  "subcategory": [
+    "spa"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Bodyworks+Spa+Canggu+Bali",
   "instagramUrl": "https://instagram.com/bodyworksbali",

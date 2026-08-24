@@ -4,7 +4,9 @@
   "description": "Serene spa retreat offering holistic treatments and rejuvenation",
   "imageUrl": "/images/spring.webp",
   "category": "wellness",
-  "subcategory": "spa",
+  "subcategory": [
+    "spa"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Bliss+Sanctuary+Canggu+Bali",
   "instagramUrl": "https://instagram.com/blisssanctuarybali",

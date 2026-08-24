@@ -4,7 +4,9 @@
   "description": "Ocean-view yoga studio with daily classes and wellness retreats",
   "imageUrl": "/images/pexels-photo-3822906.webp",
   "category": "wellness",
-  "subcategory": "yoga",
+  "subcategory": [
+    "yoga"
+  ],
   "location": "uluwatu",
   "googleMapsUrl": "https://maps.google.com/?q=Yoga+Searcher+Uluwatu+Bali",
   "instagramUrl": "https://instagram.com/yogasearcher",

@@ -4,7 +4,9 @@
   "description": "Modern padel tennis courts with equipment rental and coaching",
   "imageUrl": "/images/bali-padel-acsdemny.webp",
   "category": "wellness",
-  "subcategory": "padel",
+  "subcategory": [
+    "padel"
+  ],
   "location": "canggu",
   "googleMapsUrl": "https://maps.google.com/?q=Bali+Padel+Club+Canggu",
   "instagramUrl": "https://instagram.com/balipadelclub",

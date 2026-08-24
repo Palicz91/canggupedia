@@ -1,43 +1,35 @@
-# Astro Starter Kit: Minimal
+# Canggupedia
+
+Venue guide for Canggu and Uluwatu, Bali. Astro 7 static site with React islands and Decap CMS.
+
+## Development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm run dev          # Astro dev server at localhost:4321
+npm test             # Vitest unit tests
+npm run build        # Production build to dist/
+npm run build:e2e && npm run test:e2e  # Playwright e2e tests
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Admin CMS
 
-## 🚀 Project Structure
+The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git-gateway).
 
-Inside of your Astro project, you'll see the following folders and files:
+The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## How to add an area
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+1. Add the area key and label to `locations` in `src/data/category-config.ts`
+2. Create `src/pages/<area>/index.astro` and `src/pages/<area>/[category].astro` (copy from canggu)
+3. Rebuild. The area appears in venue dropdowns automatically.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## How to add a category
 
-Any static assets, like images, can be placed in the `public/` directory.
+1. Add it to `src/data/categories.json` via the CMS or directly
+2. Add a `venueCollection()` call in `src/pages/admin/config.yml.ts`
+3. Create `src/data/venues/<category>/` folder
+4. Rebuild.
 
-## 🧞 Commands
+## Bumping Decap CMS
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Change the version in `public/admin/index.html` (pinned at 3.15.1). Re-run `npm run build:e2e && npm run test:e2e` to verify.
