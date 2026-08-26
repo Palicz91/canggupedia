@@ -261,7 +261,7 @@
         '.cp-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin:0 0 10px}',
         '.cp-card{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.10);overflow:hidden;max-width:420px;margin-bottom:28px}',
         '.cp-img{position:relative;height:192px;background:#f3f4f6}.cp-img img{width:100%;height:100%;object-fit:cover;display:block}',
-        '.cp-noimg{display:flex;align-items:center;justify-content:center;height:100%;color:#9ca3af;font-weight:600}',
+        '.cp-noimg{display:flex;align-items:center;justify-content:center;height:100%;color:#9ca3af;font-weight:600;text-align:center;padding:0 16px;font-size:13px;line-height:1.45}',
         '.cp-badge{position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:999px;color:#fff;font-size:13px;font-weight:700;background:linear-gradient(135deg,#fb923c,#f97316 50%,#f87171)}',
         '.cp-body{padding:24px}.cp-meta{font-size:12px;color:#6b7280;margin:0 0 6px;text-transform:capitalize}',
         '.cp-body h3{font-family:Fredoka,sans-serif;font-weight:700;font-size:24px;margin:0 0 8px;color:#1f2937}',
@@ -277,6 +277,28 @@
       CMS.registerPreviewStyle(previewCss, { raw: true });
 
       function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+      /* Photos live in git but only reach the website on the next build, so a freshly
+         uploaded file 404s in this preview. Say that instead of showing a broken image. */
+      var PreviewImage = createClass({
+        getInitialState: function () { return { failed: false }; },
+        componentDidUpdate: function (prev) {
+          if (prev.src !== this.props.src && this.state.failed) this.setState({ failed: false });
+        },
+        render: function () {
+          var self = this;
+          if (!this.props.src || this.state.failed) {
+            return h('div', { className: 'cp-noimg' }, this.props.hasImage
+              ? 'Photo saved. It shows here and on the website after you press Put online now.'
+              : 'Add a photo');
+          }
+          return h('img', {
+            src: this.props.src,
+            alt: '',
+            onError: function () { self.setState({ failed: true }); }
+          });
+        }
+      });
 
       var VenuePreview = createClass({
         render: function () {
@@ -298,7 +320,7 @@
             h('p', { className: 'cp-eyebrow' }, 'On the website'),
             h('div', { className: 'cp-card' },
               h('div', { className: 'cp-img' },
-                src ? h('img', { src: src, alt: '' }) : h('div', { className: 'cp-noimg' }, 'Add a photo'),
+                h(PreviewImage, { src: src, hasImage: Boolean(img) }),
                 d('featured') ? h('span', { className: 'cp-badge' }, 'Our Top Pick') : null),
               h('div', { className: 'cp-body' },
                 meta ? h('p', { className: 'cp-meta' }, meta) : null,

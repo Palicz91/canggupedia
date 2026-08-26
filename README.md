@@ -17,6 +17,19 @@ The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git
 
 The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
+## Deploys
+
+Two things can build the site, and only one of them respects batching:
+
+- **Netlify's native GitHub integration** — builds on push and honours `[skip netlify]` in the commit message. Every CMS commit carries that flag (`src/pages/admin/config.yml.ts`), so editing in the CMS does *not* build.
+- **The "Put online now" button** — `netlify/functions/deploy.js` POSTs to `BUILD_HOOK_URL` (the "Admin: put online" build hook). This is what actually publishes a batch of CMS edits.
+
+**Trap:** the repo also had a GitHub `push` webhook pointing straight at a second Netlify build hook ("GitHub Push"). Build hooks ignore `[skip netlify]`, so every CMS save triggered a full build anyway — two builds per dev push, and the "Not on the website yet" banner was untrue. That webhook (id `667271345`) is now **deactivated**. Don't re-enable it; the native integration already covers pushes. If deploys ever stop entirely, check the native integration before re-adding a webhook.
+
+## Photos
+
+`imageUrl` is optional on a venue. When it is missing — or the file is not deployed yet — `VenueGrid` renders a branded placeholder instead of a broken `<img>`. A freshly uploaded photo lives in git immediately but only reaches the site on the next build, so the CMS preview says "Photo saved…" rather than showing a broken image.
+
 ## How to add an area
 
 1. Add the area key and label to `locations` in `src/data/category-config.ts`

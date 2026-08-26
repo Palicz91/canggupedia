@@ -13,12 +13,51 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+const PLACEHOLDER_LOGO = '/images/pediafamlogo.webp';
+
+function VenueImage({
+  src,
+  alt,
+  className,
+  rounded = '',
+}: {
+  src?: string;
+  alt: string;
+  className: string;
+  rounded?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  const usable = Boolean(src && src.trim()) && !failed;
+
+  if (!usable) {
+    return (
+      <div
+        className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100 ${rounded}`}
+        role="img"
+        aria-label={`${alt} — no photo yet`}
+      >
+        <img src={PLACEHOLDER_LOGO} alt="" className="w-24 max-w-[60%] opacity-40" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 interface Venue {
   id: string;
   slug?: string;
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string;
   category: string;
   subcategory: string | string[];
   location: string;
@@ -122,11 +161,11 @@ export default function VenueGrid({
                 className="bg-white rounded-2xl shadow-lg overflow-hidden card-hover"
               >
                 <div className="relative h-48">
-                  <img
+                  <VenueImage
+                    key={venue.imageUrl || 'none'}
                     src={venue.imageUrl}
                     alt={venue.name}
                     className="w-full h-full object-cover"
-                    loading="lazy"
                   />
                   {venue.featured && (
                     <div className="absolute top-4 right-4 bg-gradient-tropical text-white px-3 py-1 rounded-full text-sm font-bold">
@@ -201,10 +240,12 @@ export default function VenueGrid({
               </button>
 
               <div className="relative w-full h-56 mb-4">
-                <img
+                <VenueImage
+                  key={selectedVenue.imageUrl || 'none'}
                   src={selectedVenue.imageUrl}
                   alt={selectedVenue.name}
                   className="w-full h-full object-cover rounded-xl"
+                  rounded="rounded-xl"
                 />
               </div>
 
