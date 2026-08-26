@@ -6,6 +6,91 @@
   <meta name="robots" content="noindex" />
   <title>Canggupedia Admin</title>
   <link rel="icon" href="/favicon.svg" />
+
+  <!-- Upload debugging. No "Upload photo:" commit has ever reached this repo, so photos are
+       failing somewhere between the file picker and Git Gateway. This logs the picked file's
+       size and every Git Gateway call with its payload size, status and error body. It loads
+       before Identity and the CMS so nothing is missed. -->
+  <script>
+  (function () {
+    var log = [];
+    window.__cpDebug = log;
+
+    function say(line) { console.log('%c[cp] ' + line, 'color:#e8590c'); }
+
+    function sizeOf(body) {
+      if (!body) return 0;
+      if (typeof body === 'string') return body.length;
+      if (typeof body.size === 'number') return body.size;          // Blob / File
+      if (typeof body.byteLength === 'number') return body.byteLength;
+      return 0;
+    }
+
+    function kb(bytes) { return Math.round(bytes / 1024); }
+
+    function record(entry) {
+      log.push(entry);
+      say(entry.method + ' ' + entry.path + ' -> ' + entry.status + (entry.ok ? '' : '  <-- FAILED')
+        + (entry.sentKB ? '  (sent ' + entry.sentKB + ' KB)' : '')
+        + '  ' + entry.ms + 'ms');
+      if (entry.body) say('response: ' + entry.body);
+    }
+
+    var realFetch = window.fetch;
+    window.fetch = function (input, init) {
+      var url = typeof input === 'string' ? input : (input && input.url) || '';
+      if (url.indexOf('/.netlify/git') === -1 && url.indexOf('/.netlify/identity') === -1) {
+        return realFetch.apply(this, arguments);
+      }
+      var method = (init && init.method) || (input && input.method) || 'GET';
+      var sent = sizeOf(init && init.body);
+      var path = url.replace(/^https?:\/\/[^/]+/, '').split('?')[0];
+      var started = Date.now();
+
+      return realFetch.apply(this, arguments).then(function (res) {
+        var entry = { method: method, path: path, status: res.status, ok: res.ok,
+                      sentKB: sent ? kb(sent) : 0, ms: Date.now() - started };
+        if (res.ok) { record(entry); return res; }
+        // Read the error off a clone so the CMS still gets an unconsumed body.
+        return res.clone().text().then(function (t) {
+          entry.body = String(t).slice(0, 500); record(entry); return res;
+        }, function () { record(entry); return res; });
+      }, function (err) {
+        record({ method: method, path: path, status: 'network error', ok: false,
+                 sentKB: sent ? kb(sent) : 0, ms: Date.now() - started,
+                 body: String((err && err.message) || err) });
+        throw err;
+      });
+    };
+
+    // The size of the file Ivan picked is the number we most want; grab it at the source.
+    document.addEventListener('change', function (e) {
+      var t = e.target;
+      if (!t || t.type !== 'file' || !t.files) return;
+      for (var i = 0; i < t.files.length; i++) {
+        var f = t.files[i];
+        log.push({ kind: 'file', name: f.name, KB: kb(f.size), type: f.type || 'unknown' });
+        say('picked file: ' + f.name + ' — ' + kb(f.size) + ' KB, ' + (f.type || 'unknown type'));
+      }
+    }, true);
+
+    window.addEventListener('error', function (e) {
+      log.push({ kind: 'error', message: e.message, at: e.filename + ':' + e.lineno });
+      say('uncaught error: ' + e.message + '  (' + e.filename + ':' + e.lineno + ')');
+    });
+    window.addEventListener('unhandledrejection', function (e) {
+      var r = e.reason;
+      var msg = String((r && (r.message || r.stack)) || r).slice(0, 500);
+      log.push({ kind: 'rejection', message: msg, status: r && r.status });
+      say('unhandled rejection: ' + msg);
+    });
+
+    window.cpReport = function () { var t = JSON.stringify(log, null, 1); console.log(t); return t; };
+
+    say('upload debugging is on. After the upload fails, run:  copy(cpReport())  and paste it.');
+  })();
+  </script>
+
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     /* One choice under Save instead of three. Cosmetic: if a CMS update renames the class, the options just come back. */
