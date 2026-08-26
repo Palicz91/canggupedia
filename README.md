@@ -17,6 +17,23 @@ The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git
 
 The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
+### The Save button
+
+Decap's save control is a *dropdown*, not a button. Clicking it opens a menu; the "Save now" item
+inside is what commits. Nothing in the UI says so, so on 2026-08-26 Ivan clicked Save, saw a menu,
+and concluded the CMS was broken — reported as "adding pictures doesn't work", because a picked
+photo is held in the browser and only uploaded when the entry is saved. Git Gateway was never at
+fault: it accepts writes to `public/images` with an ordinary Identity token.
+
+`public/admin/one-click-save.js` presses "Save now" for him, so one click saves. It degrades
+safely: if the menu doesn't appear the dropdown is simply left open. The cost is that "Save and add
+another" and "Save and duplicate" are no longer reachable — a fair trade for a Save button that
+saves.
+
+Note the editor still shows a broken-image icon for a just-picked photo, and a 404 for it in the
+console. That is cosmetic: the file is not on the site until the next build. The custom preview pane
+says "Photo saved…" instead of showing it.
+
 ## Deploys
 
 Two things build the site:
