@@ -17,6 +17,17 @@ The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git
 
 The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
+### Decap style overrides
+
+`public/admin/index.html` carries a block of CSS that overrides Decap's own styling — larger field
+labels and hints, 44px touch targets, WCAG-passing colours, and a phone layout that drops the
+preview pane instead of scrolling sideways at 800px. It came out of `docs/admin-ux-audit.md`
+(2026-08-26); that doc records what each rule fixes and the two ways it is easy to break. Read the
+"If you are the next person editing these overrides" section before touching it.
+
+Every rule targets an emotion class via `[class*=]`, so bumping Decap can make them inert — the
+admin then degrades to stock rather than breaking.
+
 ### The Save button
 
 Decap's save control is a *dropdown*, not a button. Clicking it opens a menu; the "Save now" item

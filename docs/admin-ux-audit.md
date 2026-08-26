@@ -17,6 +17,10 @@ state.
 
 The findings are ordered by how much damage they do to Ivan, not by severity label.
 
+**Status: 1–6 are fixed** — all six were CSS in `public/admin/index.html`, shipped in one commit the
+same day. Each finding below keeps its original text and carries a `Fixed:` line with what actually
+landed and what was measured afterwards. 7–9 are open.
+
 ---
 
 ## 1. "Put online now" — the most important button — has 2.61:1 contrast
@@ -43,6 +47,11 @@ use `#9a3412`, which the audit already found passing at 6.88:1 where it is used 
 `--cp-orange` on the marketing site is fine as a *fill behind large type*; it is only failing here
 because it is carrying 14–15px text.
 
+**Fixed.** Two new tokens carry the type — `--cp-orange-btn: #c2410c` for the button fill and
+`--cp-orange-ink: #9a3412` for orange-on-light text — while `--cp-orange` stays the brand fill.
+Measured after: white on `#c2410c` **5.18:1**, hover white on `#9a3412` 7.31:1, `#9a3412` on
+`#fff7ed` 6.88:1, green digit `#047857` on `#ecfdf5` **5.21:1**. All pass 4.5:1.
+
 ## 2. The venue editor is unusable on a phone
 
 At a 390px viewport the document lays out at **800px** and scrolls horizontally. Cause: Decap's
@@ -64,6 +73,15 @@ and the splitter, and force the control pane to 100% width. Decap has no config 
 `editor: preview: false` is per-collection and would also remove the preview on desktop, where it is
 genuinely useful (see §7).
 
+**Fixed**, but not the way this paragraph proposed. The real blocker was Decap hardcoding
+`min-width: 800px` on `-EditorContainer` and `-ToolbarContainer`; clearing that plus hiding
+`.SplitPane .Pane2` / `.Resizer` and forcing `.Pane1` to 100% is what stacks it. **Do not write
+`[class*="-PreviewPaneContainer"]`** — emotion composes labels, so the *control* pane's class is
+`css-…-PreviewPaneContainer-ControlPaneContainer` and that selector blanks the entire form. The
+status strip also stacks below 900px. Measured after, at 390×844: `scrollWidth 390`, `Pane2`
+`display: none`, `Pane1` 390px, zero elements wider than the viewport. Desktop at 1440 unchanged —
+`Pane2` still `block`, `Pane1` 720px.
+
 ## 3. Every hint on the form is 12px grey — the smallest text on the page
 
 The venue editor has **21 text nodes below 14px**, nearly all of them `12px #5d626f`. They are the
@@ -82,6 +100,10 @@ Fix: a CSS override bumping Decap's hint and label classes to 14px and dropping 
 `text-transform: uppercase` on labels. Both are `[class*="-FieldLabel"]` / `[class*="-ControlHint"]`
 selectors, same pattern as the two overrides already in `index.html`.
 
+**Fixed.** Measured after: labels 14px, `text-transform: none`, `rgb(55,65,81)` = 10.31:1 on white;
+hints 14px `rgb(75,85,99)` = 7.56:1. The editor's labels now read "Venue name", "Area", "Type",
+"Photo", "Short description".
+
 ## 4. Photo controls are 21px tall
 
 `Choose different image` measures **152×21**, `Remove image` **104×21**. The minimum is 44×44 (iOS) /
@@ -97,6 +119,13 @@ that should be hard to hit.
 Fix: pad both to 44px min-height, put a real gap between them, and consider demoting `Remove image`
 to a text link that asks for confirmation.
 
+**Fixed** (no confirmation dialog — placement and contrast only). `[class*="-FileWidgetButton"]`
+gets `min-height: 44px` and inline-flex centring; because `[class*=]` is a substring match the same
+floor also reaches `FileWidgetButtonRemove`, which additionally gets `margin-top: 16px` and
+`#b91c1c` (**5.16:1** on the pink, up from 3.15:1). `Choose an image` measured 44px tall after. The
+remove-button spacing and colour need an entry that already has a photo, which the local test-repo
+backend cannot produce — verified on the live admin after deploy, not locally.
+
 ## 5. Destructive `Delete` sits next to the Save control
 
 On the editor toolbar: `Saved ▾` at 97×36 and `Delete` at 70×36, roughly 20px apart, comparable
@@ -108,6 +137,13 @@ distance, not adjacency.
 Fix: push `Delete` to the right edge of the toolbar with `margin-left: auto`, or move it out of the
 toolbar entirely. The confirmation copy is already good ("Delete this from the website? This cannot
 be undone.") — the problem is purely placement.
+
+**Fixed** with `margin-left: 48px`, scoped as `[class*="-ToolbarContainer"] [class*="-DeleteButton"]`.
+The scoping is not optional: Decap uses the `DeleteButton` emotion label **twice** — once on this
+toolbar and once inside the media library, where a 48px indent would just look broken. `margin-left:
+auto` was rejected because the toolbar is not a simple flex row. Delete only renders on a saved
+entry, which the local test-repo backend would not persist, so this one is verified on the live
+admin after deploy.
 
 ## 6. Help is the least visible thing on screen and the best content in the admin
 
@@ -124,6 +160,10 @@ the app shows a collection list with no orientation at all.
 Fix: give `Help` a visible border and 44px height. Consider auto-opening the panel on Ivan's first
 visit per browser (a `localStorage` flag), dismissable — the skill's rule is "don't repeat for
 returning users", not "never show it".
+
+**Partly fixed.** `Help` now has a border, a 44px height and `#374151` (10.31:1) — measured after.
+The first-visit auto-open was not built; it is behaviour, not CSS, and would not have belonged in
+this commit.
 
 ## 7. Screens render wrong content before they render right content
 
@@ -187,16 +227,30 @@ Worth recording so it does not get "improved" away:
 
 ## Priority
 
-| # | Finding | Effort |
-|---|---|---|
-| 1 | `Put online now` contrast 2.61:1 | 1 line |
-| 2 | Editor unusable on a phone (800px overflow) | ~8 lines of CSS |
-| 3 | 12px hints and uppercase labels | ~4 lines of CSS |
-| 4 | Photo controls 21px tall, `Remove image` adjacent and low-contrast | ~6 lines |
-| 5 | `Delete` adjacent to Save | 1 line |
-| 6 | `Help` invisible | ~3 lines, plus optional first-visit auto-open |
-| 7 | "0 venues" shown while loading | needs a Decap-class override, ~10 lines |
-| 8–9 | Dead-end route, small toolbar controls, primary button colour | assorted |
+| # | Finding | Effort | Status |
+|---|---|---|---|
+| 1 | `Put online now` contrast 2.61:1 | 1 line | fixed, measured 5.18:1 |
+| 2 | Editor unusable on a phone (800px overflow) | ~8 lines of CSS | fixed, measured 390px |
+| 3 | 12px hints and uppercase labels | ~4 lines of CSS | fixed, measured 14px |
+| 4 | Photo controls 21px tall, `Remove image` adjacent and low-contrast | ~6 lines | fixed, height measured; spacing verified live |
+| 5 | `Delete` adjacent to Save | 1 line | fixed, verified live |
+| 6 | `Help` invisible | ~3 lines, plus optional first-visit auto-open | fixed; auto-open not built |
+| 7 | "0 venues" shown while loading | needs a Decap-class override, ~10 lines | open |
+| 8–9 | Dead-end route, small toolbar controls, primary button colour | assorted | open |
 
-1 through 6 are CSS in `public/admin/index.html` and could ship in one commit. Nothing here requires
-touching `config.yml.ts` or the Decap version.
+1 through 6 shipped as CSS in `public/admin/index.html`, one commit. Nothing there touched
+`config.yml.ts` or the Decap version.
+
+### If you are the next person editing these overrides
+
+Every rule hooks a Decap emotion class through `[class*=]`, so a Decap upgrade that renames a
+component makes the rule inert — the admin degrades to stock rather than breaking. Two traps are
+worth repeating, both of which cost time here:
+
+1. **Emotion composes labels onto one element.** `css-195712k-PreviewPaneContainer-ControlPaneContainer`
+   is the *form* pane. A `[class*=]` selector on either label matches it.
+2. **`DeleteButton` is two different buttons.** Always scope by ancestor.
+
+And a specificity note: the phone rules for `#cp-strip` live in a **second** media query at the very
+bottom of the stylesheet, deliberately after the base `#cp-strip` rules. Same specificity means last
+one wins; put them up with the other phone rules and `height: auto` silently loses to `height: 56px`.

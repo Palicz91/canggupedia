@@ -98,10 +98,62 @@
     /* Room for the status strip so the last field is never hidden behind it. */
     [class*="-ControlPaneContainer"], [class*="-CollectionMain"], [class*="-PreviewPaneContainer"] { padding-bottom: 72px !important; }
 
+    /* ---------- Decap overrides, from the 2026-08-26 UI audit (docs/admin-ux-audit.md) ----------
+       All of these hook emotion class names via [class*=], the same way the two rules above do. A
+       Decap upgrade that renames a component makes the rule inert — the admin degrades to stock,
+       it doesn't break. */
+
+    /* Field labels were 12px uppercase grey: too small, hardest-to-read casing, low contrast, all
+       at once. The audit's reference checklist flags each of the three separately. */
+    [class*="-FieldLabel"] {
+      font-size: 14px !important; text-transform: none !important; letter-spacing: normal !important;
+      color: #374151 !important;
+    }
+    /* Every instruction on the form lived in the smallest type on the page — 21 nodes at 12px. */
+    [class*="-ControlHint"] { font-size: 14px !important; color: #4b5563 !important; }
+
+    /* "Choose different image" / "Remove image" measured 152x21 and 104x21 against a 44px minimum,
+       with the destructive one 12px below the one Ivan wants and failing contrast at 3.15:1. */
+    [class*="-FileWidgetButton"] {
+      min-height: 44px !important; padding: 0 16px !important;
+      display: inline-flex !important; align-items: center !important;
+    }
+    [class*="-FileWidgetButtonRemove"] { margin-top: 16px !important; color: #b91c1c !important; }
+
+    /* Delete sat ~20px from the save control at the same visual weight. Ivan has already once
+       decided this CMS was broken and started clicking things. Scoped to the editor toolbar on
+       purpose: Decap uses the DeleteButton label twice, and the other one is inside the media
+       library, where a 48px indent would just look broken. */
+    [class*="-ToolbarContainer"] [class*="-DeleteButton"] { margin-left: 48px !important; }
+
+    /* Phones: Decap's split pane never stacks, so a 390px screen laid out at 800px and scrolled
+       sideways — Delete and the strip's own "Put online now" ended up off-screen. Below 900px the
+       preview is dropped and the form gets the whole width. The preview stays on desktop, where it
+       is the thing that tells Ivan what the venue will look like. */
+    @media (max-width: 899px) {
+      /* Decap hardcodes min-width:800px on the editor and its toolbar — that, not the split itself,
+         is what forced a 390px screen to lay out at 800 and scroll sideways. */
+      [class*="-EditorContainer"], [class*="-ToolbarContainer"] { min-width: 0 !important; }
+      /* Hiding Pane2 is enough, and is the only safe way to say it: emotion composes labels, so the
+         *control* pane's class is "...-PreviewPaneContainer-ControlPaneContainer". A [class*=]
+         selector on PreviewPaneContainer matches the form too and blanks the whole editor. */
+      .SplitPane .Pane2, .SplitPane .Resizer { display: none !important; }
+      .SplitPane .Pane1 { width: 100% !important; }
+      /* Show/hide-preview and sync-scroll float over the form and drive a pane that isn't here. */
+      [class*="-ViewControls"] { display: none !important; }
+      /* The strip stacks on a phone (see the bottom of this stylesheet) and is taller than the 72px
+         the desktop rule above reserves for it. */
+      [class*="-ControlPaneContainer"], [class*="-CollectionMain"] { padding-bottom: 130px !important; }
+    }
+
     :root {
       --cp-ink: #1f2937; --cp-muted: #6b7280; --cp-line: #e5e7eb;
       --cp-orange: #ff7849; --cp-orange-deep: #f97316; --cp-warm: #fff7ed; --cp-warm-line: #fed7aa;
-      --cp-green: #059669; --cp-green-bg: #ecfdf5; --cp-green-line: #a7f3d0;
+      /* The brand orange is a fill colour, not a text colour: #fff on #ff7849 is 2.61:1, and the
+         same orange as text on the warm background is 2.64:1. Both need 4.5:1. These two darker
+         steps carry the type instead — 5.18:1 and 6.88:1 — and still read as the same orange. */
+      --cp-orange-btn: #c2410c; --cp-orange-ink: #9a3412;
+      --cp-green: #047857; --cp-green-bg: #ecfdf5; --cp-green-line: #a7f3d0;
       --cp-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -118,20 +170,22 @@
     #cp-strip .cp-text span { color: var(--cp-muted); }
     #cp-strip .cp-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
     #cp-strip button, #cp-strip a.cp-btn {
-      font: 600 14px/1 var(--cp-font); border-radius: 10px; padding: 10px 14px; cursor: pointer; text-decoration: none;
-      border: 1px solid var(--cp-line); background: #fff; color: var(--cp-ink);
+      font: 600 14px/1 var(--cp-font); border-radius: 10px; padding: 0 16px; min-height: 44px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; border: 1px solid var(--cp-line); background: #fff; color: var(--cp-ink);
     }
-    #cp-strip .cp-go { background: var(--cp-orange); border-color: var(--cp-orange); color: #fff; font-weight: 700; }
-    #cp-strip .cp-go:hover { background: var(--cp-orange-deep); border-color: var(--cp-orange-deep); }
+    #cp-strip .cp-go { background: var(--cp-orange-btn); border-color: var(--cp-orange-btn); color: #fff; font-weight: 700; }
+    #cp-strip .cp-go:hover { background: var(--cp-orange-ink); border-color: var(--cp-orange-ink); }
     #cp-strip .cp-go[disabled] { opacity: .6; cursor: default; }
-    #cp-strip .cp-quiet { border: 0; background: transparent; color: var(--cp-muted); }
-    #cp-strip .cp-quiet:hover { color: var(--cp-ink); }
+    /* Help is the only door to the instructions panel. Borderless grey made it the quietest thing
+       on the screen; it now looks like a button and clears the 44px minimum. */
+    #cp-strip .cp-quiet { background: transparent; color: #374151; }
+    #cp-strip .cp-quiet:hover { color: var(--cp-ink); background: rgba(31,41,55,.05); }
     #cp-strip .cp-progress { position: absolute; left: 0; top: -1px; height: 3px; width: 0; background: var(--cp-orange); transition: width 1s linear; }
     #cp-strip button:focus-visible, #cp-strip a:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
 
     #cp-strip.is-pending { background: var(--cp-warm); border-top-color: var(--cp-warm-line); }
-    #cp-strip.is-pending .cp-lead { color: var(--cp-orange-deep); }
-    #cp-strip.is-building .cp-lead { color: var(--cp-orange-deep); }
+    #cp-strip.is-pending .cp-lead { color: var(--cp-orange-ink); }
+    #cp-strip.is-building .cp-lead { color: var(--cp-orange-ink); }
     #cp-strip.is-live { background: var(--cp-green-bg); border-top-color: var(--cp-green-line); }
     #cp-strip.is-live .cp-lead { color: var(--cp-green); }
     #cp-strip.is-live .cp-progress { background: var(--cp-green); }
@@ -155,8 +209,25 @@
     #cp-help kbd { font: inherit; font-weight: 600; color: var(--cp-ink); background: #f3f4f6; border: 1px solid var(--cp-line); border-radius: 6px; padding: 0 6px; white-space: nowrap; }
     #cp-help .cp-tip { background: var(--cp-warm); }
     #cp-help .cp-tip h4 { color: #9a3412; }
-    #cp-help .cp-link { border: 0; background: transparent; color: var(--cp-orange-deep); font: inherit; font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; }
+    #cp-help .cp-link { border: 0; background: transparent; color: var(--cp-orange-ink); font: inherit; font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; }
     #cp-help .cp-x:focus-visible, #cp-help .cp-link:focus-visible { outline: 3px solid var(--cp-orange); outline-offset: 2px; }
+
+    /* ---------- the strip on a phone ----------
+       Must come after the #cp-strip rules above, not up with the other phone rules: same
+       specificity, so the later block is the one that wins and `height: auto` actually applies.
+       On one line the message truncated to "3 changes s…" next to the two buttons; stacked, it
+       reads in full and "Put online now" gets the width it deserves. */
+    @media (max-width: 899px) {
+      #cp-strip {
+        height: auto; padding: 10px 12px; gap: 8px 10px; flex-wrap: wrap;
+        justify-content: flex-start; align-items: center;
+      }
+      #cp-strip .cp-text { flex: 1 1 100%; order: 2; white-space: normal; font-size: 14px; line-height: 1.3; }
+      #cp-strip .cp-lead { order: 1; }
+      #cp-strip .cp-actions { order: 3; flex: 1 1 100%; }
+      #cp-strip .cp-go { flex: 1 1 auto; justify-content: center; }
+      #cp-help { bottom: 116px; }
+    }
   </style>
 </head>
 <body>
