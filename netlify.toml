@@ -1,0 +1,8 @@
+# These live in the repo, not just in the Netlify UI, because relinking the repo wipes the
+# site's build settings. On 2026-08-26 a relink cleared the build command and publish
+# directory, then immediately deployed — publishing an empty site over the live one. With
+# this file present, a build always knows what to run and what to publish.
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
