@@ -1,19 +1,20 @@
 {
-  "id": "canggu-party-11",
+  "ticketUrl": "https://linktr.ee/LaBrisaBali_?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+  "tableBookingUrl": "https://reserveyourvenue.com/labrisa",
   "name": "La Brisa Bali",
+  "featured": true,
+  "note": "This place is hosts a popular weekly Sunday Market ",
+  "priceRange": "No entrance fee. Minimum spend for daybeds starts from Rp 700.000++ and premium beachfront seating from Rp 2.400.000++.",
+  "imageUrl": "/images/la-brisa-bali.webp",
+  "location": "canggu",
+  "openingHours": "Daily: 10:00 – 23:00",
+  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
+  "id": "canggu-party-11",
   "description": "is an eco-friendly beach club in Canggu, Bali, known for its rustic design using reclaimed wood from over 500 fishing boats. It features a tropical ambiance with pools, beach access, and is situated on Echo Beach, offering stunning sunset views. The venue serves global cuisine with a focus on sustainably sourced seafood, cocktails, and coffee, and also hosts a popular weekly Sunday Market.",
+  "instagramUrl": "https://instagram.com/labrisabali",
   "category": "hangout",
   "subcategory": [
     "party"
   ],
-  "location": "canggu",
-  "googleMapsUrl": "https://maps.app.goo.gl/rYXfeYKTrBLwFFYB8",
-  "instagramUrl": "https://instagram.com/labrisabali",
-  "featured": true,
-  "note": "This place is hosts a popular weekly Sunday Market ",
-  "openingHours": "Daily: 10:00 – 23:00",
-  "priceRange": "No entrance fee. Minimum spend for daybeds starts from Rp 700.000++ and premium beachfront seating from Rp 2.400.000++.",
-  "tableBookingUrl": "https://reserveyourvenue.com/labrisa",
-  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
-  "ticketUrl": "https://linktr.ee/LaBrisaBali_?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
+  "googleMapsUrl": "https://maps.app.goo.gl/rYXfeYKTrBLwFFYB8"
 }
