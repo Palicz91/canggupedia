@@ -21,16 +21,32 @@ The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`
 
 Two things build the site:
 
-- **The GitHub `push` webhook (id `667271345`)** — fires on every push straight at a Netlify build hook. **This is currently the only thing that builds on push. Do not deactivate it.** Netlify's native GitHub integration is configured (the site is linked to installation `96440176`) but delivers no events, so turning this webhook off stops deploys entirely — that happened on 2026-08-26 and took the site's deploys down for ~5 minutes.
-- **The "Put online now" button** — `netlify/functions/deploy.js` POSTs to `BUILD_HOOK_URL` (the "Admin: put online" build hook). This is what publishes a batch of CMS edits.
+- **Netlify's native GitHub integration** — builds on push and honours `[skip netlify]`. Every CMS commit carries that flag (`src/pages/admin/config.yml.ts`), so Ivan saving an edit does *not* build.
+- **The "Put online now" button** — `netlify/functions/deploy.js` POSTs to `BUILD_HOOK_URL` (the "Admin: put online" build hook). This is what publishes a batch of CMS edits, and the only reason the batching works.
 
-**Trap:** relinking the repo in the Netlify UI destroys the site's build settings and creates a
-fresh, empty record — and then deploys. On 2026-08-26 that published an empty site over the live
-one, and Netlify reported the deploy as successful (16 seconds, no build). `netlify.toml` now
-carries the build command, publish dir and functions dir so a relink cannot cause this again.
-After any relink, still check `netlify api getSite` for `build_settings.cmd` and `.dir`.
+Build hooks ignore `[skip netlify]` by design, which is exactly why the button uses one.
 
-**Consequence:** build hooks ignore `[skip netlify]`, so the flag on every CMS commit (`src/pages/admin/config.yml.ts`) does nothing today — each CMS save triggers a build, and the "Not on the website yet" banner is untrue. The flag is left in place because it starts working the moment the native integration does. Fixing that means relinking the repo in Netlify so native push events arrive; only then can the webhook be removed. Test any such change by disabling the webhook, pushing a trivial commit, and confirming a deploy fires on its own — re-enable immediately if it does not.
+### The 2026-08-26 relink
+
+For a long time a GitHub `push` webhook pointed straight at a build hook, because native push
+events were not arriving. That webhook ignored `[skip netlify]`, so every CMS save built anyway and
+the "Not on the website yet" banner was a lie. Relinking the repo in Netlify fixed the native
+integration; the webhook was deleted afterwards.
+
+The relink itself did three destructive things, none of them announced in the UI:
+
+1. **Wiped the build settings** and immediately deployed with them empty — publishing an empty site
+   over the live one. Netlify reported that deploy as successful: `ready` in 16 seconds, no build.
+   Every page 404'd for 9 minutes. `netlify.toml` now pins the command, publish dir and functions
+   dir, so a future relink cannot repeat this.
+2. **Deleted every build hook on the site.** `BUILD_HOOK_URL` still pointed at a dead one, so "Put
+   online now" would have returned 502 to Ivan with nothing in the UI to explain it. A replacement
+   hook was created and the env var repointed.
+3. Left the old `push` webhook returning 404 on every push.
+
+**After any relink, check all three:** `netlify api getSite` for `build_settings.cmd`/`.dir`,
+`netlify api listSiteBuildHooks` for a non-empty list, and that `BUILD_HOOK_URL` matches a hook in
+it. Then confirm a push actually deploys before walking away.
 
 ## Photos
 
