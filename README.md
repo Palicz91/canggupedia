@@ -75,6 +75,12 @@ Decap cannot drag-reorder entries of a folder collection, so the running order l
 venues in `src/data/venue-order/<area>.json` — one list of venue ids per category. Ivan edits it
 under **Venue order** in the CMS, where each list is a draggable `relation` widget.
 
+Those lists are deliberately **not** collapsed. Decap builds a collapsed row's summary from the raw
+stored value, and these rows store a bare venue id, so every row rendered as the word "Venue" —
+draggable but unreadable. Expanded, each row renders its relation control, which shows the venue's
+name. The cost is a tall page (54 rows for Canggu wellness); `test/admin-config.test.ts` pins
+`collapsed: false` so it can't quietly regress.
+
 `sortVenues()` in `src/lib/venues.ts` treats that list as authoritative. A venue missing from it —
 newly added, or dropped by mistake — falls back to the old rule (featured, then type order, then
 numeric id) and sorts *after* everything listed. That is why `featured` no longer floats a venue to

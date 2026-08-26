@@ -41,6 +41,9 @@ describe('admin config', () => {
       expect(file.fields.map((f: any) => f.name)).toEqual(categories.map((c) => c.value));
       for (const field of file.fields) {
         expect(field.widget).toBe('list');
+        // Collapsed rows would all read "Venue": Decap summarises a row from its raw stored value,
+        // and these store a bare id. Expanded, the relation control shows the venue's name.
+        expect(field.collapsed, `${field.name} rows are collapsed and unreadable`).toBe(false);
         // `field` singular => each item is a bare id string, matching venue-order/*.json
         expect(field.field.widget).toBe('relation');
         expect(field.field.value_field).toBe('id');

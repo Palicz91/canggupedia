@@ -87,7 +87,10 @@ function orderFieldsFor(areaLabel: string) {
     name: cat.value,
     label_singular: 'venue',
     widget: 'list',
-    collapsed: true,
+    // Not collapsed. A collapsed row shows the field label — literally the word "Venue", 29 times
+    // over — because Decap builds row summaries from raw stored values and these rows store a bare
+    // id. Expanded, each row renders its relation control, which shows the venue's name.
+    collapsed: false,
     required: false,
     hint: `Drag the handles to reorder. The top of this list shows first on the ${areaLabel} ${cat.title} page.`,
     field: {
