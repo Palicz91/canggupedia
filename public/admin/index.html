@@ -118,7 +118,12 @@
       min-height: 44px !important; padding: 0 16px !important;
       display: inline-flex !important; align-items: center !important;
     }
-    [class*="-FileWidgetButtonRemove"] { margin-top: 16px !important; color: #b91c1c !important; }
+    /* Both margins on purpose: inline-flex above lays the two buttons out as a row, so margin-left
+       is what actually separates them (measured live: they were touching at 0px without it), and
+       margin-top only bites once the pane is narrow enough for them to wrap. */
+    [class*="-FileWidgetButtonRemove"] {
+      margin-left: 24px !important; margin-top: 16px !important; color: #b91c1c !important;
+    }
 
     /* Delete sat ~20px from the save control at the same visual weight. Ivan has already once
        decided this CMS was broken and started clicking things. Scoped to the editor toolbar on

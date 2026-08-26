@@ -121,10 +121,18 @@ to a text link that asks for confirmation.
 
 **Fixed** (no confirmation dialog — placement and contrast only). `[class*="-FileWidgetButton"]`
 gets `min-height: 44px` and inline-flex centring; because `[class*=]` is a substring match the same
-floor also reaches `FileWidgetButtonRemove`, which additionally gets `margin-top: 16px` and
-`#b91c1c` (**5.16:1** on the pink, up from 3.15:1). `Choose an image` measured 44px tall after. The
-remove-button spacing and colour need an entry that already has a photo, which the local test-repo
-backend cannot produce — verified on the live admin after deploy, not locally.
+floor also reaches `FileWidgetButtonRemove`, which additionally gets `#b91c1c` (**5.16:1** on the
+pink, up from 3.15:1) and 24px of separation.
+
+Measured on the live admin (`canggu-authentic-1`, the local test-repo backend cannot produce an
+entry that already has a photo): `Choose different image` **164×44**, `Remove image` **116×44**,
+colour `rgb(185,28,28)`.
+
+Worth recording, because the first attempt got it wrong: `min-height` plus `inline-flex` also turned
+the two buttons from a stack into a **row**, and `margin-top: 16px` does nothing horizontally — they
+came out touching at 0px, which is worse than the 12px stack this finding complained about. The
+separation is `margin-left: 24px`; the top margin stays only for when the pane is narrow enough to
+wrap. This was caught by measuring the deployed page, not by reading the rule.
 
 ## 5. Destructive `Delete` sits next to the Save control
 
@@ -141,9 +149,15 @@ be undone.") — the problem is purely placement.
 **Fixed** with `margin-left: 48px`, scoped as `[class*="-ToolbarContainer"] [class*="-DeleteButton"]`.
 The scoping is not optional: Decap uses the `DeleteButton` emotion label **twice** — once on this
 toolbar and once inside the media library, where a 48px indent would just look broken. `margin-left:
-auto` was rejected because the toolbar is not a simple flex row. Delete only renders on a saved
-entry, which the local test-repo backend would not persist, so this one is verified on the live
-admin after deploy.
+auto` was rejected because the toolbar is not a simple flex row.
+
+Measured on the live admin (Delete only renders on a saved entry, which the local test-repo backend
+would not persist): `margin-left` computes to 48px, and the gap from the right edge of the save
+control to the left edge of `Delete` is **58px**, up from ~20px.
+
+**Still open from this finding:** both controls are 36px tall against a 44px minimum. Only Delete
+was touched here, and raising it alone would leave the toolbar ragged beside a 36px save control —
+the two have to move together, which is more than this commit.
 
 ## 6. Help is the least visible thing on screen and the best content in the admin
 
@@ -232,8 +246,8 @@ Worth recording so it does not get "improved" away:
 | 1 | `Put online now` contrast 2.61:1 | 1 line | fixed, measured 5.18:1 |
 | 2 | Editor unusable on a phone (800px overflow) | ~8 lines of CSS | fixed, measured 390px |
 | 3 | 12px hints and uppercase labels | ~4 lines of CSS | fixed, measured 14px |
-| 4 | Photo controls 21px tall, `Remove image` adjacent and low-contrast | ~6 lines | fixed, height measured; spacing verified live |
-| 5 | `Delete` adjacent to Save | 1 line | fixed, verified live |
+| 4 | Photo controls 21px tall, `Remove image` adjacent and low-contrast | ~6 lines | fixed, measured 164×44 / 116×44 live |
+| 5 | `Delete` adjacent to Save | 1 line | placement fixed (58px gap, live); 36px height still open |
 | 6 | `Help` invisible | ~3 lines, plus optional first-visit auto-open | fixed; auto-open not built |
 | 7 | "0 venues" shown while loading | needs a Decap-class override, ~10 lines | open |
 | 8–9 | Dead-end route, small toolbar controls, primary button colour | assorted | open |
