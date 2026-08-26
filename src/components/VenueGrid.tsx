@@ -82,6 +82,8 @@ interface CategoryConfig {
 interface Props {
   venues: Venue[];
   config: CategoryConfig;
+  /** Venue ids in the order Ivan dragged them, from src/data/venue-order/<area>.json. */
+  order?: string[];
   category: string;
   location: string;
   backHref: string;
@@ -92,6 +94,7 @@ interface Props {
 export default function VenueGrid({
   venues,
   config,
+  order,
   category,
   location,
   backHref,
@@ -107,7 +110,7 @@ export default function VenueGrid({
   const base = activeSubcategory
     ? venues.filter((v) => subsOf(v).includes(activeSubcategory))
     : venues;
-  const filteredVenues = sortVenues(base, subOrder);
+  const filteredVenues = sortVenues(base, subOrder, order);
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${bgGradient}`}>

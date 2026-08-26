@@ -23,13 +23,30 @@ describe('admin config', () => {
     expect(config.publish_mode).toBe('simple');
   });
 
-  it('has 6 collections in the right order', async () => {
+  it('has 7 collections in the right order', async () => {
     const config = await getConfig();
     const names = config.collections.map((c: any) => c.name);
     expect(names).toEqual([
       'food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues',
-      'deals', 'settings',
+      'venue-order', 'deals', 'settings',
     ]);
+  });
+
+  it('venue order is one draggable relation list per category, per area', async () => {
+    const config = await getConfig();
+    const coll = config.collections.find((c: any) => c.name === 'venue-order');
+    expect(coll.files.map((f: any) => f.name)).toEqual(['canggu', 'uluwatu']);
+
+    for (const file of coll.files) {
+      expect(file.fields.map((f: any) => f.name)).toEqual(categories.map((c) => c.value));
+      for (const field of file.fields) {
+        expect(field.widget).toBe('list');
+        // `field` singular => each item is a bare id string, matching venue-order/*.json
+        expect(field.field.widget).toBe('relation');
+        expect(field.field.value_field).toBe('id');
+        expect(field.field.collection).toBe(`${field.name}-venues`);
+      }
+    }
   });
 
   it('venue subcategory options match categories.json', async () => {

@@ -7,6 +7,7 @@ const venues = Object.entries(venueModules).map(([path, v]) => {
   return { ...(v as any), slug, id: (v as any).id || slug };
 });
 import { categoryConfigs } from '../../data/category-config';
+import venueOrder from '../../data/venue-order/canggu.json';
 
 export function getStaticPaths() {
   const categories = Object.keys(categoryConfigs.canggu);
@@ -20,6 +21,7 @@ const config = categoryConfigs.canggu[category];
 const categoryVenues = venues.filter(
   (v) => v.location === 'canggu' && v.category === category
 );
+const order = (venueOrder as Record<string, string[]>)[category] ?? [];
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -57,6 +59,7 @@ const structuredData = {
     client:load
     venues={categoryVenues}
     config={config}
+    order={order}
     category={category}
     location="canggu"
     backHref="/canggu"

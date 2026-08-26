@@ -51,7 +51,7 @@ function venueCollection(cat: (typeof categories)[number], folder: string, singu
       imageField(),
       { label: 'Short description', name: 'description', widget: 'text', hint: '2 to 3 sentences. This shows on the venue card.' },
       { label: 'Show "Our Top Pick" badge', name: 'featured', widget: 'boolean', required: false, default: false,
-        hint: 'Only for a few favourites. Top picks always show first in their section.' },
+        hint: 'Only for a few favourites. This adds the badge on the card. To move a venue up or down, use **Venue order** in the left menu.' },
       linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link).', true),
       linkField('Instagram', 'instagramUrl', 'Paste the profile link or just the username, e.g. @cratecafe', true),
       { label: 'Opening hours', name: 'openingHours', widget: 'string', required: false, hint: `e.g. ${hoursExample}` },
@@ -75,6 +75,50 @@ const venueCollections = [
   venueCollection(byValue['wellness'], 'src/data/venues/wellness', 'wellness venue', '6AM – 10PM'),
   venueCollection(byValue['fun-family'], 'src/data/venues/fun-family', 'fun & family venue', '9AM – 6PM'),
 ];
+
+/**
+ * Decap cannot drag-reorder entries across a folder collection, so the running order lives
+ * in its own file per area: a list of venue ids that Ivan drags. src/lib/venues.ts sorts by
+ * that list, and anything missing from it falls to the bottom.
+ */
+function orderFieldsFor(areaLabel: string) {
+  return categories.map((cat) => ({
+    label: cat.title,
+    name: cat.value,
+    label_singular: 'venue',
+    widget: 'list',
+    collapsed: true,
+    required: false,
+    hint: `Drag the handles to reorder. The top of this list shows first on the ${areaLabel} ${cat.title} page.`,
+    field: {
+      label: 'Venue',
+      name: 'venue',
+      widget: 'relation',
+      collection: `${cat.value}-venues`,
+      value_field: 'id',
+      display_fields: ['name', 'location'],
+      search_fields: ['name'],
+    },
+  }));
+}
+
+const venueOrderCollection = {
+  name: 'venue-order',
+  label: 'Venue order',
+  description:
+    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. A newly added venue starts at the bottom until you drag it.',
+  editor: { preview: false },
+  files: [
+    {
+      name: 'canggu', label: 'Canggu', file: 'src/data/venue-order/canggu.json', format: 'json',
+      fields: orderFieldsFor('Canggu'),
+    },
+    {
+      name: 'uluwatu', label: 'Uluwatu', file: 'src/data/venue-order/uluwatu.json', format: 'json',
+      fields: orderFieldsFor('Uluwatu'),
+    },
+  ],
+};
 
 const areaSelect = {
   label: 'Area', name: 'location', widget: 'select', default: 'canggu',
@@ -195,7 +239,7 @@ export const GET: APIRoute = ({ site }) => {
     media_folder: 'public/images',
     public_folder: '/images',
     slug: { encoding: 'ascii', clean_accents: true },
-    collections: [...venueCollections, dealsCollection, categoriesCollection],
+    collections: [...venueCollections, venueOrderCollection, dealsCollection, categoriesCollection],
   };
 
   return new Response(stringify(config, { lineWidth: 0, aliasDuplicateObjects: false }), {

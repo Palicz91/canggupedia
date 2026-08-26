@@ -40,6 +40,35 @@ describe('sortVenues', () => {
     ]);
   });
 
+  it('the dragged order beats both featured and type order', () => {
+    const venues = [
+      { id: 'c-brunch-1', name: 'A', featured: true, subcategory: ['brunch'] },
+      { id: 'c-dinner-1', name: 'D', featured: false, subcategory: ['dinner'] },
+      { id: 'c-brunch-2', name: 'B', featured: false, subcategory: ['brunch'] },
+    ];
+    const sorted = sortVenues(venues, ['brunch', 'dinner'], ['c-dinner-1', 'c-brunch-2', 'c-brunch-1']);
+    expect(sorted.map((v) => v.id)).toEqual(['c-dinner-1', 'c-brunch-2', 'c-brunch-1']);
+  });
+
+  it('a venue missing from the order list sorts below the ones that are in it', () => {
+    const venues = [
+      // featured, but unlisted — it still goes last
+      { id: 'c-brunch-9', name: 'Z', featured: true, subcategory: ['brunch'] },
+      { id: 'c-brunch-1', name: 'A', featured: false, subcategory: ['brunch'] },
+      { id: 'c-brunch-2', name: 'B', featured: false, subcategory: ['brunch'] },
+    ];
+    const sorted = sortVenues(venues, ['brunch'], ['c-brunch-2', 'c-brunch-1']);
+    expect(sorted.map((v) => v.id)).toEqual(['c-brunch-2', 'c-brunch-1', 'c-brunch-9']);
+  });
+
+  it('an empty order list leaves the old behaviour alone', () => {
+    const venues = [
+      { id: 'c-brunch-2', name: 'B', featured: false, subcategory: ['brunch'] },
+      { id: 'c-brunch-1', name: 'A', featured: true, subcategory: ['brunch'] },
+    ];
+    expect(sortVenues(venues, ['brunch'], []).map((v) => v.id)).toEqual(['c-brunch-1', 'c-brunch-2']);
+  });
+
   it('venues without trailing number sort after numbered ones alphabetically', () => {
     const venues = [
       { id: 'new-place', name: 'New Place', featured: false, subcategory: ['brunch'] },
