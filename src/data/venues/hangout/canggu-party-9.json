@@ -1,20 +1,20 @@
 {
-  "id": "canggu-party-9",
+  "ticketUrl": "https://example.com/ticket",
+  "tableBookingUrl": "https://bookings.finnsbeachclub.com/",
   "name": "Finns Beach Club",
-  "description": "is a large, upscale beachfront venue in Canggu, Bali, known for its luxury pools, multiple bars, restaurants, and daily entertainment. It is a popular spot for day parties, sunset cocktails, and nightlife, with attractions like multiple swimming pools, numerous bars and kitchens, and live DJs and vocalists.",
-  "imageUrl": "/images/finns-vip-beach-club-bali-canggu-1.webp",
-  "category": "hangout",
-  "subcategory": [
-    "party"
-  ],
-  "location": "canggu",
-  "googleMapsUrl": "https://maps.app.goo.gl/2vLDmFymXih1C37y8",
-  "instagramUrl": "https://instagram.com/finnsbeachclub",
   "featured": true,
   "note": "This place is famous for its day-party which typically runs from midday into the evening.",
-  "openingHours": "Daily: 10:00 – 24:00",
   "priceRange": "Free entry; minimum spend applies for day-beds (from ~IDR 3,200,000 and up)",
-  "tableBookingUrl": "https://bookings.finnsbeachclub.com/",
+  "imageUrl": "/images/finns-vip-beach-club-bali-canggu-1.webp",
+  "location": "canggu",
+  "openingHours": "Daily: 10:00 – 24:00",
   "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
-  "ticketUrl": "https://example.com/ticket"
+  "id": "canggu-party-9",
+  "description": "is a large, upscale beachfront venue in Canggu, Bali, known for its luxury pools, multiple bars, restaurants, and daily entertainment. It is a popular spot for day parties, sunset cocktails, and nightlife, with attractions like multiple swimming pools, numerous bars and kitchens, and live DJs and vocalists.",
+  "instagramUrl": "https://instagram.com/finnsbeachclub",
+  "category": "hangout",
+  "subcategory": [
+    "beach-clubs"
+  ],
+  "googleMapsUrl": "https://maps.app.goo.gl/2vLDmFymXih1C37y8"
 }
