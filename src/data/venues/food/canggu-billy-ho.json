@@ -1,0 +1,17 @@
+{
+  "name": "Billy Ho",
+  "featured": true,
+  "priceRange": "IDR 150,000 to IDR 400,000+ per person",
+  "imageUrl": "/images/billy-ho-2508-homepage-hero.webp",
+  "location": "canggu",
+  "openingHours": "Monday\t11.00 am–11.00 pm Tuesday\t11.00 am–11.00 pm Wednesday\t11.00 am–11.00 pm Thursday\t11.00 am–11.00 pm Friday\t11.00 am–11.00 pm Saturday\t11.00 am–11.00 pm Sunday\t11.00 am–11.00 pm",
+  "id": "canggu-billy-ho",
+  "description": "Billy Ho is a popular modern Japanese restaurant and cocktail bar located in the heart of Canggu, Bali. Conceptually designed by acclaimed celebrity chef Will Meyrick, the venue blends Japanese precision with a lively Bali energy, featuring a moody, sophisticated aesthetic with dark tones and comfortable lounge seating.",
+  "instagramUrl": "https://www.instagram.com/billyho.co/?hl=en",
+  "category": "food",
+  "subcategory": [
+    "dinner",
+    "brunch"
+  ],
+  "googleMapsUrl": "https://maps.app.goo.gl/dDVLrjHSejkefPia6"
+}
