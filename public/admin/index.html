@@ -390,6 +390,17 @@
         progress.style.width = '100%';
         timer = setTimeout(showIdle, 5 * 60 * 1000);
       }
+      /* Every refusal used to read "this is a test copy of the admin", including a plain expired
+         login. That one sentence hid a dead publish button for three days — saving worked, the
+         changes reached GitHub, and nothing ever said why they stopped there. Each refusal now
+         names itself. */
+      function whyNot(reason) {
+        if (reason === 'not-logged-in') return 'Your login has expired. Reload this page, log in again, then press Put online now.';
+        if (reason === 'not-production') return 'This is a preview copy of the admin, not the real one. Open the admin from canggupedia.com and try there.';
+        if (reason === 'no-build-hook') return 'Publishing is not switched on for this site. Nothing you saved is lost — send Adam this message.';
+        if (reason && reason.indexOf('hook-failed') === 0) return 'The website refused the request (' + reason.replace('hook-failed-', 'code ') + '). Wait a minute and press it again.';
+        return 'Could not publish' + (reason ? ' (' + reason + ')' : '') + '. Nothing you saved is lost — send Adam this message.';
+      }
       function putOnline() {
         var go = actions.querySelector('.cp-go');
         if (go) { go.disabled = true; go.textContent = 'Starting…'; }
@@ -398,7 +409,7 @@
         token.then(function (jwt) {
           return fetch('/.netlify/functions/deploy', { method: 'POST', headers: { Authorization: 'Bearer ' + jwt } });
         }).then(function (res) { return res.json().catch(function () { return {}; }); }).then(function (out) {
-          if (!out || out.deployed !== true) { showNotice('Nothing happened: this is a test copy of the admin, not the real one.'); return; }
+          if (!out || out.deployed !== true) { showNotice(whyNot(out && out.reason)); return; }
           setPending(0); showBuilding();
         }).catch(function () { showNotice('Could not start. Check your internet and try again.'); });
       }
