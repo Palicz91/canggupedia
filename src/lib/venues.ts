@@ -5,6 +5,43 @@ export function subsOf(v: VenueLike): string[] {
 }
 
 /**
+ * Key for a per-type order list inside venue-order/<area>.json, e.g. "food__dinner".
+ *
+ * A section has one main order plus an optional order per type. Ivan asked for Billy Ho to be
+ * first under Dinner without moving him in the full Food & Dining list, which the single
+ * per-section list could not express.
+ *
+ * Both the CMS field names (src/pages/admin/config.yml.ts) and the page that reads them build
+ * their keys here, so the two cannot drift apart. Subcategory values are slugified to
+ * [a-z0-9-], so a double underscore can never appear inside one and the split is unambiguous.
+ */
+export function subOrderKey(category: string, subcategory: string): string {
+  return `${category}__${subcategory}`;
+}
+
+/**
+ * Pulls one section's per-type order lists out of a venue-order file, keyed by type.
+ *
+ * Empty lists are dropped rather than returned as [], so a type Ivan opened and saved without
+ * dragging anything still inherits the section order instead of silently ordering by nothing.
+ */
+export function subOrdersFor(
+  orderFile: Record<string, unknown>,
+  category: string,
+): Record<string, string[]> {
+  const prefix = subOrderKey(category, '');
+  const out: Record<string, string[]> = {};
+
+  for (const [key, value] of Object.entries(orderFile)) {
+    if (!key.startsWith(prefix)) continue;
+    if (!Array.isArray(value) || value.length === 0) continue;
+    out[key.slice(prefix.length)] = value as string[];
+  }
+
+  return out;
+}
+
+/**
  * `orderIds` is the hand-dragged order from src/data/venue-order/<area>.json and wins
  * outright. A venue missing from that list — added since Ivan last dragged, or dropped
  * by mistake — falls back to the original rule and sorts after the ordered ones.

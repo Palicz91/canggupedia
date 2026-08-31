@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapPin, ArrowLeft, X } from 'lucide-react';
 import { toHref } from '../lib/links';
 import { subsOf, sortVenues, visibleSubcategories } from '../lib/venues';
+import { parseOpeningHours, todayName, type DayName } from '../lib/hours';
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
@@ -84,6 +85,8 @@ interface Props {
   config: CategoryConfig;
   /** Venue ids in the order Ivan dragged them, from src/data/venue-order/<area>.json. */
   order?: string[];
+  /** Optional per-type overrides, keyed by subcategory value. Empty or missing means inherit `order`. */
+  orderBySub?: Record<string, string[]>;
   category: string;
   location: string;
   backHref: string;
@@ -95,6 +98,7 @@ export default function VenueGrid({
   venues,
   config,
   order,
+  orderBySub,
   category,
   location,
   backHref,
@@ -104,13 +108,33 @@ export default function VenueGrid({
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
 
+  // Set after mount, never during render. The component is client:load, so it renders once on
+  // the server too — reading the clock there would highlight the server's day and React would
+  // report a hydration mismatch when the visitor's day differs.
+  const [today, setToday] = useState<DayName | null>(null);
+  useEffect(() => setToday(todayName()), []);
+
+  const hoursByDay = useMemo(
+    () => parseOpeningHours(selectedVenue?.openingHours),
+    [selectedVenue?.openingHours],
+  );
+
   const subOrder = config.subcategories.map((s) => s.value);
   const pills = visibleSubcategories(config.subcategories, venues);
 
   const base = activeSubcategory
     ? venues.filter((v) => subsOf(v).includes(activeSubcategory))
     : venues;
-  const filteredVenues = sortVenues(base, subOrder, order);
+
+  // A type tab uses its own hand-dragged order when one exists, otherwise it inherits the
+  // section order. Empty means inherit, so adding the per-type lists changed nothing on the
+  // site until someone actually drags a venue inside one.
+  const activeOrder =
+    (activeSubcategory && orderBySub?.[activeSubcategory]?.length
+      ? orderBySub[activeSubcategory]
+      : order) ?? [];
+
+  const filteredVenues = sortVenues(base, subOrder, activeOrder);
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${bgGradient}`}>
@@ -265,11 +289,30 @@ export default function VenueGrid({
 
               {(selectedVenue.openingHours || selectedVenue.priceRange) && (
                 <div className="bg-gray-50 rounded-xl p-4 mb-6 text-gray-700">
-                  {selectedVenue.openingHours && (
-                    <p className="mb-2">
-                      <span className="font-semibold text-gray-800">Opening Hours: </span>
-                      {selectedVenue.openingHours}
-                    </p>
+                  {hoursByDay ? (
+                    <div className="mb-3">
+                      <p className="font-semibold text-gray-800 mb-1">Opening Hours</p>
+                      <dl className="text-sm">
+                        {hoursByDay.map(({ day, hours }) => (
+                          <div
+                            key={day}
+                            className={`flex justify-between gap-6 py-0.5 ${
+                              day === today ? 'font-semibold text-gray-900' : ''
+                            }`}
+                          >
+                            <dt>{day}</dt>
+                            <dd className="text-right">{hours}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  ) : (
+                    selectedVenue.openingHours && (
+                      <p className="mb-2">
+                        <span className="font-semibold text-gray-800">Opening Hours: </span>
+                        {selectedVenue.openingHours}
+                      </p>
+                    )
                   )}
                   {selectedVenue.priceRange && (
                     <p>

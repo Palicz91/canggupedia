@@ -1,6 +1,9 @@
 # build output
 dist/
 dist-e2e/
+# playwright run output
+test-results/
+playwright-report/
 # generated types
 .astro/
 

@@ -7,6 +7,7 @@ const venues = Object.entries(venueModules).map(([path, v]) => {
   return { ...(v as any), slug, id: (v as any).id || slug };
 });
 import { categoryConfigs } from '../../data/category-config';
+import { subOrdersFor } from '../../lib/venues';
 import venueOrder from '../../data/venue-order/uluwatu.json';
 
 export function getStaticPaths() {
@@ -22,6 +23,7 @@ const categoryVenues = venues.filter(
   (v) => v.location === 'uluwatu' && v.category === category
 );
 const order = (venueOrder as Record<string, string[]>)[category] ?? [];
+const orderBySub = subOrdersFor(venueOrder as Record<string, unknown>, category);
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -60,6 +62,7 @@ const structuredData = {
     venues={categoryVenues}
     config={config}
     order={order}
+    orderBySub={orderBySub}
     category={category}
     location="uluwatu"
     backHref="/uluwatu"

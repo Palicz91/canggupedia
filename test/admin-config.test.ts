@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parse } from 'yaml';
 import { categories } from '../src/data/category-config';
+import { subOrderKey } from '../src/lib/venues';
 
 async function getConfig(env: Record<string, string> = {}) {
   const saved = { ...process.env };
@@ -32,13 +33,19 @@ describe('admin config', () => {
     ]);
   });
 
-  it('venue order is one draggable relation list per category, per area', async () => {
+  it('venue order is a draggable relation list per category and per type, per area', async () => {
     const config = await getConfig();
     const coll = config.collections.find((c: any) => c.name === 'venue-order');
     expect(coll.files.map((f: any) => f.name)).toEqual(['canggu', 'uluwatu']);
 
+    // Each section contributes its own list, then one optional list per type inside it.
+    const expectedNames = categories.flatMap((c) => [
+      c.value,
+      ...c.subcategories.map((s) => subOrderKey(c.value, s.value)),
+    ]);
+
     for (const file of coll.files) {
-      expect(file.fields.map((f: any) => f.name)).toEqual(categories.map((c) => c.value));
+      expect(file.fields.map((f: any) => f.name)).toEqual(expectedNames);
       for (const field of file.fields) {
         expect(field.widget).toBe('list');
         // Collapsed rows would all read "Venue": Decap summarises a row from its raw stored value,
@@ -47,7 +54,22 @@ describe('admin config', () => {
         // `field` singular => each item is a bare id string, matching venue-order/*.json
         expect(field.field.widget).toBe('relation');
         expect(field.field.value_field).toBe('id');
-        expect(field.field.collection).toBe(`${field.name}-venues`);
+        // A type list still relates to its section's venue collection, not a "food__dinner" one.
+        const section = field.name.split('__')[0];
+        expect(field.field.collection).toBe(`${section}-venues`);
+      }
+    }
+  });
+
+  it('every per-type order list says that leaving it empty inherits the section order', async () => {
+    const config = await getConfig();
+    const coll = config.collections.find((c: any) => c.name === 'venue-order');
+
+    for (const file of coll.files) {
+      const typeLists = file.fields.filter((f: any) => f.name.includes('__'));
+      expect(typeLists.length).toBeGreaterThan(0);
+      for (const field of typeLists) {
+        expect(field.hint, `${field.name} does not explain the empty case`).toMatch(/leave this empty/i);
       }
     }
   });

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { stringify } from 'yaml';
 import { categories, locations } from '../../data/category-config';
+import { subOrderKey } from '../../lib/venues';
 
 const areaOptions = [
   ...Object.entries(locations).map(([value, label]) => ({ label, value })),
@@ -54,7 +55,8 @@ function venueCollection(cat: (typeof categories)[number], folder: string, singu
         hint: 'Only for a few favourites. This adds the badge on the card. To move a venue up or down, use **Venue order** in the left menu.' },
       linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link).', true),
       linkField('Instagram', 'instagramUrl', 'Paste the profile link or just the username, e.g. @cratecafe', true),
-      { label: 'Opening hours', name: 'openingHours', widget: 'string', required: false, hint: `e.g. ${hoursExample}` },
+      { label: 'Opening hours', name: 'openingHours', widget: 'string', required: false,
+        hint: `Either one line for the whole week, e.g. ${hoursExample} — or copy the hours straight off Google and paste them here. If you paste the full week, the website lays it out day by day on its own.` },
       { label: 'Price range', name: 'priceRange', widget: 'string', required: false, hint: 'e.g. $$ or 150k–300k IDR' },
       { label: 'Note', name: 'note', widget: 'text', required: false,
         hint: 'Shows as a yellow box when someone opens the venue. Good for "closed on Mondays" or "book ahead".' },
@@ -81,10 +83,10 @@ const venueCollections = [
  * in its own file per area: a list of venue ids that Ivan drags. src/lib/venues.ts sorts by
  * that list, and anything missing from it falls to the bottom.
  */
-function orderFieldsFor(areaLabel: string) {
-  return categories.map((cat) => ({
-    label: cat.title,
-    name: cat.value,
+function orderListField(name: string, label: string, collectionValue: string, hint: string) {
+  return {
+    label,
+    name,
     label_singular: 'venue',
     widget: 'list',
     // Not collapsed. A collapsed row shows the field label — literally the word "Venue", 29 times
@@ -92,24 +94,53 @@ function orderFieldsFor(areaLabel: string) {
     // id. Expanded, each row renders its relation control, which shows the venue's name.
     collapsed: false,
     required: false,
-    hint: `Drag the handles to reorder. The top of this list shows first on the ${areaLabel} ${cat.title} page.`,
+    hint,
     field: {
       label: 'Venue',
       name: 'venue',
       widget: 'relation',
-      collection: `${cat.value}-venues`,
+      collection: `${collectionValue}-venues`,
       value_field: 'id',
       display_fields: ['name', 'location'],
       search_fields: ['name'],
     },
-  }));
+  };
+}
+
+/**
+ * One main list per section, then one optional list per type within it.
+ *
+ * The per-type lists start empty and empty means "use the main order", so nothing about the
+ * site changes until Ivan actually drags something. That matters: he only wants a custom
+ * Dinner order, and should not have to rebuild the other sixteen type lists to get it.
+ *
+ * This is 21 lists per area rather than 4. An empty list is only a label and an Add button,
+ * so the screen stays short until the lists are used.
+ */
+function orderFieldsFor(areaLabel: string) {
+  return categories.flatMap((cat) => [
+    orderListField(
+      cat.value,
+      `${cat.title} — whole section`,
+      cat.value,
+      `Drag the handles to reorder. The top of this list shows first on the ${areaLabel} ${cat.title} page, on the All tab. A venue you just created is NOT in this list yet — scroll to the bottom, click **Add venue**, then type its name into the new row to find it.`,
+    ),
+    ...cat.subcategories.map((sub) =>
+      orderListField(
+        subOrderKey(cat.value, sub.value),
+        `${cat.title} — ${sub.name} tab only`,
+        cat.value,
+        `Only changes the ${sub.name} tab. Leave this empty and the ${sub.name} tab follows the "${cat.title} — whole section" order above.`,
+      ),
+    ),
+  ]);
 }
 
 const venueOrderCollection = {
   name: 'venue-order',
   label: 'Venue order',
   description:
-    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. A newly added venue starts at the bottom until you drag it.',
+    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. A venue you just created does not appear in these lists on its own — until you add it, it sits at the bottom of the website page. To move it up: scroll to the bottom of the right list, click Add venue, then type its name into the new row.',
   editor: { preview: false },
   files: [
     {
