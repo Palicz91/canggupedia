@@ -30,7 +30,7 @@ console error.
 
 The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git-gateway).
 
-The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Sections & types".
+The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
 ### The words on the screen
 
@@ -44,10 +44,14 @@ Decap's own chrome is renamed the same way, in the `renameStrings` locale patch 
 sidebar is headed "What you can edit" rather than "Collections", and Save means save (Decap calls it
 publish). `CMS.getLocale('en')` in the browser console prints every string available to rename.
 
-The panel also uses one word per thing, which is not something a test can check: the four groups are
-**sections** everywhere (never "categories"), going online is **Put online now** everywhere (never
-"publish"), and the panel that opens on a venue card is "when someone opens the venue" (never
-"popup"). If you add a screen, reuse the existing word.
+The panel also uses one word per thing, which is not something a test can check: going online is
+**Put online now** everywhere (never "publish"), and the panel that opens on a venue card is "when
+someone opens the venue" (never "popup"). If you add a screen, reuse the existing word.
+
+The one deliberate exception is the **Categories & types** screen, whose four groups the order
+screen calls sections. A 2026-08-31 pass renamed it to "Sections & types" for consistency and Adam
+asked for "Categories" back the same day — it is what he and Ivan say out loud, and matching their
+speech beats matching the other screen. Leave it.
 
 ### Home page
 

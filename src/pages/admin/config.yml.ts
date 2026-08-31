@@ -51,7 +51,7 @@ function venueCollection(cat: (typeof categories)[number], folder: string, singu
         hint: 'Decides which page the venue shows on (Canggu or Uluwatu).' },
       { label: 'Type', name: 'subcategory', widget: 'select', multiple: true, min: 1,
         options: cat.subcategories.map((s) => ({ label: s.name, value: s.value })),
-        hint: 'Pick one or more. Missing a type? Add it under **Sections & types** in the left menu.' },
+        hint: 'Pick one or more. Missing a type? Add it under **Categories & types** in the left menu.' },
       imageField(),
       { label: 'Short description', name: 'description', widget: 'text', hint: '2 to 3 sentences. This shows on the venue card.' },
       { label: 'Show "Our Top Pick" badge', name: 'featured', widget: 'boolean', required: false, default: false,
@@ -273,14 +273,14 @@ const dealsCollection = {
 
 const categoriesCollection = {
   name: 'settings',
-  // "Categories" was the fifth word for the same four things — the rest of the panel calls them
-  // sections ("Food & Dining — whole section", "the four main sections of the website"), and this
-  // is the one screen where Ivan has to recognise them by name.
-  label: 'Sections & types',
+  // Kept as "Categories" at Adam's request (2026-08-31) after a pass that had renamed it to
+  // "Sections & types" for consistency with the order screen. It is the name he and Ivan use out
+  // loud, which beats matching the rest of the panel. Do not rename it again.
+  label: 'Categories & types',
   description: 'The types you can pick on a venue (Brunch, Padel, Yoga…). Add or rename them here. A new type appears on every venue about 2 minutes after you press Put online now — reload this page to see it.',
   editor: { preview: false },
   files: [{
-    name: 'categories', label: 'Sections & types', file: 'src/data/categories.json', format: 'json',
+    name: 'categories', label: 'Categories & types', file: 'src/data/categories.json', format: 'json',
     fields: [{
       label: 'Sections', name: 'categories', label_singular: 'section', widget: 'list',
       allow_add: false, allow_remove: false, collapsed: true, summary: '{{fields.title}}',
