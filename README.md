@@ -46,6 +46,13 @@ preview pane instead of scrolling sideways at 800px. It came out of `docs/admin-
 Every rule targets an emotion class via `[class*=]`, so bumping Decap can make them inert — the
 admin then degrades to stock rather than breaking.
 
+Rules that must apply to one screen only are scoped by a class the custom widget on that screen puts
+on its own markup (`.cp-order-*`, see [Venue order](#venue-order)) — not by the collection. An
+earlier version mirrored the route hash onto `<html data-cp-collection>` and scoped the CSS with
+that; it needed a script to stay correct and a test to prove the rules were not leaking onto Deals,
+where a row holds four fields and hiding their labels would leave four unlabelled boxes. Scoping to
+markup we own removes both. Prefer that over reintroducing a collection attribute.
+
 ### The Save button
 
 Decap's save control is a *dropdown*, not a button. Clicking it opens a menu; the "Save now" item
@@ -62,6 +69,20 @@ saves.
 Note the editor still shows a broken-image icon for a just-picked photo, and a 404 for it in the
 console. That is cosmetic: the file is not on the site until the next build. The custom preview pane
 says "Photo saved…" instead of showing it.
+
+### The preview has to agree with the site
+
+A preview that disagrees with the page is worse than no preview: it reports bugs that aren't there.
+On 2026-08-31 the hours of a venue were reported as rendering badly when the live page was already
+showing a correct day-by-day table — the preview was printing the raw pasted string.
+
+The website splits opening hours with `parseOpeningHours` in `src/lib/hours.ts`. The preview cannot
+import it: the preview is a plain script the admin page loads from `/admin/`, and there is no build
+step between the two. So `public/admin/helpers.js` carries a hand port, and `test/hours.test.ts`
+runs both over every opening-hours string in `src/data` plus every fixture and fails if they ever
+disagree. **Change one, change both.** The test loads `helpers.js` through `new Function` rather
+than importing it, because Vite rewrites the UMD wrapper's `module` check and sends it down the
+browser branch with no global to attach to.
 
 ## Deploys
 
@@ -102,15 +123,57 @@ it. Then confirm a push actually deploys before walking away.
 
 Decap cannot drag-reorder entries of a folder collection, so the running order lives beside the
 venues in `src/data/venue-order/<area>.json` — one list of venue ids per category. Ivan edits it
-under **Venue order** in the CMS, where each list is a draggable `relation` widget.
+under **Venue order** in the CMS.
 
-Those lists are deliberately **not** collapsed. Decap builds a collapsed row's summary from the raw
-stored value, and these rows store a bare venue id, so every row rendered as the word "Venue" —
-draggable but unreadable. Adding `summary: '{{fields.venue}}'` does render the id instead, but the
-older venues carry ids like `canggu-brunch-1`, so the list still reads as nonsense (checked on
-screen). Expanded, each row renders its relation control, which resolves the id to the venue's real
-name. The cost is a tall page (54 rows for Canggu wellness); `test/admin-config.test.ts` pins
-`collapsed: false` so it can't quietly regress.
+### It is a custom widget, not Decap's list
+
+Each section is one `venue_order` control, registered by `public/admin/venue-order-widget.js` and
+asked for by name in `src/pages/admin/config.yml.ts`. **The stored value is unchanged** — still a
+plain array of venue ids — so nothing on the site knows the difference.
+
+Decap's `list` widget was the obvious answer and could not do either of the two things reported on
+2026-08-31. Both were tried through config first:
+
+- **"chaotic and super difficult to use."** 21 lists open at once, 111 rows, a ~12,000px screen. A
+  single row spent **168px** on one venue name: 36px of top margin, a 20px icon bar, a repeated
+  "Venue" label and a select padded for a full-size form field. `list` has no option to start
+  closed. Using its own collapse *unmounts* the rows, and when they mount again every venue picker
+  comes back **blank** — measured, 29 rows, 29 empty selects, still empty 15 seconds later. The
+  file is untouched, but a screen showing an empty picker where the order used to be is worse than
+  a long one. `minimize_collapsed: true` looks like the feature and is not: it only takes effect
+  *after* a collapse, so it inherits exactly that fault. Setting `summary` to show the id doesn't
+  help either — older ids read `canggu-brunch-1`.
+- **"if i chnage 25 to 3 ... it moves to 3rd position and pushes everything down with one."** A
+  widget rendered inside a list row cannot reorder the list around it: Decap hands each control an
+  `onChange` for its own value only. Owning the whole array is the only way, and then the move is
+  a `splice`.
+
+So the widget owns the array. It renders its own heading (`29 venues` / Add venue), a numbered box
+per row, and hides closed rows with `display: none` — **hidden, never unmounted**, which is the
+whole point. Typing a number and pressing Enter (or clicking away) moves that venue there and
+pushes the rest down; dragging is gone. Measured after: **2,642px** on load, **4,042px** with one
+section open, **44px** per row.
+
+It does **not** reimplement the venue picker. `props.editorControl` is the same component Decap's
+own object and list widgets render children with, so each row gets the real `relation` control —
+live search over the backend, the area filter, resolved names — from the `field` block in the
+config. Two things to know if you touch it: `editorControl` reports changes as
+**`(field, value, metadata)`**, field first, and reading argument 0 as the value writes
+`Map { label: Venue, … }` into the order file (it did, once, and the entry read "NOT SAVED YET" on
+load); and `Immutable` is not exposed as a global, so an empty List is borrowed from a value already
+held rather than constructed.
+
+Its two CSS rules that reach into Decap hang off emotion class names, so a Decap bump can make them
+inert — `e2e/admin-venue-order.spec.ts` asserts the row height, that the sections load closed, that
+a heading opens one with the venue names already resolved, that **Add venue opens the section it
+adds to**, and that typing a position writes the moved array to disk.
+`test/admin-config.test.ts` pins the widget name and that `index.html` loads the script that
+registers it — an unregistered name renders a "Widget not found" box, not an error.
+
+Unrelated but easy to trip over: Decap does **not** reload the entry when the route hash moves from
+one file in a file collection to another. Loading `.../uluwatu` directly renders its 6 rows;
+arriving there from `.../canggu` leaves all 111 Canggu rows on screen under the new address. That is
+why the picker tests take one area each.
 
 Each picker is filtered to the area being ordered — `filters: [{field: location, values: [area]}]` —
 because an order file covers one area, and without it the Canggu lists also offered Uluwatu venues.

@@ -45,7 +45,7 @@ describe('admin config', () => {
     expect(fields.map((f: any) => f.name).sort()).toEqual(Object.keys(home).sort());
   });
 
-  it('venue order is a draggable relation list per category and per type, per area', async () => {
+  it('venue order is a numbered relation list per category and per type, per area', async () => {
     const config = await getConfig();
     const coll = config.collections.find((c: any) => c.name === 'venue-order');
     expect(coll.files.map((f: any) => f.name)).toEqual(['canggu', 'uluwatu']);
@@ -59,10 +59,10 @@ describe('admin config', () => {
     for (const file of coll.files) {
       expect(file.fields.map((f: any) => f.name)).toEqual(expectedNames);
       for (const field of file.fields) {
-        expect(field.widget).toBe('list');
-        // Collapsed rows would all read "Venue": Decap summarises a row from its raw stored value,
-        // and these store a bare id. Expanded, the relation control shows the venue's name.
-        expect(field.collapsed, `${field.name} rows are collapsed and unreadable`).toBe(false);
+        // Not Decap's `list`. That widget cannot start closed and cannot be reordered by anything
+        // but dragging, both reported on 2026-08-31; public/admin/venue-order-widget.js registers
+        // this one. Anything that falls back to `list` brings the 12,000px screen straight back.
+        expect(field.widget, `${field.name} is back on Decap's list widget`).toBe('venue_order');
         // `field` singular => each item is a bare id string, matching venue-order/*.json
         expect(field.field.widget).toBe('relation');
         expect(field.field.value_field).toBe('id');
@@ -70,6 +70,39 @@ describe('admin config', () => {
         const section = field.name.split('__')[0];
         expect(field.field.collection).toBe(`${section}-venues`);
       }
+    }
+  });
+
+  it('the admin page loads a script that registers every custom widget the config asks for', async () => {
+    // A widget name Decap does not know does not fail loudly — it renders a small "Widget not
+    // found" box in place of the control, and the editor is left looking at a broken section with
+    // no way to reorder anything. Deleting the script tag, renaming the file or renaming the
+    // widget would each do that, so all three are pinned here.
+    const config = await getConfig();
+    const html = readFileSync('public/admin/index.html', 'utf8');
+    const builtIn = new Set([
+      'string', 'text', 'number', 'boolean', 'list', 'object', 'relation', 'select', 'image',
+      'file', 'markdown', 'datetime', 'hidden', 'code', 'map', 'color', 'uuid',
+    ]);
+
+    const widgets = new Set<string>();
+    const walk = (node: any) => {
+      if (Array.isArray(node)) return node.forEach(walk);
+      if (!node || typeof node !== 'object') return;
+      if (typeof node.widget === 'string') widgets.add(node.widget);
+      Object.values(node).forEach(walk);
+    };
+    walk(config.collections);
+
+    const custom = [...widgets].filter((w) => !builtIn.has(w));
+    expect(custom).toEqual(['venue_order']);
+    for (const widget of custom) {
+      const script = `${widget.replace(/_/g, '-')}-widget.js`;
+      expect(html, `index.html does not load ${script}`).toContain(`/admin/${script}`);
+      const source = readFileSync(`public/admin/${script}`, 'utf8');
+      expect(source, `${script} does not register ${widget}`).toContain(
+        `registerWidget('${widget}'`,
+      );
     }
   });
 

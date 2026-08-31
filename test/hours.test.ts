@@ -3,6 +3,19 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseOpeningHours, todayName, DAYS } from '../src/lib/hours';
 
+// The admin preview cannot import the TypeScript above — it is a plain script the CMS page loads
+// from /admin/ — so public/admin/helpers.js carries a hand port. Evaluate it the way a browser
+// does rather than importing it: Vite rewrites the UMD wrapper's `module` check on import, which
+// sends it down the wrong branch. A bare Function call is what the <script> tag actually does.
+const CpHelpers = (() => {
+  const src = readFileSync('public/admin/helpers.js', 'utf8');
+  const globalStub: Record<string, unknown> = {};
+  new Function('self', src)(globalStub);
+  return globalStub.CpHelpers as {
+    parseOpeningHours(input: string | null | undefined): { day: string; hours: string }[] | null;
+  };
+})();
+
 const VENUES_DIR = 'src/data/venues';
 const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family'];
 
@@ -166,6 +179,56 @@ describe('parseOpeningHours', () => {
           /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/,
         );
       }
+    }
+  });
+});
+
+describe('the admin preview parser matches the website parser', () => {
+  // Two copies of this logic exist on purpose (see the comment in public/admin/helpers.js).
+  // The whole point of the preview is to show what the site will render, so a disagreement here
+  // recreates the exact bug it was written to fix: a correct page and a preview claiming
+  // otherwise. Every string the site has ever had to handle is run through both.
+  const FIXTURES = [
+    'Monday\t11.00 am–11.00 pm Tuesday\t11.00 am–11.00 pm Wednesday\t11.00 am–11.00 pm ' +
+      'Thursday\t11.00 am–11.00 pm Friday\t11.00 am–11.00 pm Saturday\t11.00 am–11.00 pm ' +
+      'Sunday\t11.00 am–11.00 pm',
+    '8AM – 10PM',
+    '5PM - 2AM',
+    'Open daily 7am to 11pm',
+    'Monday–Friday 9AM–5PM',
+    'Mon-Fri 9-5, Sat 10-2',
+    'Friday & Saturday: 22:00 – late (until 04:00)',
+    'Daily: 12:00 – late (until ~01:00, and often until ~02:00 on Wed/Thu/Sat) ',
+    'Happy hour Fri 5-7pm. Open daily 11am-11pm, Sat until 1am',
+    'Mon 9-5 Tue 9-5 Wed 9-5 Thu 9-5 Fri 9-5 Sat 9-5 Sun 9-5. Hours might differ · Holiday hours',
+    'Kitchen closes 22:00. Monday 11-23 Tuesday 11-23',
+    'Monday − 9am-5pm Tuesday − 9am-5pm',
+    'Friday 22:00 – late Saturday 22:00 – late',
+    'Monday 9-12, 14-18 Tuesday 9-12, 14-18',
+    'Monday 9-5 Monday 6-9 Tuesday 9-5',
+    'Monday Closed Tuesday 9am-5pm',
+    'Sunday 10-4, Saturday 9-6, Friday 8-8',
+    'Mon: 9-5 Tue: 9-5',
+    '',
+  ];
+
+  it('agrees on every fixture', () => {
+    for (const input of FIXTURES) {
+      expect(CpHelpers.parseOpeningHours(input), `disagreed on ${JSON.stringify(input)}`).toEqual(
+        parseOpeningHours(input),
+      );
+    }
+    expect(CpHelpers.parseOpeningHours(null)).toEqual(parseOpeningHours(null));
+    expect(CpHelpers.parseOpeningHours(undefined)).toEqual(parseOpeningHours(undefined));
+  });
+
+  it('agrees on every venue currently on the site', () => {
+    const all = allOpeningHours();
+    expect(all.length).toBeGreaterThan(0);
+    for (const { path, hours } of all) {
+      expect(CpHelpers.parseOpeningHours(hours), `disagreed on ${path}`).toEqual(
+        parseOpeningHours(hours),
+      );
     }
   });
 });

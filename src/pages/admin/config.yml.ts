@@ -94,14 +94,16 @@ function orderListField(
     label,
     name,
     label_singular: 'venue',
-    widget: 'list',
-    // Not collapsed, and no `summary`. A collapsed row can only show the stored value, which is a
-    // bare id — and the older venues carry ids like "canggu-brunch-1", so a collapsed list reads
-    // as nonsense (verified on screen). Expanded, each row renders its relation control, which
-    // resolves the id to the venue's real name. Rows are tall as a result; admin.css trims them.
-    collapsed: false,
+    // Not Decap's `list`. That widget cannot start closed, cannot number its rows, and cannot be
+    // reordered by anything except dragging — all three were reported on 2026-08-31. The custom
+    // widget in public/admin/venue-order-widget.js does those, and explains why each of the
+    // obvious config-only answers (`collapsed`, `summary`, `minimize_collapsed`) does not work.
+    // The stored value is unchanged: a plain array of venue ids.
+    widget: 'venue_order',
     required: false,
     hint,
+    // Read by the widget as `field.get('field')` and rendered through Decap's own editorControl,
+    // so this is a real relation control with live search, not a copy of one.
     field: {
       label: 'Venue',
       name: 'venue',

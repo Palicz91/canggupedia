@@ -47,6 +47,53 @@
        library, where a 48px indent would just look broken. */
     [class*="-ToolbarContainer"] [class*="-DeleteButton"] { margin-left: 48px !important; }
 
+    /* ---------- Venue order, from the 2026-08-31 report ----------
+       These style the `venue_order` widget in public/admin/venue-order-widget.js, which renders
+       its own numbered rows and a heading that opens them. Everything is scoped by that widget's
+       own class names, so unlike the rules above it cannot reach another screen.
+
+       The two rules that reach into Decap belong to the venue picker the widget borrows for each
+       row: react-select sizes its control for a full-size form field, and the row repeats the word
+       "Venue" under a list already labelled "Food & Dining". Both hang off emotion class names, so
+       a Decap bump makes them inert and the rows simply grow. */
+    .cp-order-head {
+      display: flex; align-items: center; gap: 12px;
+      background: #f6f6f6; border-radius: 4px; padding: 4px 8px;
+    }
+    .cp-order-toggle {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1; min-width: 0; min-height: 44px;
+      background: none; border: 0; padding: 0 4px;
+      font: inherit; font-weight: 600; color: #1f2937; text-align: left; cursor: pointer;
+    }
+    .cp-order-caret { display: inline-block; font-size: 11px; color: #6b7280; }
+    .cp-open .cp-order-caret { transform: rotate(90deg); }
+    .cp-order-add {
+      min-height: 36px; padding: 0 14px; border: 0; border-radius: 4px;
+      background: #e5e7eb; font: inherit; font-weight: 600; color: #1f2937; cursor: pointer;
+    }
+    .cp-order-add:hover { background: #d1d5db; }
+    /* Hidden, not unmounted: the borrowed picker comes back blank if it is remounted. */
+    .cp-order-rows { display: none; }
+    .cp-open .cp-order-rows { display: block; padding: 8px 0 0; }
+    .cp-order-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .cp-order-pos {
+      width: 56px; min-height: 34px; padding: 4px 6px; text-align: center;
+      border: 1px solid #d1d5db; border-radius: 4px; font: inherit;
+    }
+    .cp-order-venue { flex: 1; min-width: 0; }
+    .cp-order-venue [class*="-ControlTopbar"] { display: none !important; }
+    /* 36px of top margin, there to separate full-size form fields, on every single row. */
+    .cp-order-venue [class*="-ControlContainer"] { margin: 0 !important; }
+    .cp-order-venue [class*="-control"] {
+      min-height: 34px !important; padding-top: 2px !important; padding-bottom: 2px !important;
+    }
+    .cp-order-del {
+      min-width: 34px; min-height: 34px; border: 0; border-radius: 4px;
+      background: none; font-size: 20px; line-height: 1; color: #6b7280; cursor: pointer;
+    }
+    .cp-order-del:hover { background: #fee2e2; color: #b91c1c; }
+
     /* Phones: Decap's split pane never stacks, so a 390px screen laid out at 800px and scrolled
        sideways — Delete and the strip's own "Put online now" ended up off-screen. Below 900px the
        preview is dropped and the form gets the whole width. The preview stays on desktop, where it
@@ -156,6 +203,7 @@
   <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
   <script src="/admin/helpers.js"></script>
   <script src="/admin/one-click-save.js"></script>
+  <script src="/admin/venue-order-widget.js"></script>
 
   <div id="cp-strip" role="status" aria-live="polite">
     <i class="cp-progress" aria-hidden="true"></i>
@@ -358,6 +406,10 @@
         '.cp-btns{display:flex;gap:8px;margin-bottom:8px}.cp-btns span{flex:1;text-align:center;padding:8px 16px;border-radius:12px;color:#fff;font-weight:600}',
         '.cp-map{background:#ff7849}.cp-ig{background:#ec4899}.cp-more{display:block;text-align:center;padding:8px;border-radius:12px;background:#e5e7eb;color:#374151;font-weight:600}',
         '.cp-box{background:#f9fafb;border-radius:12px;padding:16px;margin-bottom:16px;color:#374151}.cp-box b{color:#1f2937}',
+        // Mirrors the day-by-day table VenueGrid renders, so the preview and the website agree.
+        '.cp-hours{margin:0 0 12px}.cp-hours-t{font-weight:700;color:#1f2937;margin:0 0 4px}',
+        '.cp-hours dl{margin:0;font-size:14px}.cp-hours-r{display:flex;justify-content:space-between;gap:24px;padding:1px 0}',
+        '.cp-hours-r dt,.cp-hours-r dd{margin:0}.cp-hours-r dd{text-align:right}',
         '.cp-note{background:#fefce8;border:1px solid #fef08a;color:#854d0e;border-radius:12px;padding:16px;margin-bottom:16px;font-weight:700;white-space:pre-line}',
         '.cp-extra{display:flex;flex-wrap:wrap;gap:8px}.cp-extra span{flex:1;text-align:center;padding:8px 16px;border-radius:12px;color:#fff;font-weight:600}',
         '.cp-book{background:#10b981}.cp-guest{background:#3b82f6}.cp-ticket{background:#a855f7}',
@@ -388,6 +440,25 @@
           });
         }
       });
+
+      /**
+       * The website splits a pasted week into a day-by-day table and falls back to printing the
+       * line unchanged when it cannot do so confidently. The preview has to make the same call,
+       * or it tells Ivan his hours look broken when the live page renders them fine.
+       */
+      function hoursEl(raw) {
+        if (!raw) return null;
+        var days = CpHelpers.parseOpeningHours(raw);
+        if (!days) {
+          return h('p', { key: 'h', style: { margin: '0 0 8px' } }, h('b', {}, 'Opening Hours: '), raw);
+        }
+        return h('div', { className: 'cp-hours', key: 'h' },
+          h('p', { className: 'cp-hours-t' }, 'Opening Hours'),
+          h('dl', {}, days.map(function (row) {
+            return h('div', { key: row.day, className: 'cp-hours-r' },
+              h('dt', {}, row.day), h('dd', {}, row.hours));
+          })));
+      }
 
       var VenuePreview = createClass({
         render: function () {
@@ -425,7 +496,7 @@
                   d('description') || 'The short description goes here.',
                   d('discountCode') ? h('span', {}, h('br'), h('br'), h('b', {}, 'TICKETS DISCOUNT CODE: ' + d('discountCode'))) : null),
                 hasBox ? h('div', { className: 'cp-box' },
-                  d('openingHours') ? h('p', { style: { margin: '0 0 8px' } }, h('b', {}, 'Opening Hours: '), d('openingHours')) : null,
+                  hoursEl(d('openingHours')),
                   d('priceRange') ? h('p', { style: { margin: 0 } }, h('b', {}, 'Price Range: '), d('priceRange')) : null) : null,
                 d('note') ? h('div', { className: 'cp-note' }, 'Note: ' + d('note')) : null,
                 h('div', { className: 'cp-btns' }, h('span', { className: 'cp-map' }, 'Map'), h('span', { className: 'cp-ig' }, 'Instagram')),
