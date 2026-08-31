@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parse } from 'yaml';
+import { readFileSync } from 'node:fs';
 import { categories } from '../src/data/category-config';
 import { subOrderKey } from '../src/lib/venues';
 
@@ -24,13 +25,24 @@ describe('admin config', () => {
     expect(config.publish_mode).toBe('simple');
   });
 
-  it('has 7 collections in the right order', async () => {
+  it('has 8 collections in the right order', async () => {
     const config = await getConfig();
     const names = config.collections.map((c: any) => c.name);
     expect(names).toEqual([
+      'home',
       'food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues',
       'venue-order', 'deals', 'settings',
     ]);
+  });
+
+  it('every home page field matches a key in home.json', async () => {
+    // A field named for a key that does not exist saves fine and changes nothing on the site —
+    // the same silent no-op that made the venue pickers untrustworthy.
+    const config = await getConfig();
+    const home = JSON.parse(readFileSync('src/data/home.json', 'utf8'));
+    const fields = config.collections.find((c: any) => c.name === 'home').files[0].fields;
+
+    expect(fields.map((f: any) => f.name).sort()).toEqual(Object.keys(home).sort());
   });
 
   it('venue order is a draggable relation list per category and per type, per area', async () => {

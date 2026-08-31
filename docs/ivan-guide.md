@@ -2,9 +2,11 @@
 
 Go to the website and add /admin/ to the address. Log in with your email.
 
-On the left you see the sections: Food & Dining, Hangout Spots, Wellness & Fitness, Fun & Family, Venue order, Deals & events, and Categories & types.
+On the left you see the sections: Home page, Food & Dining, Hangout Spots, Wellness & Fitness, Fun & Family, Venue order, Deals & events, and Categories & types.
 
 Save is not the same as online. Save keeps your change. The website doesn't know yet. When you're done for the day, press Put online now in the bar at the bottom of the screen. About 2 minutes later, reload the website. Press it once at the end, not after every change.
+
+To change the two big photos on the front page, click Home page. There is one photo for Canggu and one for Uluwatu. Click Choose different image, then Upload, and pick a photo from your computer. Wide photos look best. You can also change the big heading and the line under it on the same screen. Save, then Put online now.
 
 To add a venue, pick a section, click New, fill in the form, and click Save. Set the Area to Canggu or Uluwatu, that decides which page it shows on. Pick one or more types (Brunch, Bars, Yoga…). For photos, click Choose an image then Upload. No links needed. For Instagram, paste the full link or just the username like @cratecafe. WhatsApp links like wa.me/62812… work too.
 

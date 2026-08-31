@@ -276,6 +276,30 @@ const categoriesCollection = {
   }],
 };
 
+/**
+ * The front page. Only the parts Ivan should be able to change are here — the two area photos and
+ * the three lines above them. The rest of that page is navigation and stays in the template, so
+ * there is nothing on this screen he can press that breaks a link.
+ */
+const homeCollection = {
+  name: 'home',
+  label: 'Home page',
+  description: 'The front page of the website: the big heading and the two photos for Canggu and Uluwatu. Change one, then press Put online now.',
+  editor: { preview: false },
+  files: [{
+    name: 'home', label: 'Home page', file: 'src/data/home.json', format: 'json',
+    fields: [
+      { label: 'Big heading', name: 'title', widget: 'string', hint: 'The large title at the top.' },
+      { label: 'Line under it', name: 'tagline', widget: 'string' },
+      { label: 'Short intro', name: 'intro', widget: 'text', hint: 'One sentence under the heading.' },
+      { ...imageField('Canggu photo'), name: 'cangguImage',
+        hint: 'The photo on the Canggu card. Wide photos look best.' },
+      { ...imageField('Uluwatu photo'), name: 'uluwatuImage',
+        hint: 'The photo on the Uluwatu card. Wide photos look best.' },
+    ],
+  }],
+};
+
 export const GET: APIRoute = ({ site }) => {
   const siteUrl = (site?.toString() || 'https://canggupedia.netlify.app').replace(/\/$/, '');
   const backend =
@@ -302,7 +326,7 @@ export const GET: APIRoute = ({ site }) => {
     media_folder: 'public/images',
     public_folder: '/images',
     slug: { encoding: 'ascii', clean_accents: true },
-    collections: [...venueCollections, venueOrderCollection, dealsCollection, categoriesCollection],
+    collections: [homeCollection, ...venueCollections, venueOrderCollection, dealsCollection, categoriesCollection],
   };
 
   return new Response(stringify(config, { lineWidth: 0, aliasDuplicateObjects: false }), {

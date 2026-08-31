@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import type { Page } from '@playwright/test';
 
 const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family'];
+const DATA_DIR = 'src/data';
 const VENUES_DIR = 'src/data/venues';
 const ORDER_DIR = 'src/data/venue-order';
 
@@ -51,7 +52,13 @@ export function buildRepoFiles(): Record<string, unknown> {
     }
     nestedVenues[cat] = files;
   }
-  tree.src = { data: { venues: nestedVenues, 'venue-order': orderFiles } };
+  // Every other file collection (home.json, categories.json, events.json…) is a top-level json
+  // file in src/data. Seed the whole directory so a new one does not need a change here.
+  const dataFiles: Record<string, unknown> = { venues: nestedVenues, 'venue-order': orderFiles };
+  for (const f of readdirSync(DATA_DIR).filter((x) => x.endsWith('.json'))) {
+    dataFiles[f] = leaf(join(DATA_DIR, f));
+  }
+  tree.src = { data: dataFiles };
 
   return tree;
 }

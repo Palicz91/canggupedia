@@ -25,6 +25,16 @@ The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git
 
 The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
 
+### Home page
+
+`src/pages/index.astro` reads its heading, tagline, intro and the two area photos from
+`src/data/home.json`, edited under **Home page** in the CMS. Everything else on that page is
+navigation and stays hardcoded, so there is nothing on that screen Ivan can press that breaks a
+link. A photo cleared in the CMS falls back to the image the page shipped with, rather than
+rendering `url('')` and leaving a white card. `test/admin-config.test.ts` asserts the field names
+match the keys in `home.json` — a field named for a key that does not exist would save fine and
+change nothing.
+
 ### Decap style overrides
 
 `public/admin/index.html` carries a block of CSS that overrides Decap's own styling — larger field

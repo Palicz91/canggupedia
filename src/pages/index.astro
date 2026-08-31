@@ -1,5 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import home from '../data/home.json';
+
+// The two area photos and the three lines above them are the only editable things on this page,
+// so they live in home.json and Ivan changes them under "Home page" in the CMS. Everything else
+// here is navigation and stays in the template.
+//
+// A photo cleared in the CMS would otherwise render `url('')` and leave a white card, so each one
+// falls back to the image the page shipped with.
+const CANGGU_FALLBACK = '/images/chatgpt-image-oct-22-2025-08_13_45-pm.webp';
+const ULUWATU_FALLBACK = '/images/chatgpt-image-oct-22-2025-08_15_29-pm.webp';
+const cangguImage = home.cangguImage?.trim() || CANGGU_FALLBACK;
+const uluwatuImage = home.uluwatuImage?.trim() || ULUWATU_FALLBACK;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -19,13 +31,13 @@ const structuredData = {
     <div class="container mx-auto px-4 py-16">
       <div class="text-center mb-16 pt-8">
         <h1 class="font-display text-5xl md:text-6xl font-black text-white text-shadow-lg mb-6 animate-fade-in">
-          The Canggupedia
+          {home.title}
         </h1>
         <p class="font-display text-3xl font-bold text-white text-shadow mb-4">
-          Your Ultimate Bali Guide
+          {home.tagline}
         </p>
         <p class="font-sans text-lg font-medium text-white text-shadow max-w-2xl mx-auto">
-          Discover the best restaurants, bars, wellness spots, and events in Bali's most vibrant locations
+          {home.intro}
         </p>
       </div>
 
@@ -34,7 +46,7 @@ const structuredData = {
           <div class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover h-96 relative">
             <div
               class="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 ease-out group-hover:scale-105"
-              style="background-image: url('/images/chatgpt-image-oct-22-2025-08_13_45-pm.webp');"
+              style={`background-image: url('${cangguImage}');`}
             >
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             </div>
@@ -50,7 +62,7 @@ const structuredData = {
           <div class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover h-96 relative">
             <div
               class="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 ease-out group-hover:scale-105"
-              style="background-image: url('/images/chatgpt-image-oct-22-2025-08_15_29-pm.webp');"
+              style={`background-image: url('${uluwatuImage}');`}
             >
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             </div>
