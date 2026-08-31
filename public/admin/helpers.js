@@ -103,11 +103,99 @@
     });
   }
 
+  /**
+   * A hand port of subsOf / mergeOrder / sortVenues from src/lib/venues.ts, for the same reason
+   * as parseOpeningHours above: the venue-order widget is a plain script and cannot import the
+   * TypeScript the website sorts with.
+   *
+   * This one matters more than the hours port. The widget shows Ivan a numbered list and tells
+   * him that is the order the page will use, so if the two rules disagree the CMS is lying about
+   * the one thing it exists to control. test/venue-order-parity.test.ts runs this and the
+   * TypeScript over every area, section and tab in src/data and fails on any difference.
+   * **Change one, change both.**
+   */
+  function subsOf(v) {
+    if (Array.isArray(v.subcategory)) return v.subcategory;
+    return v.subcategory ? [v.subcategory] : [];
+  }
+
+  function mergeOrder(typeOrder, sectionOrder) {
+    if (!typeOrder || !typeOrder.length) return sectionOrder;
+    var pinned = {};
+    var head = [];
+    typeOrder.forEach(function (id) {
+      if (Object.prototype.hasOwnProperty.call(pinned, id)) return;
+      pinned[id] = true;
+      head.push(id);
+    });
+    return head.concat(
+      sectionOrder.filter(function (id) {
+        return !Object.prototype.hasOwnProperty.call(pinned, id);
+      })
+    );
+  }
+
+  function sortVenues(venues, subOrder, orderIds) {
+    // First occurrence wins, so a venue listed twice keeps its highest position.
+    var rank = {};
+    (orderIds || []).forEach(function (id, i) {
+      if (!Object.prototype.hasOwnProperty.call(rank, id)) rank[id] = i;
+    });
+    function rankOf(id) {
+      return Object.prototype.hasOwnProperty.call(rank, id) ? rank[id] : undefined;
+    }
+    function trailing(id) {
+      var m = String(id).match(/-(\d+)$/);
+      return m ? parseInt(m[1], 10) : NaN;
+    }
+    return venues.slice().sort(function (a, b) {
+      var ra = rankOf(a.id);
+      var rb = rankOf(b.id);
+      if (ra !== undefined && rb !== undefined) return ra - rb;
+      if (ra !== undefined) return -1;
+      if (rb !== undefined) return 1;
+
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      var subDiff = subOrder.indexOf(subsOf(a)[0]) - subOrder.indexOf(subsOf(b)[0]);
+      if (subDiff !== 0) return subDiff;
+      var aNum = trailing(a.id);
+      var bNum = trailing(b.id);
+      if (!isNaN(aNum) && !isNaN(bNum) && aNum !== bNum) return aNum - bNum;
+      if (isNaN(aNum) !== isNaN(bNum)) return isNaN(aNum) ? 1 : -1;
+      return String(a.name).localeCompare(String(b.name));
+    });
+  }
+
+  /**
+   * The venues one order list is responsible for, in the order the website will show them.
+   *
+   * `venues` is every venue of that section, already narrowed to the area. `stored` is what the
+   * list holds today and is allowed to be empty: an untouched tab list inherits the section
+   * order, exactly as subOrdersFor + mergeOrder do on the site. For a section's own list `stored`
+   * IS the section order and `sectionOrder` is unused.
+   */
+  function effectiveOrder(venues, stored, sectionOrder, sub, subOrder) {
+    var candidates = sub
+      ? venues.filter(function (v) {
+          return subsOf(v).indexOf(sub) !== -1;
+        })
+      : venues.slice();
+    var orderIds = sub ? mergeOrder(stored, sectionOrder || []) : stored || [];
+    return sortVenues(candidates, subOrder || [], orderIds).map(function (v) {
+      return v.id;
+    });
+  }
+
   return {
     slugify: slugify,
     fixUrl: fixUrl,
     fixLinks: fixLinks,
     parseOpeningHours: parseOpeningHours,
+    subsOf: subsOf,
+    mergeOrder: mergeOrder,
+    sortVenues: sortVenues,
+    effectiveOrder: effectiveOrder,
     DAYS: DAYS
   };
 });

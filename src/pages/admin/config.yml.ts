@@ -89,39 +89,42 @@ function orderListField(
   collectionValue: string,
   hint: string,
   area: string,
+  subOrder: string[],
+  subcategory?: string,
 ) {
   return {
     label,
     name,
-    label_singular: 'venue',
-    // Not Decap's `list`. That widget cannot start closed, cannot number its rows, and cannot be
-    // reordered by anything except dragging — all three were reported on 2026-08-31. The custom
-    // widget in public/admin/venue-order-widget.js does those, and explains why each of the
-    // obvious config-only answers (`collapsed`, `summary`, `minimize_collapsed`) does not work.
-    // The stored value is unchanged: a plain array of venue ids.
+    // Not Decap's `list`. That widget cannot start closed, cannot number its rows, cannot be
+    // reordered by anything except dragging, and shows only the ids already stored — so a tab
+    // nobody has ordered yet renders as an empty box. All four were reported on 2026-08-31.
+    // public/admin/venue-order-widget.js does the lot and explains why each of the obvious
+    // config-only answers (`collapsed`, `summary`, `minimize_collapsed`) does not work.
+    // The stored value is unchanged: a plain array of venue ids, empty until one is moved.
     widget: 'venue_order',
     required: false,
     hint,
-    // Read by the widget as `field.get('field')` and rendered through Decap's own editorControl,
-    // so this is a real relation control with live search, not a copy of one.
-    field: {
-      label: 'Venue',
-      name: 'venue',
-      widget: 'relation',
-      collection: `${collectionValue}-venues`,
-      value_field: 'id',
-      display_fields: ['name', 'location'],
-      search_fields: ['name'],
-      // Each order file covers one area, so only offer that area's venues. Without this the
-      // Canggu lists also offer Uluwatu venues (observed in e2e/admin-venue-order.spec.ts): picking
-      // one saves happily and changes nothing, because the id never matches on that page.
-      //
-      // Deliberately NOT filtered by subcategory as well, even though the same trap exists for
-      // types. `location` is a plain string; `subcategory` is an array, and Decap's filter does
-      // not match inside arrays — probed directly, the unfiltered control offered 12 venues and
-      // the subcategory-filtered one offered 0. An empty picker is worse than an over-full one.
-      filters: [{ field: 'location', values: [area] }],
-    },
+    // Everything below is read by the widget off its own field definition. It queries the venue
+    // collection through Decap's own search action, so the list is whatever is in the CMS right
+    // now — a venue created a minute ago included.
+    collection: `${collectionValue}-venues`,
+    // One order file covers one area, so the list is narrowed to it. This used to be a Decap
+    // relation `filters` entry and had to be, because without it the Canggu lists offered Uluwatu
+    // venues: picking one saved happily and changed nothing, since the id never matches on that
+    // page. The widget now derives the list instead of offering a picker, so the same guarantee
+    // comes from the filter below rather than from Decap.
+    area,
+    // The sibling field holding the section order. A tab list inherits it until it has one of its
+    // own, exactly as mergeOrder does on the site.
+    section: collectionValue,
+    // Left off the section's own list. Note this is applied by the widget, not by Decap: Decap's
+    // relation filter cannot match inside an array, and `subcategory` is an array — probed
+    // directly, a subcategory-filtered relation control offered 0 venues where the unfiltered one
+    // offered 12.
+    ...(subcategory ? { subcategory } : {}),
+    // The tab order from category-config, used by the tie-break rule that ranks venues no one has
+    // placed by hand. Without it the widget's order drifts from the website's for those venues.
+    sub_order: subOrder,
   };
 }
 
@@ -136,42 +139,46 @@ function orderListField(
  * so the screen stays short until the lists are used.
  */
 function orderFieldsFor(areaLabel: string, areaValue: string) {
-  return categories.flatMap((cat) => [
-    orderListField(
-      cat.value,
-      `${cat.title} — whole section`,
-      cat.value,
-      // Short on purpose. There are 21 of these lists per area, so a paragraph on each one
-      // buries the actual controls under a wall of near-identical grey text — which is the
-      // state that made this screen unusable in the first place. The full explanation lives
-      // once, in the collection description at the top of the page.
-      `Order of the ${areaLabel} ${cat.title} page, All tab.`,
-      areaValue,
-    ),
-    ...cat.subcategories.map((sub) =>
+  return categories.flatMap((cat) => {
+    const subOrder = cat.subcategories.map((s) => s.value);
+    return [
       orderListField(
-        subOrderKey(cat.value, sub.value),
-        `${cat.title} — ${sub.name} tab only`,
         cat.value,
-        `Only the ${sub.name} tab. Add just the ones you want at the top; leave empty to follow the section order above.`,
+        `${cat.title} — whole section`,
+        cat.value,
+        // Short on purpose. There are 21 of these lists per area, so a paragraph on each one
+        // buries the actual controls under a wall of near-identical grey text — which is the
+        // state that made this screen unusable in the first place. The full explanation lives
+        // once, in the collection description at the top of the page.
+        `Order of the ${areaLabel} ${cat.title} page, All tab.`,
         areaValue,
+        subOrder,
       ),
-    ),
-  ]);
+      ...cat.subcategories.map((sub) =>
+        orderListField(
+          subOrderKey(cat.value, sub.value),
+          `${cat.title} — ${sub.name} tab only`,
+          cat.value,
+          `Only the ${sub.name} tab. Until you move one here, it follows the section order above.`,
+          areaValue,
+          subOrder,
+          sub.value,
+        ),
+      ),
+    ];
+  });
 }
 
 const venueOrderCollection = {
   name: 'venue-order',
   label: 'Venue order',
   description:
-    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. ' +
-    'A venue you just created does not appear in these lists on its own — until you add it, it ' +
-    'sits at the bottom of the website page. To move it up: scroll to the bottom of the right ' +
-    'list, click Add venue, then type its name into the new row. ' +
-    'Each section has a "whole section" list plus one list per tab. The tab lists only need the ' +
-    'few venues you want pinned at the top — everything else keeps the order from the section ' +
-    'list. A venue only shows on a tab if it has that type, so adding it to a tab list it does ' +
-    'not belong to has no effect.',
+    'The order venues appear on the website. Open a list, type a new number next to a venue, ' +
+    'then Save — that venue moves to that position and the rest shift down by one. ' +
+    'Every list already holds every venue that belongs to it, newly created ones included, so ' +
+    'there is nothing to add. ' +
+    'Each section has a "whole section" list plus one list per tab. A tab list follows the ' +
+    'section order until you move something inside it, and from then on it keeps its own order.',
   editor: { preview: false },
   files: [
     {

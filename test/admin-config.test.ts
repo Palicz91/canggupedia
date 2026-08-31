@@ -59,19 +59,29 @@ describe('admin config', () => {
     for (const file of coll.files) {
       expect(file.fields.map((f: any) => f.name)).toEqual(expectedNames);
       for (const field of file.fields) {
-        // Not Decap's `list`. That widget cannot start closed and cannot be reordered by anything
-        // but dragging, both reported on 2026-08-31; public/admin/venue-order-widget.js registers
-        // this one. Anything that falls back to `list` brings the 12,000px screen straight back.
+        // Not Decap's `list`. That widget cannot start closed, cannot be reordered by anything but
+        // dragging, and shows only the ids already stored, so an untouched tab reads as an empty
+        // box — all reported on 2026-08-31. public/admin/venue-order-widget.js registers this one.
         expect(field.widget, `${field.name} is back on Decap's list widget`).toBe('venue_order');
-        // `field` singular => each item is a bare id string, matching venue-order/*.json
-        expect(field.field.widget).toBe('relation');
-        expect(field.field.value_field).toBe('id');
-        // A type list still relates to its section's venue collection, not a "food__dinner" one.
-        const section = field.name.split('__')[0];
-        expect(field.field.collection).toBe(`${section}-venues`);
+
+        // Every option below is read by the widget off the field, and a missing one fails quietly:
+        // it would just render a list narrowed by the wrong thing, or ordered by the wrong rule.
+        const [section, sub] = field.name.split('__');
+        // A type list still queries its section's venue collection, not a "food__dinner" one.
+        expect(field.collection).toBe(`${section}-venues`);
+        expect(field.section).toBe(section);
+        expect(field.area).toBe(file.name);
+        // Absent on a section's own list, which covers every type in the section.
+        expect(field.subcategory).toBe(sub);
+        // Drives the tie-break for venues nobody has placed by hand; if it drifts from
+        // category-config the widget shows a different order from the website.
+        expect(field.sub_order).toEqual(
+          categories.find((c) => c.value === section)!.subcategories.map((s) => s.value),
+        );
       }
     }
   });
+
 
   it('the admin page loads a script that registers every custom widget the config asks for', async () => {
     // A widget name Decap does not know does not fail loudly — it renders a small "Widget not
@@ -106,7 +116,11 @@ describe('admin config', () => {
     }
   });
 
-  it('every per-type order list says that leaving it empty inherits the section order', async () => {
+  it('every per-type order list says it follows the section order until it is touched', async () => {
+    // A tab list holds nothing until someone moves a venue inside it, and until then the tab
+    // inherits the section order. That is invisible from the screen — the list looks identical
+    // either way — so the hint has to say it. On 2026-08-31 it was reported as "every subcategory
+    // is empty", which was the widget showing the stored ids rather than the inherited order.
     const config = await getConfig();
     const coll = config.collections.find((c: any) => c.name === 'venue-order');
 
@@ -114,7 +128,9 @@ describe('admin config', () => {
       const typeLists = file.fields.filter((f: any) => f.name.includes('__'));
       expect(typeLists.length).toBeGreaterThan(0);
       for (const field of typeLists) {
-        expect(field.hint, `${field.name} does not explain the empty case`).toMatch(/leave\b.*\bempty/i);
+        expect(field.hint, `${field.name} does not explain the inherited case`).toMatch(
+          /follows the section order/i,
+        );
       }
     }
   });
@@ -133,17 +149,17 @@ describe('admin config', () => {
   });
 
   it('every order list only offers venues from the area it orders', async () => {
-    // Without this the Canggu lists also offer Uluwatu venues; picking one saves cleanly and
-    // changes nothing, because the id never matches on that page. Proven end-to-end in
-    // e2e/admin-venue-order.spec.ts — this is the cheap unit-level guard on the config itself.
+    // Without this the Canggu lists also showed Uluwatu venues; picking one saved cleanly and
+    // changed nothing, because the id never matches on that page. It used to be a Decap relation
+    // filter and is now the widget's own `area`, since the widget derives the list rather than
+    // offering a picker. Proven end-to-end in e2e/admin-venue-order.spec.ts — this is the cheap
+    // unit-level guard on the config itself.
     const config = await getConfig();
     const coll = config.collections.find((c: any) => c.name === 'venue-order');
 
     for (const file of coll.files) {
       for (const field of file.fields) {
-        expect(field.field.filters, `${file.name}/${field.name} is unfiltered`).toEqual([
-          { field: 'location', values: [file.name] },
-        ]);
+        expect(field.area, `${file.name}/${field.name} points at another area`).toBe(file.name);
       }
     }
   });

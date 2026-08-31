@@ -48,16 +48,12 @@
     [class*="-ToolbarContainer"] [class*="-DeleteButton"] { margin-left: 48px !important; }
 
     /* ---------- Venue order, from the 2026-08-31 report ----------
-       These style the `venue_order` widget in public/admin/venue-order-widget.js, which renders
-       its own numbered rows and a heading that opens them. Everything is scoped by that widget's
-       own class names, so unlike the rules above it cannot reach another screen.
-
-       The two rules that reach into Decap belong to the venue picker the widget borrows for each
-       row: react-select sizes its control for a full-size form field, and the row repeats the word
-       "Venue" under a list already labelled "Food & Dining". Both hang off emotion class names, so
-       a Decap bump makes them inert and the rows simply grow. */
+       These style the `venue_order` widget in public/admin/venue-order-widget.js, which renders its
+       own numbered rows and a heading that opens them. Every selector is one of that widget's own
+       class names, so unlike the rules above these cannot reach another screen, and a Decap upgrade
+       cannot make them inert. */
     .cp-order-head {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; align-items: center;
       background: #f6f6f6; border-radius: 4px; padding: 4px 8px;
     }
     .cp-order-toggle {
@@ -66,33 +62,27 @@
       background: none; border: 0; padding: 0 4px;
       font: inherit; font-weight: 600; color: #1f2937; text-align: left; cursor: pointer;
     }
+    .cp-order-toggle:disabled { color: #6b7280; cursor: default; }
     .cp-order-caret { display: inline-block; font-size: 11px; color: #6b7280; }
+    .cp-order-toggle:disabled .cp-order-caret { visibility: hidden; }
     .cp-open .cp-order-caret { transform: rotate(90deg); }
-    .cp-order-add {
-      min-height: 36px; padding: 0 14px; border: 0; border-radius: 4px;
-      background: #e5e7eb; font: inherit; font-weight: 600; color: #1f2937; cursor: pointer;
-    }
-    .cp-order-add:hover { background: #d1d5db; }
-    /* Hidden, not unmounted: the borrowed picker comes back blank if it is remounted. */
+    /* Hidden, not unmounted. Decap's own collapse unmounts rows, which is the fault this widget
+       exists to avoid; keeping the rows mounted also keeps their typed positions on screen. */
     .cp-order-rows { display: none; }
     .cp-open .cp-order-rows { display: block; padding: 8px 0 0; }
-    .cp-order-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .cp-order-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
     .cp-order-pos {
       width: 56px; min-height: 34px; padding: 4px 6px; text-align: center;
       border: 1px solid #d1d5db; border-radius: 4px; font: inherit;
     }
-    .cp-order-venue { flex: 1; min-width: 0; }
-    .cp-order-venue [class*="-ControlTopbar"] { display: none !important; }
-    /* 36px of top margin, there to separate full-size form fields, on every single row. */
-    .cp-order-venue [class*="-ControlContainer"] { margin: 0 !important; }
-    .cp-order-venue [class*="-control"] {
-      min-height: 34px !important; padding-top: 2px !important; padding-bottom: 2px !important;
+    .cp-order-name {
+      flex: 1; min-width: 0; min-height: 34px; display: flex; align-items: center;
+      padding: 0 10px; border-radius: 4px; background: #fff; border: 1px solid #eceff3;
+      /* Decap's form text is a muted grey meant for input placeholders; these are the venue names
+         and the only thing on the row worth reading. */
+      color: #1f2937;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .cp-order-del {
-      min-width: 34px; min-height: 34px; border: 0; border-radius: 4px;
-      background: none; font-size: 20px; line-height: 1; color: #6b7280; cursor: pointer;
-    }
-    .cp-order-del:hover { background: #fee2e2; color: #b91c1c; }
 
     /* Phones: Decap's split pane never stacks, so a 390px screen laid out at 800px and scrolled
        sideways — Delete and the strip's own "Put online now" ended up off-screen. Below 900px the

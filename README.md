@@ -148,42 +148,70 @@ Decap's `list` widget was the obvious answer and could not do either of the two 
   `onChange` for its own value only. Owning the whole array is the only way, and then the move is
   a `splice`.
 
-So the widget owns the array. It renders its own heading (`29 venues` / Add venue), a numbered box
-per row, and hides closed rows with `display: none` — **hidden, never unmounted**, which is the
-whole point. Typing a number and pressing Enter (or clicking away) moves that venue there and
-pushes the rest down; dragging is gone. Measured after: **2,642px** on load, **4,042px** with one
-section open, **44px** per row.
+- **"every subcategory is empty."** They were, and always had been. A tab list stores nothing until
+  someone reorders it, and empty means "inherit the section order" — correct behaviour that reads
+  as seventeen broken boxes, because `list` can only show the ids already stored. It also told Ivan
+  nothing about what the Dinner tab would actually look like.
 
-It does **not** reimplement the venue picker. `props.editorControl` is the same component Decap's
-own object and list widgets render children with, so each row gets the real `relation` control —
-live search over the backend, the area filter, resolved names — from the `field` block in the
-config. Two things to know if you touch it: `editorControl` reports changes as
-**`(field, value, metadata)`**, field first, and reading argument 0 as the value writes
-`Map { label: Venue, … }` into the order file (it did, once, and the entry read "NOT SAVED YET" on
-load); and `Immutable` is not exposed as a global, so an empty List is borrowed from a value already
-held rather than constructed.
+So the widget owns the array and **derives what it shows**. It renders a heading (`14 venues`), a
+numbered box and a venue name per row, and hides closed rows with `display: none` — **hidden, never
+unmounted**, which is the whole point. Typing a number and pressing Enter (or clicking away) moves
+that venue there and pushes the rest down; dragging is gone. Measured after: **2,642px** on load,
+**34px** per row.
 
-Its two CSS rules that reach into Decap hang off emotion class names, so a Decap bump can make them
-inert — `e2e/admin-venue-order.spec.ts` asserts the row height, that the sections load closed, that
-a heading opens one with the venue names already resolved, that **Add venue opens the section it
-adds to**, and that typing a position writes the moved array to disk.
-`test/admin-config.test.ts` pins the widget name and that `index.html` loads the script that
-registers it — an unregistered name renders a "Widget not found" box, not an error.
+### Every list is derived, so there is nothing to add or remove
+
+The rows are not the stored ids. They are every venue in this area, this section and — for a tab —
+this subcategory, fetched through `props.query`, the same Decap search action the relation widget
+uses (an empty search term returns the whole collection: probed, 34 hits for `food-venues`, each
+with full `data`). One promise per collection is shared across all 21 controls on the screen.
+
+That removes three problems at once. A venue created a minute ago is already in place, which
+retires the old *"i can't found Billy Ho here"* — he was in no list because he was added after they
+were written. There is nothing to delete either: removing an id never removed a venue from the
+site, it only dropped it to the bottom. And an untouched tab now shows the order it will actually
+inherit, rather than nothing.
+
+**Nothing is written by looking.** The stored value stays empty until a position is typed, so a tab
+keeps inheriting until it is deliberately given an order of its own; an e2e test asserts the file
+still has no `food__dinner` key after the list has been opened and read. The first move writes the
+whole derived list, which is also when a venue missing from a section list finally joins it.
+
+The order comes from `CpHelpers.effectiveOrder` in `public/admin/helpers.js` — a hand port of
+`subsOf` / `mergeOrder` / `sortVenues` from `src/lib/venues.ts`, because the widget is a plain
+script and cannot import the TypeScript the site sorts with. `test/venue-order-parity.test.ts` runs
+both over all 42 real lists and fails on any difference. **Change one, change both.** This matters
+more than the hours port: the widget tells Ivan "this is the order the page will use", so a drift
+makes the CMS lie about the one thing it exists to control.
+
+Config carries what the widget needs — `collection`, `area`, `section`, `subcategory`, `sub_order`
+— and each is pinned by `test/admin-config.test.ts`, because a missing one fails quietly as a list
+narrowed by the wrong thing. `sub_order` in particular only affects venues nobody has placed by
+hand, so dropping it would go unnoticed until someone compared the CMS to the site.
+
+Every CSS rule is now on the widget's own class names, so a Decap bump cannot make the layout inert
+and the rules cannot reach another screen. `Immutable` is not exposed as a global, so an empty List
+is borrowed from a value already held rather than constructed. `e2e/admin-venue-order.spec.ts`
+covers the row height, the closed-by-default load, a tab holding exactly its type's venues, the
+empty-tab wording, a 25→3 move reaching disk, and a tab reorder leaving its section alone.
+`test/admin-config.test.ts` also pins that `index.html` loads the script registering the widget —
+an unregistered name renders a "Widget not found" box, not an error.
 
 Unrelated but easy to trip over: Decap does **not** reload the entry when the route hash moves from
-one file in a file collection to another. Loading `.../uluwatu` directly renders its 6 rows;
-arriving there from `.../canggu` leaves all 111 Canggu rows on screen under the new address. That is
-why the picker tests take one area each.
+one file in a file collection to another. Loading `.../uluwatu` directly renders its own lists;
+arriving there from `.../canggu` leaves all the Canggu rows on screen under the new address. That is
+why the per-area tests take one area each.
 
-Each picker is filtered to the area being ordered — `filters: [{field: location, values: [area]}]` —
-because an order file covers one area, and without it the Canggu lists also offered Uluwatu venues.
-Picking one saved cleanly and changed nothing, since the id never matches on that page.
+The area narrowing used to be a Decap relation filter, `filters: [{field: location, values: [area]}]`,
+and is now the widget's own `area`. Without it the Canggu lists also offered Uluwatu venues, and
+picking one saved cleanly and changed nothing, since the id never matches on that page.
 
-The same trap exists for the per-tab lists, and is **not** fixed the same way. `location` is a plain
-string, but `subcategory` is an array, and Decap's relation filter does not match inside arrays: with
-`filters` on `subcategory`, the picker offered **zero** venues where the unfiltered control offered
-12. An empty picker is worse than an over-full one, so the tab lists stay unfiltered by type.
-`e2e/admin-venue-order.spec.ts` drives the real admin to hold both of these in place.
+The same trap exists for the per-tab lists, and could **not** be fixed the Decap way. `location` is a
+plain string, but `subcategory` is an array, and Decap's relation filter does not match inside arrays:
+with `filters` on `subcategory`, the picker offered **zero** venues where the unfiltered control offered
+12. So the subcategory narrowing is done by the widget, in `effectiveOrder`, where it is a plain
+`subcategory.includes(sub)` over data the widget already holds. `e2e/admin-venue-order.spec.ts` drives
+the real admin and checks each list against the venue files on disk, by name.
 
 Hints on these fields are kept to one short line and capped by a unit test. There are 21 lists per
 area, and a paragraph on each buried the controls under a wall of near-identical grey text — the
