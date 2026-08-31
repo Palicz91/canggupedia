@@ -11,6 +11,13 @@ npm run build        # Production build to dist/
 npm run build:e2e && npm run test:e2e  # Playwright e2e tests
 ```
 
+`npm run test:e2e` rebuilds `dist-e2e` itself, via `globalSetup` in `playwright.config.ts`. That is
+not belt-and-braces: the Playwright `webServer` only serves the prebuilt directory, and
+`reuseExistingServer` skips its command entirely whenever something is already listening on 4321.
+On 2026-08-31 a `serve` left over from an earlier session held the port and the whole admin suite
+passed green against a build made before the changes under test. Do not move the build back into
+`webServer`.
+
 `build:e2e` swaps the CMS backend to Decap's `test-repo`, which boots the admin with a one-click
 login and reads an in-memory repo from `window.repoFiles`. `e2e/seed.ts` fills that from the real
 files on disk, so the admin specs drive the actual CMS against actual venue data. It writes the tree
@@ -23,7 +30,24 @@ console error.
 
 The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git-gateway).
 
-The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Categories & types".
+The CMS config is **generated at build time** by `src/pages/admin/config.yml.ts`. There is no `public/admin/config.yml`. The "Type" dropdown on venue forms comes from `src/data/categories.json`, which Ivan edits in the CMS under "Sections & types".
+
+### The words on the screen
+
+Every label, hint and screen description in that file is written for a non-technical reader, and two
+tests in `test/admin-config.test.ts` hold it there: one rejects CMS vocabulary (`widget`,
+`collection`, `library`, `popup`, `publish`, …) anywhere Ivan can read it, the other caps hint
+length. Add a word to that list rather than fixing one hint by hand.
+
+Decap's own chrome is renamed the same way, in the `renameStrings` locale patch in
+`public/admin/index.html`: the top nav is **Edit | Photos** rather than "Contents | Media", the
+sidebar is headed "What you can edit" rather than "Collections", and Save means save (Decap calls it
+publish). `CMS.getLocale('en')` in the browser console prints every string available to rename.
+
+The panel also uses one word per thing, which is not something a test can check: the four groups are
+**sections** everywhere (never "categories"), going online is **Put online now** everywhere (never
+"publish"), and the panel that opens on a venue card is "when someone opens the venue" (never
+"popup"). If you add a screen, reuse the existing word.
 
 ### Home page
 
@@ -123,7 +147,8 @@ it. Then confirm a push actually deploys before walking away.
 
 Decap cannot drag-reorder entries of a folder collection, so the running order lives beside the
 venues in `src/data/venue-order/<area>.json` — one list of venue ids per category. Ivan edits it
-under **Venue order** in the CMS.
+under **Order of venues** in the CMS (the label was "Venue order", which reads as an order someone
+placed for a venue).
 
 ### It is a custom widget, not Decap's list
 

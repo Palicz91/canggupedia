@@ -205,22 +205,45 @@ describe('admin config', () => {
     }
   });
 
-  it('no jargon in labels or hints', async () => {
-    const config = await getConfig();
-    const forbidden = /\b(slug|widget|collection|field|JSON|repo|commit|deploy|URL|boolean|string|subcategory)\b/i;
+  /**
+   * Text the admin puts on screen from the config. `keys` picks which kind: labels and hints are
+   * the controls, `description` is the paragraph at the top of a screen — the longest thing Ivan
+   * reads and, until 2026-08-31, the only text here that nothing checked.
+   */
+  function readableText(config: any, keys: string[] = ['label', 'hint', 'description']) {
     const lines: string[] = [];
     function collect(obj: any) {
       if (typeof obj === 'string') return;
       if (Array.isArray(obj)) return obj.forEach(collect);
       if (obj && typeof obj === 'object') {
-        if (obj.label) lines.push(obj.label);
-        if (obj.hint) lines.push(obj.hint);
+        for (const key of keys) if (typeof obj[key] === 'string') lines.push(obj[key]);
         Object.values(obj).forEach(collect);
       }
     }
     collect(config.collections);
-    const hits = lines.filter((l) => forbidden.test(l));
+    return lines;
+  }
+
+  it('no jargon in labels, hints or descriptions', async () => {
+    // Ivan is not technical, and a word he cannot place is a word that stops him: he decided once
+    // already that this CMS was broken. Each of these named something real that has a plain name
+    // here instead — the media "library" is Choose an image, the venue "popup" is what opens when
+    // someone clicks the card, "publish" is Put online now.
+    const config = await getConfig();
+    const forbidden =
+      /\b(slug|widget|collection|field|JSON|repo|commit|deploy|URL|boolean|string|subcategory|popup|dropdown|library|entry|entries|CMS|publish\w*|metadata|parameter|attribute)\b/i;
+
+    const hits = readableText(config).filter((l) => forbidden.test(l));
     expect(hits).toEqual([]);
+  });
+
+  it('keeps every hint to a line or two', async () => {
+    // A hint is grey 14px text under a control. Past roughly two lines it stops being read at all,
+    // and the one it buries is the next control's. The order screen has a tighter cap of its own
+    // below, because it stacks 21 of them.
+    const config = await getConfig();
+    const long = readableText(config, ['hint']).filter((l) => l.length > 200);
+    expect(long).toEqual([]);
   });
 
   it('CMS_BACKEND=test-repo uses test-repo backend', async () => {

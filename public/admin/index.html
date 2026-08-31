@@ -209,11 +209,12 @@
       <p><kbd>Save</kbd> keeps your change. The website doesn't know yet. When you're done for the day, press <kbd>Put online now</kbd> in the bar at the bottom. About 2 minutes later, reload the website.</p>
       <p>Press it once at the end, not after every change.</p>
     </section>
-    <section><h4>Add a venue</h4><p>Pick a section on the left &rarr; <kbd>New</kbd> &rarr; fill in the form &rarr; <kbd>Save</kbd>.</p></section>
+    <section><h4>Add a venue</h4><p>Pick a section on the left &rarr; <kbd>Add</kbd> at the top right &rarr; fill in the form &rarr; <kbd>Save</kbd>.</p></section>
     <section><h4>Change a venue</h4><p>Type its name in the search box at the top &rarr; click it &rarr; change what you want &rarr; <kbd>Save</kbd>.</p></section>
     <section><h4>Change a photo</h4><p><kbd>Choose an image</kbd> &rarr; <kbd>Upload</kbd> &rarr; pick a photo from your computer. No links needed.</p></section>
     <section><h4>Uluwatu or Seminyak</h4><p>Same as Canggu. Set <kbd>Area</kbd> to Uluwatu inside the venue. That's all.</p></section>
-    <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p><kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Save</kbd> &rarr; <kbd>Put online now</kbd>. After 2 minutes, reload this page and the new type is in every venue's Type list.</p></section>
+    <section><h4>Change the order on a page</h4><p><kbd>Order of venues</kbd> &rarr; Canggu or Uluwatu &rarr; click a heading to open that list &rarr; type a new number next to a venue and press Enter. It jumps to that place and the rest shift down. Then <kbd>Save</kbd>.</p></section>
+    <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p><kbd>Sections &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Save</kbd> &rarr; <kbd>Put online now</kbd>. After 2 minutes, reload this page and the new type is in every venue's Type list.</p></section>
     <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>A switch on each venue. <kbd>Filter</kbd> &rarr; Top picks only shows which venues have it.</p></section>
     <section><h4>Removed something?</h4><p>Deleting doesn't show in the bar. <button type="button" class="cp-link" id="cp-help-go">Put online now</button> to send it to the website.</p></section>
   </div>
@@ -237,7 +238,25 @@
           return target;
         }
         CMS.registerLocale('en', merge(JSON.parse(JSON.stringify(en)), {
-          collection: { sidebar: { searchAll: 'Search by name' } },
+          /* Decap's own chrome, in the CMS's words: a top nav reading "Contents | Media", a sidebar
+             headed "Collections", and an add button that just says "＋ food venue". None of those
+             are things Ivan has a name for. Renamed to what each one actually does. */
+          app: {
+            header: { content: 'Edit', media: 'Photos', quickAdd: 'Add new' },
+            app: { errorHeader: 'Something is wrong with this page. Send Adam a screenshot of it.' },
+            notFoundPage: { header: 'That page does not exist.' }
+          },
+          mediaLibrary: {
+            mediaLibraryModal: { mediaAssets: 'Photos' },
+            mediaLibrary: { onDelete: 'Delete the photos you picked?' }
+          },
+          collection: {
+            sidebar: { collections: 'What you can edit', allCollections: 'Everything', searchAll: 'Search by name' },
+            collectionTop: {
+              newButton: '＋ Add %{collectionLabel}',
+              newButtonAriaLabel: 'Add a new %{collectionLabel}'
+            }
+          },
           editor: {
             editorToolbar: {
               publish: 'Save', publishing: 'Saving…', published: 'Saved', publishNow: 'Save now',
@@ -351,9 +370,11 @@
       function whyNot(reason) {
         if (reason === 'not-logged-in') return 'Your login has expired. Reload this page, log in again, then press Put online now.';
         if (reason === 'not-production') return 'This is a preview copy of the admin, not the real one. Open the admin from canggupedia.com and try there.';
-        if (reason === 'no-build-hook') return 'Publishing is not switched on for this site. Nothing you saved is lost — send Adam this message.';
-        if (reason && reason.indexOf('hook-failed') === 0) return 'The website refused the request (' + reason.replace('hook-failed-', 'code ') + '). Wait a minute and press it again.';
-        return 'Could not publish' + (reason ? ' (' + reason + ')' : '') + '. Nothing you saved is lost — send Adam this message.';
+        // The button says "Put online now", so every refusal says it the same way — "publish" was
+        // a word that appeared nowhere else Ivan can see.
+        if (reason === 'no-build-hook') return 'Putting things online is switched off for this site. Nothing you saved is lost — send Adam this message.';
+        if (reason && reason.indexOf('hook-failed') === 0) return 'The website did not accept it (' + reason.replace('hook-failed-', 'code ') + '). Wait a minute and press it again.';
+        return 'Could not put it online' + (reason ? ' (' + reason + ')' : '') + '. Nothing you saved is lost — send Adam this message.';
       }
       function putOnline() {
         var go = actions.querySelector('.cp-go');
