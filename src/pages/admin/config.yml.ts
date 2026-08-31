@@ -130,7 +130,7 @@ function orderFieldsFor(areaLabel: string) {
         subOrderKey(cat.value, sub.value),
         `${cat.title} — ${sub.name} tab only`,
         cat.value,
-        `Only changes the ${sub.name} tab. Leave this empty and the ${sub.name} tab follows the "${cat.title} — whole section" order above.`,
+        `Only changes the ${sub.name} tab. Add just the venues you want at the top — everything else keeps the order it has above. Leave this empty and the ${sub.name} tab follows the "${cat.title} — whole section" order above.`,
       ),
     ),
   ]);

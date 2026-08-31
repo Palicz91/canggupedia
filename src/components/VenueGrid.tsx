@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { MapPin, ArrowLeft, X } from 'lucide-react';
 import { toHref } from '../lib/links';
-import { subsOf, sortVenues, visibleSubcategories } from '../lib/venues';
+import { subsOf, sortVenues, visibleSubcategories, mergeOrder } from '../lib/venues';
 import { parseOpeningHours, todayName, type DayName } from '../lib/hours';
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
@@ -129,10 +129,13 @@ export default function VenueGrid({
   // A type tab uses its own hand-dragged order when one exists, otherwise it inherits the
   // section order. Empty means inherit, so adding the per-type lists changed nothing on the
   // site until someone actually drags a venue inside one.
-  const activeOrder =
-    (activeSubcategory && orderBySub?.[activeSubcategory]?.length
-      ? orderBySub[activeSubcategory]
-      : order) ?? [];
+  //
+  // mergeOrder keeps a type list as a prefix over the section order, so pinning one venue to a
+  // tab does not unrank the rest of it.
+  const activeOrder = mergeOrder(
+    activeSubcategory ? orderBySub?.[activeSubcategory] : undefined,
+    order ?? [],
+  );
 
   const filteredVenues = sortVenues(base, subOrder, activeOrder);
 

@@ -42,6 +42,24 @@ export function subOrdersFor(
 }
 
 /**
+ * Combines a per-type order with the section order for one tab.
+ *
+ * A type list is a PREFIX, not a replacement. Ivan only ever wants to pin a venue or two to the
+ * top of a tab; everything he did not name should keep the order he already dragged at section
+ * level. Treating the type list as the whole order instead would unrank every other venue on
+ * that tab and drop them back to the automatic featured/type/name sort — so pinning one venue
+ * under Dinner would silently reshuffle the other thirteen. That is the exact surprise this
+ * feature exists to remove, so it must not be reintroduced one level down.
+ *
+ * An empty or missing type list means "inherit", and returns the section order untouched.
+ */
+export function mergeOrder(typeOrder: string[] | undefined, sectionOrder: string[]): string[] {
+  if (!typeOrder?.length) return sectionOrder;
+  const pinned = new Set(typeOrder);
+  return [...typeOrder, ...sectionOrder.filter((id) => !pinned.has(id))];
+}
+
+/**
  * `orderIds` is the hand-dragged order from src/data/venue-order/<area>.json and wins
  * outright. A venue missing from that list — added since Ivan last dragged, or dropped
  * by mistake — falls back to the original rule and sorts after the ordered ones.

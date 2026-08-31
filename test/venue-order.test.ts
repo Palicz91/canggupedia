@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { subOrderKey, subOrdersFor, sortVenues, type VenueLike } from '../src/lib/venues';
+import { subOrderKey, subOrdersFor, sortVenues, mergeOrder, type VenueLike } from '../src/lib/venues';
 
 const AREAS = ['canggu', 'uluwatu'];
 
@@ -45,6 +45,56 @@ describe('subOrdersFor', () => {
         expect(() => subOrdersFor(file, category)).not.toThrow();
       }
     }
+  });
+});
+
+describe('mergeOrder', () => {
+  it('inherits the section order when the type list is empty or missing', () => {
+    expect(mergeOrder(undefined, ['a', 'b'])).toEqual(['a', 'b']);
+    expect(mergeOrder([], ['a', 'b'])).toEqual(['a', 'b']);
+  });
+
+  it('puts the type list first and keeps the section order behind it', () => {
+    expect(mergeOrder(['c'], ['a', 'b', 'c', 'd'])).toEqual(['c', 'a', 'b', 'd']);
+  });
+
+  it('does not repeat a venue that appears in both lists', () => {
+    const merged = mergeOrder(['b', 'a'], ['a', 'b', 'c']);
+    expect(merged).toEqual(['b', 'a', 'c']);
+    expect(new Set(merged).size).toBe(merged.length);
+  });
+
+  it('keeps a pinned venue that is missing from the section order', () => {
+    expect(mergeOrder(['new'], ['a', 'b'])).toEqual(['new', 'a', 'b']);
+  });
+});
+
+describe('pinning one venue to a tab does not reshuffle the rest', () => {
+  // The regression this exists for. Ivan drags Woods Bali to the top of the whole Food section,
+  // then separately pins Billy Ho to the top of Dinner. Before mergeOrder, that second action
+  // unranked every other dinner venue and dropped Woods Bali from 1st to last, because the type
+  // list replaced the section order instead of sitting in front of it.
+  const venues: VenueLike[] = [
+    { id: 'woods', name: 'Woods Bali', subcategory: ['dinner'] },
+    { id: 'avocado', name: 'Avocado Factory', subcategory: ['dinner'] },
+    { id: 'skool', name: 'Skool', subcategory: ['dinner'] },
+    { id: 'billy-ho', name: 'Billy Ho', subcategory: ['dinner'] },
+  ];
+  const subOrder = ['dinner'];
+  const sectionOrder = ['woods', 'avocado', 'skool', 'billy-ho'];
+
+  it('inherits his dragged section order when the type list is empty', () => {
+    const order = mergeOrder(undefined, sectionOrder);
+    expect(sortVenues(venues, subOrder, order).map((v) => v.id)).toEqual([
+      'woods', 'avocado', 'skool', 'billy-ho',
+    ]);
+  });
+
+  it('moves only the pinned venue and leaves the others in his order', () => {
+    const order = mergeOrder(['billy-ho'], sectionOrder);
+    expect(sortVenues(venues, subOrder, order).map((v) => v.id)).toEqual([
+      'billy-ho', 'woods', 'avocado', 'skool',
+    ]);
   });
 });
 
