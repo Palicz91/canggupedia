@@ -1,18 +1,19 @@
 {
-  "id": "canggu-party-10",
+  "ticketUrl": "https://atlasbeachfest.com/super-club",
+  "tableBookingUrl": "https://atlasbeachfest.com/super-club",
   "name": "Atlas Super Club",
-  "description": "is Bali's largest nightclub, located at Atlas Beach Fest in Canggu. It is a premium, three-level venue with a high-energy atmosphere, known for its industrial design, massive lighting and sound systems, and top DJs. The club operates seven days a week and features different themed nights.",
+  "featured": true,
+  "priceRange": "Entry / One-Night Pass: starting from ~Rp 100.000 (general admission) up to ~Rp 150.000 depending on night & gender promos; day-bed / VIP & day-club rates from ~Rp 500.000 and up.",
   "imageUrl": "/images/atlas-super-club.webp",
+  "location": "canggu",
+  "openingHours": "Nightclub hours: daily 21:00 – 03:00",
+  "id": "canggu-party-10",
+  "description": "is Bali's largest nightclub, located at Atlas Beach Fest in Canggu. It is a premium, three-level venue with a high-energy atmosphere, known for its industrial design, massive lighting and sound systems, and top DJs. The club operates seven days a week and features different themed nights.",
+  "instagramUrl": "https://instagram.com/atlasbeachclub",
   "category": "hangout",
   "subcategory": [
-    "party"
+    "party",
+    "beach-clubs"
   ],
-  "location": "canggu",
-  "googleMapsUrl": "https://maps.app.goo.gl/k9hxLHoEe6TB7hsN7",
-  "instagramUrl": "https://instagram.com/atlasbeachclub",
-  "featured": true,
-  "openingHours": "Nightclub hours: daily 21:00 – 03:00",
-  "priceRange": "Entry / One-Night Pass: starting from ~Rp 100.000 (general admission) up to ~Rp 150.000 depending on night & gender promos; day-bed / VIP & day-club rates from ~Rp 500.000 and up.",
-  "tableBookingUrl": "https://atlasbeachfest.com/super-club",
-  "ticketUrl": "https://atlasbeachfest.com/super-club"
+  "googleMapsUrl": "https://maps.app.goo.gl/k9hxLHoEe6TB7hsN7"
 }
