@@ -63,24 +63,43 @@ const CANONICAL: Record<string, DayName> = {
 };
 
 /**
- * Real hours contain a digit. "Closed" is the one exception.
+ * A day's text must be a time range and nothing else. "Closed" is the one exception.
  *
- * This is what rejects day names that appear inside prose rather than as list headings:
- *   "Friday & Saturday: 22:00 – late"      -> Friday's text is "&"
- *   "...often until ~02:00 on Wed/Thu/Sat" -> Wednesday's and Thursday's text is "/"
- * Both used to slice into a table that was actively wrong and dropped the real hours. Now
- * they fail this check, the whole parse is abandoned, and the original line is printed.
+ * Requiring merely "contains a digit" was not enough. It rejected the pure-punctuation cases
+ * ("Friday & Saturday: ..." leaving Friday as "&") but still accepted prose that happens to
+ * carry a number, which slices into a table that is confidently wrong:
+ *
+ *   "Happy hour Fri 5-7pm. Open daily 11am-11pm, Sat until 1am"
+ *      -> Friday "5-7pm. Open daily 11am-11pm", Saturday "until 1am"
+ *      -> a two-day table for a venue that is open seven days.
+ *
+ *   "Mon 9-5 ... Sun 9-5. Hours might differ · Holiday hours"   (Google's own panel suffix)
+ *      -> Sunday "9-5. Hours might differ · Holiday hours"
+ *
+ * Anchoring the whole string to a time shape rejects both, so the original line is printed
+ * unchanged instead. Being wrong here is worse than doing nothing.
  */
+const CLOCK = String.raw`\d{1,2}(?:[:.]\d{2})?\s*(?:am|pm)?`;
+const DASH = String.raw`(?:[-–—−‐]+|to|till|til|until)`;
+const OPEN_ENDED = String.raw`(?:late(?:\s*night)?|midnight|close|closing)`;
+const RANGE = String.raw`${CLOCK}\s*${DASH}\s*(?:${CLOCK}|${OPEN_ENDED})`;
+const SEPARATOR = String.raw`(?:[,&/;+]|and)`;
+const HOURS_TEXT = new RegExp(
+  String.raw`^(?:closed|${RANGE}(?:\s*${SEPARATOR}\s*${RANGE})*)$`,
+  'i',
+);
+
 function looksLikeHours(text: string): boolean {
-  return /\d/.test(text) || text.toLowerCase() === 'closed';
+  return HOURS_TEXT.test(text);
 }
 
 /** Strip the separators that sit between a day name and its hours, plus trailing punctuation. */
 function cleanHours(raw: string): string {
   return raw
     .replace(/\s+/g, ' ')
-    .replace(/^[\s:\-–—,;|]+/, '')
-    .replace(/[\s,;|]+$/, '')
+    // U+2212 MINUS and U+2010 HYPHEN both turn up in text pasted out of Google.
+    .replace(/^[\s:\-–—−‐,;|]+/, '')
+    .replace(/[\s,;|.]+$/, '')
     .trim();
 }
 
@@ -102,6 +121,12 @@ export function parseOpeningHours(input: string | null | undefined): DayHours[] 
 
   const matches = [...input.matchAll(DAY_PATTERN)];
   if (matches.length < 2) return null;
+
+  // Anything written before the first day name is not part of any day's hours and has nowhere
+  // to go in a table, so it would simply vanish from the page:
+  //   "Kitchen closes 22:00. Monday 11-23 Tuesday 11-23"  -> the kitchen note disappears.
+  // Silently dropping something Ivan typed is worse than printing the line as he wrote it.
+  if (/[a-z0-9]/i.test(input.slice(0, matches[0].index ?? 0))) return null;
 
   const found = new Map<DayName, string>();
 

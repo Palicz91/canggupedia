@@ -55,8 +55,14 @@ export function subOrdersFor(
  */
 export function mergeOrder(typeOrder: string[] | undefined, sectionOrder: string[]): string[] {
   if (!typeOrder?.length) return sectionOrder;
-  const pinned = new Set(typeOrder);
-  return [...typeOrder, ...sectionOrder.filter((id) => !pinned.has(id))];
+  const pinned = new Set<string>();
+  const head: string[] = [];
+  for (const id of typeOrder) {
+    if (pinned.has(id)) continue;
+    pinned.add(id);
+    head.push(id);
+  }
+  return [...head, ...sectionOrder.filter((id) => !pinned.has(id))];
 }
 
 /**
@@ -69,7 +75,14 @@ export function sortVenues<T extends VenueLike>(
   subOrder: string[],
   orderIds: string[] = [],
 ): T[] {
-  const rank = new Map(orderIds.map((id, i) => [id, i]));
+  // First occurrence wins. Nothing stops Ivan adding the same venue to a list twice — the CMS
+  // relation control has no uniqueness check — and building the map straight from the array
+  // would let the later, lower entry overwrite the earlier one, so a venue he dragged to the
+  // top would render further down instead. Silent and baffling from his side.
+  const rank = new Map<string, number>();
+  orderIds.forEach((id, i) => {
+    if (!rank.has(id)) rank.set(id, i);
+  });
   return [...venues].sort((a, b) => {
     const ra = rank.get(a.id);
     const rb = rank.get(b.id);

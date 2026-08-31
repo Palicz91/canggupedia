@@ -65,6 +65,49 @@ describe('parseOpeningHours', () => {
     ).toBeNull();
   });
 
+  it('refuses prose that happens to contain numbers', () => {
+    // "Contains a digit" was not a strict enough test for a day's hours. This one used to give
+    // Friday "5-7pm. Open daily 11am-11pm" and Saturday "until 1am" — a two-day table for a
+    // venue open all week.
+    expect(
+      parseOpeningHours('Happy hour Fri 5-7pm. Open daily 11am-11pm, Sat until 1am'),
+    ).toBeNull();
+  });
+
+  it("refuses Google's own trailing note rather than gluing it onto Sunday", () => {
+    // The guide tells Ivan to copy the week straight out of Google, and Google's panel often
+    // carries this suffix. It used to land inside Sunday's hours.
+    expect(
+      parseOpeningHours(
+        'Mon 9-5 Tue 9-5 Wed 9-5 Thu 9-5 Fri 9-5 Sat 9-5 Sun 9-5. Hours might differ · Holiday hours',
+      ),
+    ).toBeNull();
+  });
+
+  it('refuses input with text before the first day, instead of dropping it', () => {
+    // A table has nowhere to put this note, so it would silently disappear from the page.
+    expect(parseOpeningHours('Kitchen closes 22:00. Monday 11-23 Tuesday 11-23')).toBeNull();
+  });
+
+  it('accepts the unicode dashes that come with pasted text', () => {
+    // U+2212 MINUS between the day and its hours.
+    expect(parseOpeningHours('Monday − 9am-5pm Tuesday − 9am-5pm')).toEqual([
+      { day: 'Monday', hours: '9am-5pm' },
+      { day: 'Tuesday', hours: '9am-5pm' },
+    ]);
+  });
+
+  it('accepts open-ended and split hours', () => {
+    expect(parseOpeningHours('Friday 22:00 – late Saturday 22:00 – late')).toEqual([
+      { day: 'Friday', hours: '22:00 – late' },
+      { day: 'Saturday', hours: '22:00 – late' },
+    ]);
+    expect(parseOpeningHours('Monday 9-12, 14-18 Tuesday 9-12, 14-18')).toEqual([
+      { day: 'Monday', hours: '9-12, 14-18' },
+      { day: 'Tuesday', hours: '9-12, 14-18' },
+    ]);
+  });
+
   it('refuses input that names the same day twice', () => {
     expect(parseOpeningHours('Monday 9-5 Monday 6-9 Tuesday 9-5')).toBeNull();
   });

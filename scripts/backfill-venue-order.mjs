@@ -2,7 +2,9 @@
  * Seeds src/data/venue-order/<area>.json from the order the site currently renders.
  *
  * Run once when introducing hand-dragged ordering, and again only if the order files
- * ever need rebuilding from scratch. Re-running OVERWRITES whatever Ivan has dragged.
+ * ever need rebuilding from scratch. Re-running OVERWRITES the section lists, so whatever
+ * Ivan has dragged at section level is lost. The per-type lists ("food__dinner") are read
+ * back and preserved, because this script has no way to rebuild those.
  *
  * The comparator below mirrors the fallback branch of sortVenues() in src/lib/venues.ts.
  * Keep them in step, or a rebuild will silently reshuffle the site.
@@ -51,6 +53,21 @@ for (const { value: category } of categories) {
 
 mkdirSync(OUT_DIR, { recursive: true });
 for (const area of AREAS) {
+  const path = join(OUT_DIR, `${area}.json`);
+
+  // Preserve the per-type lists ("food__dinner" and friends). This script only knows how to
+  // rebuild the section lists; building `out` from scratch and writing it wholesale would
+  // silently delete every per-tab order Ivan has dragged, with no way to get it back.
+  let existing = {};
+  try {
+    existing = JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    existing = {};
+  }
+  const preserved = Object.fromEntries(
+    Object.entries(existing).filter(([key]) => key.includes('__')),
+  );
+
   const out = {};
   for (const { value: category, subOrder } of categories) {
     out[category] = venues
@@ -58,7 +75,8 @@ for (const area of AREAS) {
       .sort(legacyCompare(subOrder))
       .map((v) => v.id);
   }
-  const path = join(OUT_DIR, `${area}.json`);
+  Object.assign(out, preserved);
+
   writeFileSync(path, JSON.stringify(out, null, 2) + '\n');
   const counts = Object.entries(out).map(([k, v]) => `${k}=${v.length}`).join(' ');
   console.log(`${path}  ${counts}`);

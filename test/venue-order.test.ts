@@ -67,6 +67,26 @@ describe('mergeOrder', () => {
   it('keeps a pinned venue that is missing from the section order', () => {
     expect(mergeOrder(['new'], ['a', 'b'])).toEqual(['new', 'a', 'b']);
   });
+
+  it('collapses a venue listed twice down to its first position', () => {
+    expect(mergeOrder(['a', 'b', 'a'], ['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
+  });
+});
+
+describe('a venue added to a list twice still sorts by its first position', () => {
+  // Nothing in the CMS stops Ivan adding the same venue twice. Ranking by the last occurrence
+  // would drop a venue he dragged to the top down to wherever the duplicate sat.
+  const venues: VenueLike[] = [
+    { id: 'a', name: 'A', subcategory: ['dinner'] },
+    { id: 'b', name: 'B', subcategory: ['dinner'] },
+    { id: 'c', name: 'C', subcategory: ['dinner'] },
+  ];
+
+  it('keeps the first position when an id repeats in the order list', () => {
+    expect(sortVenues(venues, ['dinner'], ['a', 'b', 'a', 'c']).map((v) => v.id)).toEqual([
+      'a', 'b', 'c',
+    ]);
+  });
 });
 
 describe('pinning one venue to a tab does not reshuffle the rest', () => {
