@@ -52,6 +52,18 @@ for (const area of ['canggu', 'uluwatu']) {
   });
 }
 
+test('a venue that is not in the order list yet can still be found by name', async ({ page }) => {
+  // Ivan's third complaint, verbatim: "And also i can't found Billy Ho here". Billy Ho was added
+  // after the order lists were seeded, so he is not a row in any of them — the only way to reach
+  // him is Add venue, then type the name. If that search ever stops matching, a new venue becomes
+  // permanently stuck at the bottom of the site with no way to move it.
+  await seedAdmin(page);
+  await loginAdmin(page);
+
+  const found = await optionsFor(page, 'canggu', 'Dinner tab only', 'Billy');
+  expect(found.join(' | ')).toContain('Billy Ho');
+});
+
 test('a tab list offers the same venues as its section, not an empty picker', async ({ page }) => {
   await seedAdmin(page);
   await loginAdmin(page);

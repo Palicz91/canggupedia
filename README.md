@@ -137,6 +137,22 @@ The lists were seeded from the order the site already rendered, by `scripts/back
 the fallback branch of `sortVenues`, so if you change one, change both or a rebuild silently
 reshuffles the site.
 
+### Duplicate venue names (open, needs a content decision)
+
+Four venues are entered twice and render two cards on the same page, confirmed on the built site:
+
+| Name | Entries | Looks like |
+|---|---|---|
+| Woods Bali (canggu, food) | `canggu-dinner-6`, `canggu-brunch-19` | one venue split by type instead of one entry with both types |
+| Canggu Padel (canggu, wellness) | `canggu-padel-3`, `canggu-padel-8` | a straight duplicate — same name, same type |
+| Bali Social Club (canggu, wellness) | `canggu-padel-1`, `canggu-gym-1` | one venue offering two things |
+| The Canggu Studio (canggu, wellness) | `canggu-yoga-1`, `canggu-boxing-10` | one venue offering two things |
+
+Merging means choosing which description, photo and hours survive and deleting the other entry, so
+it is deliberately left for Ivan/Adam rather than resolved in code. Note this also breaks
+name-based lookups: `e2e/venue-order-site.spec.ts` resolves id to name, never the reverse, because
+a name lookup here silently picks the wrong entry.
+
 A venue deleted in the CMS leaves a dangling id behind here. That is harmless — `sortVenues` ignores
 ids it cannot match — and deliberately not a test failure, so it can never block Ivan's next deploy.
 
