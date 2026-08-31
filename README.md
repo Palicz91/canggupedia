@@ -11,6 +11,14 @@ npm run build        # Production build to dist/
 npm run build:e2e && npm run test:e2e  # Playwright e2e tests
 ```
 
+`build:e2e` swaps the CMS backend to Decap's `test-repo`, which boots the admin with a one-click
+login and reads an in-memory repo from `window.repoFiles`. `e2e/seed.ts` fills that from the real
+files on disk, so the admin specs drive the actual CMS against actual venue data. It writes the tree
+in **two shapes on purpose**: folder collections read `repoFiles['src/data/venues/food']` with the
+whole path as one flat key, while file collections split the path and walk it nested. Every leaf
+needs both `path` and `content`. Get any of that wrong and the admin renders "No Entries" with no
+console error.
+
 ## Admin CMS
 
 The admin panel lives at `/admin/` and uses Decap CMS with Netlify Identity (git-gateway).
@@ -88,9 +96,26 @@ under **Venue order** in the CMS, where each list is a draggable `relation` widg
 
 Those lists are deliberately **not** collapsed. Decap builds a collapsed row's summary from the raw
 stored value, and these rows store a bare venue id, so every row rendered as the word "Venue" —
-draggable but unreadable. Expanded, each row renders its relation control, which shows the venue's
+draggable but unreadable. Adding `summary: '{{fields.venue}}'` does render the id instead, but the
+older venues carry ids like `canggu-brunch-1`, so the list still reads as nonsense (checked on
+screen). Expanded, each row renders its relation control, which resolves the id to the venue's real
 name. The cost is a tall page (54 rows for Canggu wellness); `test/admin-config.test.ts` pins
 `collapsed: false` so it can't quietly regress.
+
+Each picker is filtered to the area being ordered — `filters: [{field: location, values: [area]}]` —
+because an order file covers one area, and without it the Canggu lists also offered Uluwatu venues.
+Picking one saved cleanly and changed nothing, since the id never matches on that page.
+
+The same trap exists for the per-tab lists, and is **not** fixed the same way. `location` is a plain
+string, but `subcategory` is an array, and Decap's relation filter does not match inside arrays: with
+`filters` on `subcategory`, the picker offered **zero** venues where the unfiltered control offered
+12. An empty picker is worse than an over-full one, so the tab lists stay unfiltered by type.
+`e2e/admin-venue-order.spec.ts` drives the real admin to hold both of these in place.
+
+Hints on these fields are kept to one short line and capped by a unit test. There are 21 lists per
+area, and a paragraph on each buried the controls under a wall of near-identical grey text — the
+state that made the screen unusable in the first place. The long explanation lives once, in the
+collection description.
 
 `sortVenues()` in `src/lib/venues.ts` treats that list as authoritative. A venue missing from it —
 newly added, or dropped by mistake — falls back to the old rule (featured, then type order, then

@@ -69,7 +69,36 @@ describe('admin config', () => {
       const typeLists = file.fields.filter((f: any) => f.name.includes('__'));
       expect(typeLists.length).toBeGreaterThan(0);
       for (const field of typeLists) {
-        expect(field.hint, `${field.name} does not explain the empty case`).toMatch(/leave this empty/i);
+        expect(field.hint, `${field.name} does not explain the empty case`).toMatch(/leave\b.*\bempty/i);
+      }
+    }
+  });
+
+  it('keeps the order hints short enough to not bury the controls', async () => {
+    // There are 21 of these lists per area. A paragraph on each turned the screen into a wall of
+    // near-identical grey text with the actual controls lost inside it.
+    const config = await getConfig();
+    const coll = config.collections.find((c: any) => c.name === 'venue-order');
+
+    for (const file of coll.files) {
+      for (const field of file.fields) {
+        expect(field.hint.length, `${field.name} hint is too long`).toBeLessThanOrEqual(140);
+      }
+    }
+  });
+
+  it('every order list only offers venues from the area it orders', async () => {
+    // Without this the Canggu lists also offer Uluwatu venues; picking one saves cleanly and
+    // changes nothing, because the id never matches on that page. Proven end-to-end in
+    // e2e/admin-venue-order.spec.ts — this is the cheap unit-level guard on the config itself.
+    const config = await getConfig();
+    const coll = config.collections.find((c: any) => c.name === 'venue-order');
+
+    for (const file of coll.files) {
+      for (const field of file.fields) {
+        expect(field.field.filters, `${file.name}/${field.name} is unfiltered`).toEqual([
+          { field: 'location', values: [file.name] },
+        ]);
       }
     }
   });

@@ -83,15 +83,22 @@ const venueCollections = [
  * in its own file per area: a list of venue ids that Ivan drags. src/lib/venues.ts sorts by
  * that list, and anything missing from it falls to the bottom.
  */
-function orderListField(name: string, label: string, collectionValue: string, hint: string) {
+function orderListField(
+  name: string,
+  label: string,
+  collectionValue: string,
+  hint: string,
+  area: string,
+) {
   return {
     label,
     name,
     label_singular: 'venue',
     widget: 'list',
-    // Not collapsed. A collapsed row shows the field label — literally the word "Venue", 29 times
-    // over — because Decap builds row summaries from raw stored values and these rows store a bare
-    // id. Expanded, each row renders its relation control, which shows the venue's name.
+    // Not collapsed, and no `summary`. A collapsed row can only show the stored value, which is a
+    // bare id — and the older venues carry ids like "canggu-brunch-1", so a collapsed list reads
+    // as nonsense (verified on screen). Expanded, each row renders its relation control, which
+    // resolves the id to the venue's real name. Rows are tall as a result; admin.css trims them.
     collapsed: false,
     required: false,
     hint,
@@ -103,6 +110,15 @@ function orderListField(name: string, label: string, collectionValue: string, hi
       value_field: 'id',
       display_fields: ['name', 'location'],
       search_fields: ['name'],
+      // Each order file covers one area, so only offer that area's venues. Without this the
+      // Canggu lists also offer Uluwatu venues (observed in e2e/admin-venue-order.spec.ts): picking
+      // one saves happily and changes nothing, because the id never matches on that page.
+      //
+      // Deliberately NOT filtered by subcategory as well, even though the same trap exists for
+      // types. `location` is a plain string; `subcategory` is an array, and Decap's filter does
+      // not match inside arrays — probed directly, the unfiltered control offered 12 venues and
+      // the subcategory-filtered one offered 0. An empty picker is worse than an over-full one.
+      filters: [{ field: 'location', values: [area] }],
     },
   };
 }
@@ -117,20 +133,26 @@ function orderListField(name: string, label: string, collectionValue: string, hi
  * This is 21 lists per area rather than 4. An empty list is only a label and an Add button,
  * so the screen stays short until the lists are used.
  */
-function orderFieldsFor(areaLabel: string) {
+function orderFieldsFor(areaLabel: string, areaValue: string) {
   return categories.flatMap((cat) => [
     orderListField(
       cat.value,
       `${cat.title} — whole section`,
       cat.value,
-      `Drag the handles to reorder. The top of this list shows first on the ${areaLabel} ${cat.title} page, on the All tab. A venue you just created is NOT in this list yet — scroll to the bottom, click **Add venue**, then type its name into the new row to find it.`,
+      // Short on purpose. There are 21 of these lists per area, so a paragraph on each one
+      // buries the actual controls under a wall of near-identical grey text — which is the
+      // state that made this screen unusable in the first place. The full explanation lives
+      // once, in the collection description at the top of the page.
+      `Order of the ${areaLabel} ${cat.title} page, All tab.`,
+      areaValue,
     ),
     ...cat.subcategories.map((sub) =>
       orderListField(
         subOrderKey(cat.value, sub.value),
         `${cat.title} — ${sub.name} tab only`,
         cat.value,
-        `Only changes the ${sub.name} tab. Add just the venues you want at the top — everything else keeps the order it has above. Only venues that have ${sub.name} as one of their types show on this tab, so adding any other venue here does nothing. Leave this empty and the ${sub.name} tab follows the "${cat.title} — whole section" order above.`,
+        `Only the ${sub.name} tab. Add just the ones you want at the top; leave empty to follow the section order above.`,
+        areaValue,
       ),
     ),
   ]);
@@ -140,16 +162,23 @@ const venueOrderCollection = {
   name: 'venue-order',
   label: 'Venue order',
   description:
-    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. A venue you just created does not appear in these lists on its own — until you add it, it sits at the bottom of the website page. To move it up: scroll to the bottom of the right list, click Add venue, then type its name into the new row.',
+    'The order venues appear on the website. Open an area, drag a venue up or down, then Save. ' +
+    'A venue you just created does not appear in these lists on its own — until you add it, it ' +
+    'sits at the bottom of the website page. To move it up: scroll to the bottom of the right ' +
+    'list, click Add venue, then type its name into the new row. ' +
+    'Each section has a "whole section" list plus one list per tab. The tab lists only need the ' +
+    'few venues you want pinned at the top — everything else keeps the order from the section ' +
+    'list. A venue only shows on a tab if it has that type, so adding it to a tab list it does ' +
+    'not belong to has no effect.',
   editor: { preview: false },
   files: [
     {
       name: 'canggu', label: 'Canggu', file: 'src/data/venue-order/canggu.json', format: 'json',
-      fields: orderFieldsFor('Canggu'),
+      fields: orderFieldsFor('Canggu', 'canggu'),
     },
     {
       name: 'uluwatu', label: 'Uluwatu', file: 'src/data/venue-order/uluwatu.json', format: 'json',
-      fields: orderFieldsFor('Uluwatu'),
+      fields: orderFieldsFor('Uluwatu', 'uluwatu'),
     },
   ],
 };
