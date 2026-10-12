@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import eventsData from '../data/events.json';
+import { upcomingEvents, baliToday, lastDay } from '../lib/events';
+import { toHref } from '../lib/links';
+import { cdnImage } from '../lib/images';
 
-const sortedEvents = [...eventsData.events].sort(
-  (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-);
+// Build-time cut. The inline script below repeats it in the browser because the site only
+// rebuilds when someone saves in the CMS.
+const sortedEvents = upcomingEvents(eventsData.events, baliToday());
 ---
 
 <BaseLayout
@@ -25,14 +28,20 @@ const sortedEvents = [...eventsData.events].sort(
       {sortedEvents.length > 0 ? (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {sortedEvents.map((event) => (
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover event-card" data-location={event.location}>
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover event-card" data-location={event.location} data-date={lastDay(event)}>
               <div class="relative h-56">
-                <img
-                  src={event.imageUrl}
-                  alt={event.title}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100" aria-hidden="true">
+                  <img src="/images/pediafamlogo.webp" alt="" class="w-24 max-w-[60%] opacity-40" />
+                </div>
+                {event.imageUrl && (
+                  <img
+                    src={cdnImage(event.imageUrl, 800)}
+                    alt={event.title}
+                    class="relative w-full h-full object-cover"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
+                )}
               </div>
               <div class="p-6">
                 <h3 class="font-display font-bold text-2xl text-gray-800 mb-3">
@@ -70,9 +79,9 @@ const sortedEvents = [...eventsData.events].sort(
                   {event.description}
                 </p>
 
-                {event.ticketUrl && (
+                {toHref(event.ticketUrl) && (
                   <a
-                    href={event.ticketUrl}
+                    href={toHref(event.ticketUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="block w-full bg-gradient-tropical text-white py-3 px-6 rounded-xl font-bold hover:shadow-lg transition-all hover:scale-105 text-center"
@@ -84,28 +93,51 @@ const sortedEvents = [...eventsData.events].sort(
             </div>
           ))}
         </div>
-      ) : (
-        <div class="text-center py-16">
-          <p class="text-xl text-gray-600 mb-4">No upcoming events yet.</p>
-          <p class="text-gray-500">Check back soon for exciting events!</p>
-        </div>
-      )}
+      ) : null}
+
+      <div id="empty-state" class="text-center py-16" hidden={sortedEvents.length > 0}>
+        <p id="empty-state-text" class="text-xl text-gray-600">No upcoming events right now. Check back soon.</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
 
 <script>
+  import { baliToday } from '../lib/events';
+
   const params = new URLSearchParams(window.location.search);
   const location = params.get('location');
   if (location) {
     const name = location.charAt(0).toUpperCase() + location.slice(1);
     const subtitle = document.getElementById('events-subtitle');
     if (subtitle) subtitle.textContent = `${name} - Upcoming Parties, Festivals & Conferences`;
+  }
 
-    document.querySelectorAll('.event-card').forEach((card) => {
-      if (card.getAttribute('data-location') !== location) {
-        (card as HTMLElement).style.display = 'none';
-      }
-    });
+  const today = baliToday();
+  let upcoming = 0;
+  let shown = 0;
+  document.querySelectorAll<HTMLElement>('.event-card').forEach((card) => {
+    const date = card.getAttribute('data-date') || '';
+    if (date && date < today) {
+      card.style.display = 'none';
+      return;
+    }
+    upcoming++;
+    if (location && card.getAttribute('data-location') !== location) {
+      card.style.display = 'none';
+      return;
+    }
+    shown++;
+  });
+
+  const empty = document.getElementById('empty-state');
+  const emptyText = document.getElementById('empty-state-text');
+  if (empty && emptyText) {
+    if (shown === 0) {
+      emptyText.textContent = upcoming > 0 ? 'Nothing in this area yet.' : 'No upcoming events right now. Check back soon.';
+      empty.hidden = false;
+    } else {
+      empty.hidden = true;
+    }
   }
 </script>

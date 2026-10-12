@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, it, expect } from 'vitest';
 import { toHref } from '../src/lib/links';
 import { sortVenues, visibleSubcategories, subsOf } from '../src/lib/venues';
@@ -16,7 +17,16 @@ describe('toHref', () => {
     ['instagram.com/cratecafe', 'instagram', 'https://instagram.com/cratecafe'],
     ['www.instagram.com/cratecafe/', 'instagram', 'https://instagram.com/cratecafe'],
     ['https://instagram.com/cratecafe', 'instagram', 'https://instagram.com/cratecafe'],
-    ['bali.socialclub', 'instagram', 'https://bali.socialclub'],
+    ['bali.socialclub', 'instagram', 'https://instagram.com/bali.socialclub'],
+    ['@the.lawn.canggu', 'instagram', 'https://instagram.com/the.lawn.canggu'],
+    ['instagram.com/cratecafe?igsh=x', 'instagram', 'https://instagram.com/cratecafe'],
+    ['mailto:hi@x.com', undefined, 'mailto:hi@x.com'],
+    ['tel:+62812', undefined, 'tel:+62812'],
+    ['+62 812 3456', undefined, undefined],
+    ['crate cafe', undefined, undefined],
+    ['crate cafe', 'instagram', undefined],
+    ['cratecafe', undefined, undefined],
+    ['maps.app.goo.gl/abc', undefined, 'https://maps.app.goo.gl/abc'],
   ];
 
   for (const [input, kind, expected] of cases) {
@@ -24,6 +34,37 @@ describe('toHref', () => {
       expect(toHref(input, kind as 'instagram' | undefined)).toBe(expected);
     });
   }
+});
+
+// public/admin/helpers.js is the CMS-side mirror. Same inputs, same result, except that it keeps
+// the typed text where toHref gives up.
+const { fixUrl } = (() => {
+  const g: Record<string, unknown> = {};
+  new Function('self', readFileSync('public/admin/helpers.js', 'utf8'))(g);
+  return g.CpHelpers as { fixUrl(v: unknown, kind?: string): string | undefined };
+})();
+
+describe('fixUrl mirrors toHref', () => {
+  const inputs: [string, 'instagram' | undefined][] = [
+    ['https://maps.app.goo.gl/x', undefined], ['wa.me/628', undefined], ['/wa.me/628', undefined],
+    ['mailto:hi@x.com', undefined], ['tel:+62812', undefined], ['maps.app.goo.gl/abc', undefined],
+    ['@the.lawn.canggu', 'instagram'], ['@cratecafe', 'instagram'],
+    ['instagram.com/cratecafe?igsh=x', 'instagram'], ['https://instagram.com/cratecafe', 'instagram'],
+  ];
+  for (const [input, kind] of inputs) {
+    it(`"${input}" ${kind ?? ''}`, () => expect(fixUrl(input, kind)).toBe(toHref(input, kind)));
+  }
+  it('keeps what the editor typed when it is not a link', () => {
+    expect(fixUrl('  +62 812 3456 ')).toBe('+62 812 3456');
+    expect(fixUrl('crate cafe', 'instagram')).toBe('crate cafe');
+    expect(fixUrl('cratecafe')).toBe('cratecafe');
+  });
+  it('empty stays empty', () => {
+    expect(fixUrl('')).toBe('');
+    expect(fixUrl('   ')).toBe('');
+    expect(fixUrl(undefined)).toBe(undefined);
+    expect(fixUrl(null)).toBe(null);
+  });
 });
 
 describe('sortVenues', () => {

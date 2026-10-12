@@ -6,3 +6,23 @@
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
+
+# Basic hardening. The admin must never be framed (a hidden frame could click Save or Delete for a
+# logged-in editor), and an uploaded SVG opened directly must not run script on this origin, where
+# it could read the editor's login.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+
+[[headers]]
+  for = "/images/*.svg"
+  [headers.values]
+    Content-Security-Policy = "default-src 'none'; style-src 'unsafe-inline'; img-src data:; sandbox"

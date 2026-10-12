@@ -1,34 +1,42 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { categoryConfigs } from '../../data/category-config';
-const cfg = categoryConfigs.uluwatu;
-const typesOf = (key: string) => (cfg[key]?.subcategories ?? []).map((s) => s.name);
+import { hubSections } from '../../lib/hub';
 
-const categories = [
-  {
-    title: 'FOOD',
-    description: 'Brunch, Dinner & Authentic Cuisine',
-    href: '/uluwatu/food',
+const venueModules = import.meta.glob('../../data/venues/**/*.json', { eager: true, import: 'default' });
+const venues = Object.values(venueModules) as { location?: string; category?: string; subcategory?: string | string[] }[];
+const sections = hubSections(categoryConfigs.uluwatu, venues, 'uluwatu');
+
+const styles: Record<string, { gradient: string; icon: string }> = {
+  'food': {
     gradient: 'from-amber-400 to-orange-500',
-    subcategories: typesOf('food'),
     icon: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
   },
-  {
-    title: 'HANGOUT',
-    description: 'Bars & Party Spots',
-    href: '/uluwatu/hangout',
+  'hangout': {
     gradient: 'from-pink-500 to-rose-500',
-    subcategories: typesOf('hangout'),
     icon: '<path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="m19 3-7 8-7-8Z"/>',
   },
-  {
-    title: 'WELLNESS',
-    description: 'Gym, Yoga, Spa & More',
-    href: '/uluwatu/wellness',
+  'wellness': {
     gradient: 'from-green-400 to-teal-500',
-    subcategories: typesOf('wellness'),
     icon: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
   },
+  'fun-family': {
+    gradient: 'from-blue-400 to-cyan-500',
+    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  },
+};
+const fallbackStyle = { gradient: 'from-gray-400 to-gray-600', icon: '<circle cx="12" cy="12" r="10"/>' };
+
+const cardOf = (sec: (typeof sections)[number]) => ({
+  title: sec.title.toUpperCase(),
+  description: sec.description,
+  href: `/uluwatu/${sec.key}`,
+  ...(styles[sec.key] ?? fallbackStyle),
+  subcategories: sec.types,
+});
+
+const categories = [
+  ...sections.filter((s) => s.key !== 'fun-family').map(cardOf),
   {
     title: "WHAT'S ON",
     description: 'Daily Promos & Deals',
@@ -53,14 +61,7 @@ const categories = [
     subcategories: ['Daily Specials'],
     icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
   },
-  {
-    title: 'FUN & FAMILY',
-    description: 'Family Activities',
-    href: '/uluwatu/fun-family',
-    gradient: 'from-blue-400 to-cyan-500',
-    subcategories: typesOf('fun-family'),
-    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-  },
+  ...sections.filter((s) => s.key === 'fun-family').map(cardOf),
 ];
 ---
 

@@ -14,6 +14,11 @@ authored as `canggupedia <canggupedia@gmail.com>`. That push triggers a normal N
 **every Save goes live on its own in about 2 minutes**. The status strip at the bottom of the admin
 counts down while it builds.
 
+The strip knows a save is live by polling `/build.json` (`src/pages/build.json.ts`, built with the
+site: the deployed commit, its commit time and the build time). After a Save it waits for a build
+whose commit is no older than the save; after **Update the website now** it waits for a newer build
+time. Past 5 minutes it says so and points at the help-panel button instead of counting forever.
+
 Changed 2026-10-12. Before that, every CMS commit was stamped `[skip netlify]` (see the
 `commit_messages` block in `src/pages/admin/config.yml.ts`) and only a separate **Put online now**
 button published. Ivan saved a Monday promo on 2026-10-06, never pressed the button, and the site
@@ -63,6 +68,24 @@ The pages build fine first, so the error is easy to miss. Every publish from 202
 2026-10-12 failed this way, including Ivan's Brochette promo. A local `netlify build` (CLI 27.12,
 same `@netlify/build` 37.4.1) did **not** reproduce it, so only a real Netlify build proves a
 function change. Use `export async function handler`.
+
+**Never write the skip marker in a commit message, even as prose.** Netlify skips the build for
+any commit whose message contains `[skip netlify]` or `[skip ci]` anywhere, including the body.
+On 2026-10-12 the commit that *removed* the marker quoted it in its body and was never built.
+
+**Two people editing the same list file overwrite each other.** Promos, happy hours, events, the
+venue order, categories and the home page are each one JSON file. If the file changes on GitHub
+after Ivan opened it in the admin (another save, or a developer commit), his Save writes his copy
+over it without warning. Open, not fixed (it needs either a version check before save or one file
+per item). Workaround: after a developer changes anything in `src/data/`, Ivan reloads the admin
+before editing.
+
+## Who can log in
+
+Netlify Identity is **invite only** since 2026-10-12 (`disable_signup: true` on the Identity
+instance). Before that anyone could sign up on `/admin/`, was auto-confirmed, and git-gateway (which
+has no role restriction) let them commit to `main` and trigger builds. New editors get an invite from
+Netlify → Identity → Invite users. Do not turn open signup back on.
 
 ## Publishing manually
 

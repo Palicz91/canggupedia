@@ -183,8 +183,9 @@
   </style>
 </head>
 <body>
-  <!-- Pinned on purpose. Bump it in its own task and re-test the admin. -->
-  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
+  <!-- Pinned on purpose, with its hash: a changed file on unpkg is refused instead of run with the
+       editor's login. Bumping the version means a new integrity hash (sha384 of the file). -->
+  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js" integrity="sha384-in6eHztHveqQ7uMZ1fDaKlDmacQLFuLH2wWrFTiymyuS8zQ5bixwL8U3AeRi8h/L" crossorigin="anonymous"></script>
   <script src="/admin/helpers.js"></script>
   <script src="/admin/one-click-save.js"></script>
   <script src="/admin/venue-order-widget.js"></script>
@@ -200,12 +201,12 @@
     <header><strong>How to use this</strong><button class="cp-x" type="button" aria-label="Close help">&times;</button></header>
     <section class="cp-tip">
       <h4>Save puts it on the website</h4>
-      <p>Press <kbd>Save</kbd> and that's it. The bar at the bottom counts down while the website updates itself. About 2 minutes later, reload the website.</p>
+      <p>Press <kbd>Save</kbd> and that's it. The bar at the bottom says <em>Live on the website</em> once the update is online, usually about 2 minutes later.</p>
     </section>
     <section><h4>Add a venue</h4><p>Pick a section on the left &rarr; <kbd>Add</kbd> at the top right &rarr; fill in the form &rarr; <kbd>Save</kbd>.</p></section>
     <section><h4>Change a venue</h4><p>Type its name in the search box at the top &rarr; click it &rarr; change what you want &rarr; <kbd>Save</kbd>.</p></section>
     <section><h4>Change a photo</h4><p><kbd>Choose an image</kbd> &rarr; <kbd>Upload</kbd> &rarr; pick a photo from your computer. No links needed.</p></section>
-    <section><h4>Uluwatu or Seminyak</h4><p>Same as Canggu. Set <kbd>Area</kbd> to Uluwatu inside the venue. That's all.</p></section>
+    <section><h4>Uluwatu</h4><p>Same as Canggu. Set <kbd>Area</kbd> to Uluwatu inside the venue. That's all. A venue anywhere else (Seminyak, Ubud&hellip;) goes under the nearer of the two.</p></section>
     <section><h4>Change the order on a page</h4><p><kbd>Order of venues</kbd> &rarr; Canggu or Uluwatu &rarr; click a heading to open that list &rarr; type a new number next to a venue and press Enter. It jumps to that place and the rest shift down. Then <kbd>Save</kbd>.</p></section>
     <section><h4>Add a type (Brunch, Padel, Rooftop&hellip;)</h4><p><kbd>Categories &amp; types</kbd> &rarr; open the section &rarr; <kbd>Add type</kbd> &rarr; <kbd>Save</kbd>. After 2 minutes, reload this page and the new type is in every venue's Type list.</p></section>
     <section><h4>&ldquo;Our Top Pick&rdquo; badge</h4><p>A switch on each venue. <kbd>Filter</kbd> &rarr; Top picks only shows which venues have it.</p></section>
@@ -263,9 +264,25 @@
               onDeleteWithUnsavedChanges: 'Delete this from the website, including your changes that are not saved? This cannot be undone.'
             }
           },
-          ui: { toast: { entrySaved: 'Saved. Not on the website yet.', entryPublished: 'Saved. Not on the website yet.' } }
+          ui: { toast: { entrySaved: 'Saved. Going on the website in about 2 minutes.', entryPublished: 'Saved. Going on the website in about 2 minutes.' } }
         }));
       })();
+
+      /* File names of the venues already in a folder, which are their ids (slug: '{{id}}'). Decap
+         avoids a clash by renaming only the file (crate-cafe-1.json), so without this a second
+         "Crate Cafe" in Canggu kept the first one's id and the two moved as one in every order list.
+         Read through git-gateway with the editor's own login; on any failure it returns [] and the
+         save goes ahead exactly as before. */
+      function venueIdsIn(collection) {
+        var user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+        if (!user || !/-venues$/.test(collection || '')) return Promise.resolve([]);
+        var folder = 'src/data/venues/' + collection.replace(/-venues$/, '');
+        return user.jwt().then(function (jwt) {
+          return fetch('/.netlify/git/github/contents/' + folder + '?ref=main', { headers: { Authorization: 'Bearer ' + jwt } });
+        }).then(function (res) { return res.ok ? res.json() : []; }).then(function (files) {
+          return (Array.isArray(files) ? files : []).map(function (f) { return String(f.name || '').replace(/\.json$/, ''); });
+        }).catch(function () { return []; });
+      }
 
       CMS.registerEventListener({
         name: 'preSave',
@@ -273,22 +290,23 @@
           var data = ctx.entry.get('data');
           if (!data || typeof data.get !== 'function') return data;
 
-          if (data.has('name') && data.has('location')) {
-            if (!data.get('id')) data = data.set('id', H.slugify(data.get('location')) + '-' + H.slugify(data.get('name')));
-            if (data.get('featured') === undefined || data.get('featured') === null) data = data.set('featured', false);
-            var sub = data.get('subcategory');
-            if (typeof sub === 'string') data = data.set('subcategory', [sub]);
-            data = H.fixLinks(data, ['googleMapsUrl', 'tableBookingUrl', 'guestlistUrl', 'ticketUrl'], ['instagramUrl']);
-          }
-
           if (data.has('categories')) {
+            var catKeys = [];
             data = data.update('categories', function (cats) {
               if (!cats) return cats;
               return cats.map(function (cat) {
-                if (!cat.get('value')) cat = cat.set('value', H.slugify(cat.get('title')));
-                var subs = cat.get('subcategories');
-                return subs ? cat.set('subcategories', subs.map(function (s) {
-                  return s.get('value') ? s : s.set('value', H.slugify(s.get('name')));
+                var key = cat.get('value') || H.uniqueKey(H.slugify(cat.get('title')), catKeys, 'section');
+                catKeys.push(key);
+                cat = cat.set('value', key);
+                var subs = cat.get('subcategories'), subKeys = [];
+                return subs ? cat.set('subcategories', subs.map(function (sub) {
+                  // A stored key is kept, so renaming a type never orphans the venues that use it.
+                  // A new or blank one must not repeat a key already in this section.
+                  var k = sub.get('value') && subKeys.indexOf(sub.get('value')) === -1
+                    ? sub.get('value')
+                    : H.uniqueKey(H.slugify(sub.get('name')), subKeys, 'type');
+                  subKeys.push(k);
+                  return sub.set('value', k);
                 })) : cat;
               });
             });
@@ -297,17 +315,37 @@
           [['happy_hours', 'venue'], ['daily_promos', 'title'], ['events', 'title']].forEach(function (pair) {
             var key = pair[0], nameField = pair[1];
             if (!data.has(key) || !data.get(key)) return;
+            var used = [];
             data = data.update(key, function (items) {
               return items.map(function (item) {
-                if (!item.get('id')) item = item.set('id', H.slugify(item.get(nameField)) + '-' + Date.now().toString(36));
-                return H.fixLinks(item, ['googleMapsUrl', 'ticketUrl'], ['instagramUrl', 'venueInstagram']);
+                // Two items added in one session used to be able to share an id; make each unique.
+                var id = item.get('id');
+                if (!id || used.indexOf(id) !== -1) id = H.uniqueKey(H.slugify(item.get(nameField)) + '-' + Date.now().toString(36), used, 'item');
+                used.push(id);
+                return H.fixLinks(item.set('id', id), ['googleMapsUrl', 'ticketUrl'], ['instagramUrl', 'venueInstagram']);
               });
             });
           });
-          return data;
+          // "Add promo" puts the new one at the bottom of one long list. Saved in week order, a new
+          // Monday promo sits with the other Mondays the next time the list is opened.
+          if (data.has('daily_promos') && data.get('daily_promos')) {
+            data = data.update('daily_promos', function (items) {
+              return items.clear().concat(H.sortByWeekday(items.toArray(), function (it) { return it.get('day'); }));
+            });
+          }
+
+          if (!(data.has('name') && data.has('location'))) return data;
+          if (data.get('featured') === undefined || data.get('featured') === null) data = data.set('featured', false);
+          var sub = data.get('subcategory');
+          if (typeof sub === 'string') data = data.set('subcategory', [sub]);
+          data = H.fixLinks(data, ['googleMapsUrl', 'tableBookingUrl', 'guestlistUrl', 'ticketUrl'], ['instagramUrl']);
+          if (data.get('id')) return data;
+          var base = H.slugify(data.get('location')) + '-' + H.slugify(data.get('name'));
+          return venueIdsIn(ctx.entry.get('collection')).then(function (taken) {
+            return data.set('id', H.uniqueKey(base, taken, 'venue'));
+          });
         }
       });
-
 
       /* ---------- status strip: every save builds (no [skip netlify] on CMS commits) ---------- */
       var strip = document.getElementById('cp-strip'), timer = null, lastLink = SITE;
@@ -330,23 +368,55 @@
         progress.style.width = '0';
       }
 
-      function showIdle() { render('is-idle', '✓', '<span>Press Save and your change goes on the website by itself.</span>', []); }
-      function showNotice(msg) { render('is-notice', '!', '<strong>' + msg + '</strong>', [btn('OK', 'cp-quiet', showIdle)]); }
-      function showBuilding() {
-        var left = BUILD_SECONDS;
-        render('is-building', fmt(left), '<strong>Saved. Going live…</strong> <span>The website is updating itself. No need to press anything.</span>', []);
+      function showIdle() { watch++; render('is-idle', '✓', '<span>Press Save and your change goes on the website by itself.</span>', []); }
+      function showNotice(msg) { watch++; render('is-notice', '!', '<strong>' + msg + '</strong>', [btn('OK', 'cp-quiet', showIdle)]); }
+      /* The website's build stamp (src/pages/build.json.ts). The strip used to say "Should be live
+         now" after a fixed 2 minutes whatever had happened, and kept saying it while every build
+         failed for a week in October. It now waits for a build that really contains the save. */
+      function fetchBuild() {
+        return fetch('/build.json', { cache: 'no-store' }).then(function (res) {
+          if (!res.ok) throw new Error('build ' + res.status);
+          var serverNow = Date.parse(res.headers.get('Date') || '') || Date.now();
+          return res.json().then(function (b) { return { build: b || {}, serverNow: serverNow }; });
+        });
+      }
+      var watch = 0;
+      /* mode 'save': live once the site's commit is at least as new as the save (two quick saves both
+         wait for the later build). mode 'rebuild': the same commit is rebuilt, so wait for a newer
+         build time instead. */
+      function showBuilding(mode) {
+        var id = ++watch, started = Date.now(), since = null, LIMIT = 5 * 60;
+        render('is-building', fmt(BUILD_SECONDS), '<strong>Saved. Going live…</strong> <span>The website is updating itself. No need to press anything.</span>', []);
         progress.style.width = '0%';
+        fetchBuild().then(function (r) { since = r.serverNow; }, function () { since = Date.now(); });
+        function check() {
+          if (id !== watch || since === null) return;
+          fetchBuild().then(function (r) {
+            if (id !== watch) return;
+            var b = r.build, t = mode === 'rebuild' ? b.builtAt : (b.commitTime || b.builtAt);
+            // 15 s slack: GitHub stamps the commit a moment before Netlify answers our first request.
+            if (t && Date.parse(t) >= since - 15000) showLive();
+          }, function () {});
+        }
         timer = setInterval(function () {
-          left -= 1;
-          if (left > 0) { lead.textContent = fmt(left); progress.style.width = ((BUILD_SECONDS - left) / BUILD_SECONDS * 100) + '%'; return; }
-          clearInterval(timer); showLive();
+          if (id !== watch) return;
+          var gone = Math.round((Date.now() - started) / 1000), left = BUILD_SECONDS - gone;
+          if (gone >= LIMIT) { showSlow(); return; }
+          lead.textContent = left > 0 ? fmt(left) : '…';
+          progress.style.width = Math.min(95, gone / BUILD_SECONDS * 100) + '%';
+          if (gone >= 30 && gone % 10 === 0) check();
         }, 1000);
       }
       function showLive() {
+        watch++;
         var a = document.createElement('a'); a.className = 'cp-btn'; a.href = lastLink; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Open the website ↗';
-        render('is-live', '✓', '<strong>Should be live now.</strong> <span>Open the website and reload it. Still old? Give it one more minute.</span>', [a, btn('OK', 'cp-quiet', showIdle)]);
+        render('is-live', '✓', '<strong>Live on the website.</strong> <span>Open it and reload the page to see your change.</span>', [a, btn('OK', 'cp-quiet', showIdle)]);
         progress.style.width = '100%';
         timer = setTimeout(showIdle, 5 * 60 * 1000);
+      }
+      function showSlow() {
+        watch++;
+        render('is-notice', '!', '<strong>Taking longer than usual.</strong> <span>Your change is saved. Press Help → Update the website now. Still not showing after 5 more minutes? Message Adam.</span>', [btn('OK', 'cp-quiet', showIdle)]);
       }
       /* Every refusal used to read "this is a test copy of the admin", including a plain expired
          login. That one sentence hid a dead publish button for three days — saving worked, the
@@ -363,17 +433,30 @@
       function putOnline() {
         render('is-building', '…', '<strong>Starting…</strong>', []);
         var user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
-        var token = user ? user.jwt() : Promise.resolve('');
+        // jwt() refreshes an expired token and rejects when the login itself has run out. That used
+        // to land in the catch below as "Check your internet".
+        var token = user ? user.jwt().catch(function () { throw { expired: true }; }) : Promise.resolve('');
         token.then(function (jwt) {
           return fetch('/.netlify/functions/deploy', { method: 'POST', headers: { Authorization: 'Bearer ' + jwt } });
         }).then(function (res) { return res.json().catch(function () { return {}; }); }).then(function (out) {
           if (!out || out.deployed !== true) { showNotice(whyNot(out && out.reason)); return; }
-          showBuilding();
-        }).catch(function () { showNotice('Could not start. Check your internet and try again.'); });
+          showBuilding('rebuild');
+        }).catch(function (e) {
+          showNotice(e && e.expired ? whyNot('not-logged-in') : 'Could not start. Check your internet and try again.');
+        });
       }
       CMS.registerEventListener({
         name: 'postPublish',
-        handler: function (ctx) { lastLink = pageFor(ctx.entry.get('data')); showBuilding(); }
+        handler: function (ctx) { lastLink = pageFor(ctx.entry.get('data')); showBuilding('save'); }
+      });
+      // Delete commits straight away too, but fires its own event; the strip used to stay silent.
+      CMS.registerEventListener({
+        name: 'postUnpublish',
+        handler: function (ctx) {
+          var d = ctx.entry && ctx.entry.get('data');
+          lastLink = d && typeof d.get === 'function' ? pageFor(d) : SITE;
+          showBuilding('save');
+        }
       });
 
       /* ---------- help panel ---------- */
@@ -413,8 +496,10 @@
 
       function cap(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
 
-      /* Photos live in git but only reach the website on the next build, so a freshly
-         uploaded file 404s in this preview. Say that instead of showing a broken image. */
+      /* Decap loads a picked photo from the repo through git-gateway (a blob: URL) and only falls
+         back to the live site's copy if that read fails. A broken thumbnail therefore means the
+         repo read failed (seen with a 2 MB upload on 2026-10-06), not that the site is behind; the
+         file itself is saved and the website shows it. Say so instead of a broken image. */
       var PreviewImage = createClass({
         getInitialState: function () { return { failed: false }; },
         componentDidUpdate: function (prev) {
@@ -424,7 +509,7 @@
           var self = this;
           if (!this.props.src || this.state.failed) {
             return h('div', { className: 'cp-noimg' }, this.props.hasImage
-              ? 'Photo saved. It shows here about 2 minutes after you press Save.'
+              ? 'Photo saved. This preview could not load it, but the website will show it after you press Save.'
               : 'Add a photo');
           }
           return h('img', {

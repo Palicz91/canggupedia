@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import promosData from '../data/daily-promos.json';
+import { toHref } from '../lib/links';
+import { cdnImage } from '../lib/images';
 const dailyPromos = promosData.daily_promos;
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -34,12 +36,18 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
               {dayPromos.map((promo) => (
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover promo-card" data-location={promo.location}>
                   <div class="relative h-48">
-                    <img
-                      src={promo.imageUrl}
-                      alt={promo.title}
-                      class="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100" aria-hidden="true">
+                      <img src="/images/pediafamlogo.webp" alt="" class="w-24 max-w-[60%] opacity-40" />
+                    </div>
+                    {promo.imageUrl && (
+                      <img
+                        src={cdnImage(promo.imageUrl, 800)}
+                        alt={promo.title}
+                        class="relative w-full h-full object-cover"
+                        loading="lazy"
+                        onerror="this.remove()"
+                      />
+                    )}
                   </div>
                   <div class="p-6">
                     <h3 class="font-display font-bold text-2xl text-gray-800 mb-2">
@@ -49,9 +57,9 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
                       {promo.venue}
                     </p>
                     <p class="text-gray-600 mb-6">{promo.description}</p>
-                    {promo.venueInstagram && (
+                    {toHref(promo.venueInstagram, 'instagram') && (
                       <a
-                        href={promo.venueInstagram}
+                        href={toHref(promo.venueInstagram, 'instagram')}
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center space-x-2 bg-pink-500 text-white py-2 px-4 rounded-xl hover:bg-pink-600 transition-colors font-semibold"
@@ -68,12 +76,9 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
         );
       })}
 
-      {dailyPromos.length === 0 && (
-        <div class="text-center py-16">
-          <p class="text-xl text-gray-600 mb-4">No daily promos available yet.</p>
-          <p class="text-gray-500">Check back soon for great deals!</p>
-        </div>
-      )}
+      <div id="empty-state" class="text-center py-16" hidden={dailyPromos.length > 0}>
+        <p id="empty-state-text" class="text-xl text-gray-600">No daily promos available yet. Check back soon for great deals!</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -86,17 +91,21 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
     const subtitle = document.getElementById('promos-subtitle');
     if (subtitle) subtitle.textContent = `${name} - Daily Promos & Special Deals`;
 
-    document.querySelectorAll('.promo-card').forEach((card) => {
-      if (card.getAttribute('data-location') !== location) {
-        (card as HTMLElement).style.display = 'none';
-      }
+    document.querySelectorAll<HTMLElement>('.promo-card').forEach((card) => {
+      if (card.getAttribute('data-location') !== location) card.style.display = 'none';
     });
 
-    document.querySelectorAll('.day-section').forEach((section) => {
-      const visible = section.querySelectorAll('.promo-card:not([style*="display: none"])');
-      if (visible.length === 0) {
-        (section as HTMLElement).style.display = 'none';
-      }
+    document.querySelectorAll<HTMLElement>('.day-section').forEach((section) => {
+      const visible = Array.from(section.querySelectorAll<HTMLElement>('.promo-card')).some((c) => c.style.display !== 'none');
+      if (!visible) section.style.display = 'none';
     });
+
+    const anyVisible = Array.from(document.querySelectorAll<HTMLElement>('.promo-card')).some((c) => c.style.display !== 'none');
+    const empty = document.getElementById('empty-state');
+    const emptyText = document.getElementById('empty-state-text');
+    if (empty && emptyText && !anyVisible) {
+      emptyText.textContent = 'Nothing in this area yet.';
+      empty.hidden = false;
+    }
   }
 </script>

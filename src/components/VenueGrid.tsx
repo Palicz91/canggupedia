@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { MapPin, ArrowLeft, X } from 'lucide-react';
 import { toHref } from '../lib/links';
+import { cdnImage } from '../lib/images';
 import { subsOf, sortVenues, visibleSubcategories, mergeOrder } from '../lib/venues';
 import { parseOpeningHours, todayName, type DayName } from '../lib/hours';
 
@@ -21,7 +22,11 @@ function VenueImage({
   alt,
   className,
   rounded = '',
+  width,
+  cdn = false,
 }: {
+  width: number;
+  cdn?: boolean;
   src?: string;
   alt: string;
   className: string;
@@ -44,7 +49,7 @@ function VenueImage({
 
   return (
     <img
-      src={src}
+      src={cdnImage(src, width, cdn)}
       alt={alt}
       className={className}
       loading="lazy"
@@ -92,6 +97,8 @@ interface Props {
   backHref: string;
   backLabel: string;
   bgGradient: string;
+  /** Build-time flag (true on Netlify) so images go through the Netlify Image CDN. Pass the same value on server and client. */
+  cdn?: boolean;
 }
 
 export default function VenueGrid({
@@ -104,6 +111,7 @@ export default function VenueGrid({
   backHref,
   backLabel,
   bgGradient,
+  cdn = false,
 }: Props) {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
@@ -194,6 +202,8 @@ export default function VenueGrid({
                   <VenueImage
                     key={venue.imageUrl || 'none'}
                     src={venue.imageUrl}
+                    width={800}
+                    cdn={cdn}
                     alt={venue.name}
                     className="w-full h-full object-cover"
                   />
@@ -273,6 +283,8 @@ export default function VenueGrid({
                 <VenueImage
                   key={selectedVenue.imageUrl || 'none'}
                   src={selectedVenue.imageUrl}
+                  width={1024}
+                  cdn={cdn}
                   alt={selectedVenue.name}
                   className="w-full h-full object-cover rounded-xl"
                   rounded="rounded-xl"

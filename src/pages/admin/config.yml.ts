@@ -3,13 +3,15 @@ import { stringify } from 'yaml';
 import { categories, locations } from '../../data/category-config';
 import { subOrderKey } from '../../lib/venues';
 
-const areaOptions = [
-  ...Object.entries(locations).map(([value, label]) => ({ label, value })),
-  { label: 'Seminyak', value: 'seminyak' },
-];
+// Only areas that have a page. A Seminyak option used to sit here, and a venue saved with it showed
+// on no page at all (Mirror Bali, until 2026-10-12).
+const areaOptions = Object.entries(locations).map(([value, label]) => ({ label, value }));
 
 const imageField = (label = 'Photo') => ({
   label, name: 'imageUrl', widget: 'image', choose_url: false,
+  // Optional: every page shows a placeholder without one. Required forced made-up photos, and a
+  // venue that had none could not be saved at all.
+  required: false,
   // "the library" was the media library, which is a name only the CMS uses — there is no door on
   // this screen labelled Library, so it named nothing Ivan could look for.
   hint: 'Click **Choose an image**, then **Upload** to pick a photo from your computer. Or pick one you uploaded before.',
@@ -57,7 +59,7 @@ function venueCollection(cat: (typeof categories)[number], folder: string, singu
       { label: 'Show "Our Top Pick" badge', name: 'featured', widget: 'boolean', required: false, default: false,
         hint: 'Only for a few favourites. This adds the badge on the card. To move a venue up or down, use **Order of venues** in the left menu.' },
       linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link).', true),
-      linkField('Instagram', 'instagramUrl', 'Paste the profile link or just the username, e.g. @cratecafe', true),
+      linkField('Instagram', 'instagramUrl', 'Paste the profile link or just the username, e.g. @cratecafe'),
       { label: 'Opening hours', name: 'openingHours', widget: 'string', required: false,
         // Was three sentences describing two ways in and what each one does to the page. The short
         // version leads with the thing he actually does — copy off Google, paste.
@@ -228,7 +230,7 @@ const dealsCollection = {
           { label: 'Offer', name: 'offer', widget: 'string', hint: 'e.g. 2-for-1 cocktails' },
           areaSelect,
           linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps.', true),
-          linkField('Instagram', 'instagramUrl', 'Profile link or username, e.g. @prettypoisonbali', true),
+          linkField('Instagram', 'instagramUrl', 'Profile link or username, e.g. @prettypoisonbali'),
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],
       }],
@@ -245,7 +247,7 @@ const dealsCollection = {
           imageField(),
           { label: 'Description', name: 'description', widget: 'text' },
           areaSelect,
-          linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali', true),
+          linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],
       }],
@@ -261,8 +263,8 @@ const dealsCollection = {
           { label: 'Venue', name: 'venue', widget: 'string' },
           imageField(),
           areaSelect,
-          { label: 'Price', name: 'price', widget: 'string', hint: 'e.g. Free, or 150k IDR' },
-          { label: 'Description', name: 'description', widget: 'text' },
+          { label: 'Price', name: 'price', widget: 'string', required: false, hint: 'e.g. Free, or 150k IDR' },
+          { label: 'Description', name: 'description', widget: 'text', required: false },
           linkField('Ticket link', 'ticketUrl'),
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],

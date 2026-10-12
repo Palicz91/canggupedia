@@ -15,14 +15,36 @@ export function slugify(input: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export const categories = categoriesData.categories.map((c) => ({
-  value: c.value || slugify(c.title),
-  title: c.title,
-  description: c.description,
-  subcategories: (c.subcategories || [])
-    .filter((s) => s && s.name)
-    .map((s) => ({ name: s.name, value: s.value || slugify(s.name) })),
-}));
+/**
+ * Keys must be non-empty and unique: the order screen builds one field per key, and two fields with
+ * the same name (two types both called "Brunch", or a symbol-only name that slugifies to "") stop
+ * the whole admin loading. The admin's preSave already stores unique keys; this covers files saved
+ * before that, or edited by hand.
+ */
+export function uniqueKeys<T>(items: T[], keyOf: (item: T) => string, fallback: string): string[] {
+  const seen = new Set<string>();
+  return items.map((item) => {
+    const base = keyOf(item) || fallback;
+    let key = base;
+    for (let n = 2; seen.has(key); n++) key = `${base}-${n}`;
+    seen.add(key);
+    return key;
+  });
+}
+
+const rawCategories = categoriesData.categories.filter((c) => c && c.title);
+const categoryKeys = uniqueKeys(rawCategories, (c) => c.value || slugify(c.title), 'section');
+
+export const categories = rawCategories.map((c, i) => {
+  const subs = (c.subcategories || []).filter((s) => s && s.name);
+  const subKeys = uniqueKeys(subs, (s) => s.value || slugify(s.name), 'type');
+  return {
+    value: categoryKeys[i],
+    title: c.title,
+    description: c.description,
+    subcategories: subs.map((s, j) => ({ name: s.name, value: subKeys[j] })),
+  };
+});
 
 function buildFor(locationLabel: string): Record<string, CategoryConfig> {
   return Object.fromEntries(

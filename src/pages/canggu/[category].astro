@@ -59,6 +59,7 @@ const structuredData = {
 >
   <VenueGrid
     client:load
+    cdn={process.env.NETLIFY === 'true'}
     venues={categoryVenues}
     config={config}
     order={order}

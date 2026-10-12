@@ -145,7 +145,7 @@ it. Then confirm a push actually deploys before walking away.
 
 ## Photos
 
-`imageUrl` is optional on a venue. When it is missing — or the file is not deployed yet — `VenueGrid` renders a branded placeholder instead of a broken `<img>`. A freshly uploaded photo lives in git immediately but only reaches the site on the next build, so the CMS preview says "Photo saved…" rather than showing a broken image.
+`imageUrl` is optional on a venue. When it is missing — or the file is not deployed yet — `VenueGrid` renders a branded placeholder instead of a broken `<img>`. The CMS preview reads a picked photo from the repo through git-gateway and falls back to the live URL; when both fail it says "Photo saved…" rather than showing a broken image (the file is saved either way).
 
 ## Venue order
 
@@ -291,4 +291,19 @@ ids it cannot match — and deliberately not a test failure, so it can never blo
 
 ## Bumping Decap CMS
 
-Change the version in `public/admin/index.html` (pinned at 3.15.1). Re-run `npm run build:e2e && npm run test:e2e` to verify.
+Change the version in `public/admin/index.html` (pinned at 3.15.1) **and recompute the
+`integrity` hash on the same script tag**, otherwise the browser refuses to load the new file and the
+admin is blank:
+
+```
+curl -s https://unpkg.com/decap-cms@<version>/dist/decap-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+```
+
+Re-run `npm run build:e2e && npm run test:e2e` to verify.
+
+## Security headers
+
+`netlify.toml` sets `nosniff` and a referrer policy site-wide, forbids framing `/admin/`, and serves
+`/images/*.svg` under a sandboxing CSP so an uploaded SVG cannot run script. Photos are optional in
+the CMS: venue, promo, happy-hour and event cards show the logo placeholder when there is no photo
+or it fails to load.

@@ -62,10 +62,19 @@
             });
         })
         .catch(function () {
+          // A failed read is not kept, so the next list that opens tries again.
+          delete venueCache[collection];
           return null; // handled in render: the heading says so rather than showing an empty list
         });
     }
     return venueCache[collection];
+  }
+  // The cache lived for the whole page load, so a venue added or moved to another area in this
+  // session was missing from (or wrong in) every list until a reload. Any save or delete drops it.
+  if (window.CMS && CMS.registerEventListener) {
+    ['postPublish', 'postUnpublish'].forEach(function (name) {
+      CMS.registerEventListener({ name: name, handler: function () { venueCache = {}; } });
+    });
   }
 
   function toArray(value) {

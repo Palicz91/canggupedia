@@ -11,11 +11,13 @@
     v = String(v).trim();
     if (!v) return '';
     if (/^https?:\/\//i.test(v)) return v;
+    if (/^(mailto|tel):/i.test(v)) return v;
     if (kind === 'instagram') {
       var handle = v.replace(/^@/, '').replace(/^(www\.)?instagram\.com\//i, '').replace(/[\/?#].*$/, '');
-      if (handle && !/[.\s]/.test(handle)) return 'https://instagram.com/' + handle;
+      if (/^[A-Za-z0-9._]{1,30}$/.test(handle)) return 'https://instagram.com/' + handle;
     }
-    return 'https://' + v.replace(/^\/+/, '');
+    if (!/\s/.test(v) && v.indexOf('.') !== -1) return 'https://' + v.replace(/^\/+/, '');
+    return v;
   }
   function fixLinks(map, plain, insta) {
     plain.forEach(function (k) { if (map.get(k)) map = map.set(k, fixUrl(map.get(k))); });
@@ -187,7 +189,31 @@
     });
   }
 
+  /**
+   * `base`, or `base-2`, `base-3`… whichever is not in `taken`. An empty base (a name made only of
+   * symbols or emoji) becomes `fallback`. Mirrors uniqueKeys in src/data/category-config.ts: two
+   * types with the same key give the order screen two fields with one name, and the admin stops
+   * loading.
+   */
+  function uniqueKey(base, taken, fallback) {
+    base = base || fallback;
+    var key = base;
+    for (var n = 2; taken.indexOf(key) !== -1; n++) key = base + '-' + n;
+    return key;
+  }
+
+  /** Daily promos in week order, Monday first. Same-day promos keep the order they were in. */
+  function sortByWeekday(items, dayOf) {
+    var rank = function (it) { var i = DAYS.indexOf(dayOf(it)); return i === -1 ? DAYS.length : i; };
+    return items
+      .map(function (it, i) { return { it: it, i: i }; })
+      .sort(function (a, b) { return rank(a.it) - rank(b.it) || a.i - b.i; })
+      .map(function (x) { return x.it; });
+  }
+
   return {
+    uniqueKey: uniqueKey,
+    sortByWeekday: sortByWeekday,
     slugify: slugify,
     fixUrl: fixUrl,
     fixLinks: fixLinks,
