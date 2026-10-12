@@ -264,7 +264,7 @@
               onDeleteWithUnsavedChanges: 'Delete this from the website, including your changes that are not saved? This cannot be undone.'
             }
           },
-          ui: { toast: { entrySaved: 'Saved. Going on the website in about 2 minutes.', entryPublished: 'Saved. Going on the website in about 2 minutes.' } }
+          ui: { toast: { onFailToPersist: 'Not saved. %{details}', entrySaved: 'Saved. Going on the website in about 2 minutes.', entryPublished: 'Saved. Going on the website in about 2 minutes.' } }
         }));
       })();
 
@@ -283,6 +283,51 @@
           return (Array.isArray(files) ? files : []).map(function (f) { return String(f.name || '').replace(/\.json$/, ''); });
         }).catch(function () { return []; });
       }
+
+      /* ---------- a Save never overwrites someone else's change ---------- */
+      /* Promos, happy hours, events, the venue order, categories and the home page are each one
+         file, and Decap writes the copy it opened over whatever is on GitHub now. A save made after
+         someone else's save (or a developer's commit) silently deleted that change. Before saving,
+         the file on GitHub is compared with the copy this editor opened (entry.raw, which Decap keeps
+         on the draft) and the save is refused if it moved. Decap does not refresh that copy after a
+         save, so what this tab itself last saved also counts as unchanged. On any network or login
+         failure the save goes ahead exactly as before. */
+      var savedHere = {};
+      var STALE = 'Someone else changed this since you opened it, so your Save was stopped to keep their change. Copy what you changed, reload this page, open it again and redo your change.';
+      function fileOnGitHub(path) {
+        var user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+        if (!user) return Promise.resolve(null);
+        return user.jwt().then(function (jwt) {
+          var url = '/.netlify/git/github/contents/' + path.split('/').map(encodeURIComponent).join('/') + '?ref=main';
+          return fetch(url, { headers: { Authorization: 'Bearer ' + jwt }, cache: 'no-store' });
+        }).then(function (res) { return res.ok ? res.json() : null; }).then(function (f) {
+          return f && typeof f.content === 'string' ? H.decodeBase64Utf8(f.content) : null;
+        }).catch(function () { return null; });
+      }
+      CMS.registerEventListener({
+        name: 'preSave',
+        handler: function (ctx) {
+          var entry = ctx.entry, path = entry.get('path'), opened = entry.get('raw');
+          if (entry.get('newRecord') || !path || typeof opened !== 'string' || !opened) return;
+          return fileOnGitHub(path).then(function (now) {
+            if (now === null) return;
+            var c = H.canonical(now);
+            if (c === H.canonical(opened) || c === savedHere[path]) return;
+            showNotice(STALE);
+            // Decap shows this in its "Not saved" toast as %{details}.
+            var err = new Error(STALE);
+            err.toString = function () { return STALE; };
+            throw err;
+          });
+        }
+      });
+      CMS.registerEventListener({
+        name: 'postSave',
+        handler: function (ctx) {
+          var path = ctx.entry.get('path'), data = ctx.entry.get('data');
+          if (path && data && typeof data.toJS === 'function') savedHere[path] = H.canonical(data.toJS());
+        }
+      });
 
       CMS.registerEventListener({
         name: 'preSave',

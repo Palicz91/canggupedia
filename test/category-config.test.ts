@@ -25,6 +25,8 @@ const H = (() => {
   return g.CpHelpers as {
     uniqueKey(base: string, taken: string[], fallback: string): string;
     sortByWeekday<T>(items: T[], dayOf: (item: T) => string): T[];
+    canonical(v: unknown): string;
+    decodeBase64Utf8(b64: string): string;
   };
 })();
 
@@ -44,5 +46,39 @@ describe('sortByWeekday', () => {
       { day: 'Monday', t: 'd' }, { day: '', t: 'e' },
     ];
     expect(H.sortByWeekday(items, (i) => i.day).map((i) => i.t)).toEqual(['b', 'd', 'a', 'c', 'e']);
+  });
+});
+
+describe('canonical (the admin save guard)', () => {
+  it('treats the same JSON as equal whatever the key order, spacing or trailing newline', () => {
+    const file = '{\n  "daily_promos": [\n    { "id": "a", "day": "Monday" }\n  ]\n}\n';
+    expect(H.canonical(file)).toBe(H.canonical({ daily_promos: [{ day: 'Monday', id: 'a' }] }));
+  });
+
+  it('sees a changed value or a reordered list as a change', () => {
+    const before = '{"items":[{"id":"a"},{"id":"b"}]}';
+    expect(H.canonical(before)).not.toBe(H.canonical('{"items":[{"id":"b"},{"id":"a"}]}'));
+    expect(H.canonical(before)).not.toBe(H.canonical('{"items":[{"id":"a"},{"id":"c"}]}'));
+  });
+
+  it('drops undefined fields like JSON.stringify does', () => {
+    expect(H.canonical({ a: 1, b: undefined })).toBe(H.canonical('{"a":1}'));
+  });
+
+  it('compares text that is not JSON as trimmed text', () => {
+    expect(H.canonical('title: x\n')).toBe(H.canonical('title: x'));
+    expect(H.canonical('title: x')).not.toBe(H.canonical('title: y'));
+  });
+});
+
+describe('decodeBase64Utf8', () => {
+  it('decodes GitHub contents-API base64, line breaks and non-ASCII included', () => {
+    const text = '{"title":"Brochette Monday – Café 🍢"}\n';
+    const b64 = Buffer.from(text, 'utf8').toString('base64').replace(/(.{60})/g, '$1\n');
+    expect(H.decodeBase64Utf8(b64)).toBe(text);
+  });
+
+  it('returns an empty string for empty input', () => {
+    expect(H.decodeBase64Utf8('')).toBe('');
   });
 });

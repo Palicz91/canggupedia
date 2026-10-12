@@ -73,12 +73,15 @@ function change. Use `export async function handler`.
 any commit whose message contains `[skip netlify]` or `[skip ci]` anywhere, including the body.
 On 2026-10-12 the commit that *removed* the marker quoted it in its body and was never built.
 
-**Two people editing the same list file overwrite each other.** Promos, happy hours, events, the
-venue order, categories and the home page are each one JSON file. If the file changes on GitHub
-after Ivan opened it in the admin (another save, or a developer commit), his Save writes his copy
-over it without warning. Open, not fixed (it needs either a version check before save or one file
-per item). Workaround: after a developer changes anything in `src/data/`, Ivan reloads the admin
-before editing.
+**A Save never overwrites someone else's change** (since 2026-10-12). Promos, happy hours, events,
+the venue order, categories and the home page are each one JSON file, and Decap writes the copy it
+opened over whatever is on GitHub. Before every save, a `preSave` hook in `public/admin/index.html`
+reads the file from `main` through git-gateway and compares it (as JSON, ignoring formatting) with the
+copy the editor opened (`entry.raw`). If it moved, the save is refused and the bottom strip tells the
+editor to copy their change, reload and redo it. A second save from the same open editor is allowed:
+Decap does not refresh `entry.raw` after a save, so the tab remembers what it last saved per path.
+New entries are not checked, and any network or login failure lets the save through as before.
+Covered by `e2e/admin-save-guard.spec.ts`.
 
 ## Who can log in
 

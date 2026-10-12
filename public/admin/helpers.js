@@ -211,7 +211,33 @@
       .map(function (x) { return x.it; });
   }
 
+  /** One string per JSON value whatever its key order, spacing or trailing newline, so two copies
+   *  of a data file compare equal when only formatting differs. Text that is not JSON compares as
+   *  trimmed text. */
+  function canonical(v) {
+    if (typeof v === 'string') {
+      try { v = JSON.parse(v); } catch (e) { return 'text:' + v.trim(); }
+    }
+    return JSON.stringify(sortKeys(v === undefined ? null : v));
+  }
+  function sortKeys(v) {
+    if (Array.isArray(v)) return v.map(sortKeys);
+    if (!v || typeof v !== 'object') return v;
+    var out = {};
+    Object.keys(v).sort().forEach(function (k) { if (v[k] !== undefined) out[k] = sortKeys(v[k]); });
+    return out;
+  }
+
+  /** The text of a GitHub contents-API file (base64, wrapped every 60 characters, UTF-8). */
+  function decodeBase64Utf8(b64) {
+    var bin = atob(String(b64 || '').replace(/\s/g, '')), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
   return {
+    canonical: canonical,
+    decodeBase64Utf8: decodeBase64Utf8,
     uniqueKey: uniqueKey,
     sortByWeekday: sortByWeekday,
     slugify: slugify,
