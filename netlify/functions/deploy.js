@@ -1,4 +1,7 @@
-exports.handler = async function (event, context) {
+// ESM, not `exports.handler`: package.json is "type": "module", and since 2026-10 Netlify's
+// function bundler fails the whole build on a CommonJS function there. That silently stopped every
+// publish (saves and this button alike) from 2026-10-06 until it was found on 2026-10-12.
+export async function handler(event, context) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: '' };
 
   const user = context.clientContext && context.clientContext.user;
@@ -21,4 +24,4 @@ exports.handler = async function (event, context) {
   const res = await fetch(hook, { method: 'POST' });
   if (!res.ok) return { statusCode: 502, body: JSON.stringify({ deployed: false, reason: 'hook-failed-' + res.status }) };
   return { statusCode: 200, body: JSON.stringify({ deployed: true }) };
-};
+}

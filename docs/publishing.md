@@ -56,6 +56,14 @@ why the dead button read as working-as-intended for three days. `deploy.js` now 
 published an empty site over the live one. `netlify.toml` pins the build command and publish
 directory so a build always knows what to run; leave it in place.
 
+**Netlify functions must be ES modules.** `package.json` is `"type": "module"`. From early
+October 2026 Netlify's build servers fail the whole build when a function in `netlify/functions` uses
+CommonJS (`exports.handler`), with "Bundling of function \"deploy\" failed … is a CommonJS module".
+The pages build fine first, so the error is easy to miss. Every publish from 2026-10-06 to
+2026-10-12 failed this way, including Ivan's Brochette promo. A local `netlify build` (CLI 27.12,
+same `@netlify/build` 37.4.1) did **not** reproduce it, so only a real Netlify build proves a
+function change. Use `export async function handler`.
+
 ## Publishing manually
 
 If a save's build did not go out, use **Update the website now** in the admin help panel, or push
