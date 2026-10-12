@@ -211,7 +211,7 @@ const areaSelect = {
 const dealsCollection = {
   name: 'deals',
   label: 'Deals & events',
-  description: 'Happy hours, daily promos and upcoming events. Open one, add or change an item, then Save. Press Put online now when you are done.',
+  description: 'Happy hours, daily promos and upcoming events. Open one, add or change an item, then Save. It goes on the website by itself about 2 minutes later.',
   editor: { preview: false },
   files: [
     {
@@ -277,7 +277,7 @@ const categoriesCollection = {
   // "Sections & types" for consistency with the order screen. It is the name he and Ivan use out
   // loud, which beats matching the rest of the panel. Do not rename it again.
   label: 'Categories & types',
-  description: 'The types you can pick on a venue (Brunch, Padel, Yoga…). Add or rename them here. A new type appears on every venue about 2 minutes after you press Put online now — reload this page to see it.',
+  description: 'The types you can pick on a venue (Brunch, Padel, Yoga…). Add or rename them here. A new type appears on every venue about 2 minutes after you press Save — reload this page to see it.',
   editor: { preview: false },
   files: [{
     name: 'categories', label: 'Categories & types', file: 'src/data/categories.json', format: 'json',
@@ -307,7 +307,7 @@ const categoriesCollection = {
 const homeCollection = {
   name: 'home',
   label: 'Home page',
-  description: 'The front page of the website: the three lines at the top and the two photos for Canggu and Uluwatu. Change what you need, press Save, then Put online now.',
+  description: 'The front page of the website: the three lines at the top and the two photos for Canggu and Uluwatu. Change what you need, press Save. The website updates about 2 minutes later.',
   editor: { preview: false },
   files: [{
     name: 'home', label: 'Home page', file: 'src/data/home.json', format: 'json',
@@ -334,12 +334,14 @@ export const GET: APIRoute = ({ site }) => {
       : {
           name: 'git-gateway',
           branch: process.env.HEAD || 'main',
+          // No [skip netlify]: every Save builds and goes live on its own. The old two-step flow (save,
+          // then press "Put online now") left Ivan's 2026-10-06 promo unpublished for six days.
           commit_messages: {
-            create: 'Add {{collection}}: {{slug}} [skip netlify]',
-            update: 'Update {{collection}}: {{slug}} [skip netlify]',
-            delete: 'Remove {{collection}}: {{slug}} [skip netlify]',
-            uploadMedia: 'Upload photo: {{path}} [skip netlify]',
-            deleteMedia: 'Delete photo: {{path}} [skip netlify]',
+            create: 'Add {{collection}}: {{slug}}',
+            update: 'Update {{collection}}: {{slug}}',
+            delete: 'Remove {{collection}}: {{slug}}',
+            uploadMedia: 'Upload photo: {{path}}',
+            deleteMedia: 'Delete photo: {{path}}',
           },
         };
 

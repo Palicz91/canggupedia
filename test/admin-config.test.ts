@@ -228,7 +228,7 @@ describe('admin config', () => {
     // Ivan is not technical, and a word he cannot place is a word that stops him: he decided once
     // already that this CMS was broken. Each of these named something real that has a plain name
     // here instead — the media "library" is Choose an image, the venue "popup" is what opens when
-    // someone clicks the card, "publish" is Put online now.
+    // someone clicks the card, "publish" is just Save.
     const config = await getConfig();
     const forbidden =
       /\b(slug|widget|collection|field|JSON|repo|commit|deploy|URL|boolean|string|subcategory|popup|dropdown|library|entry|entries|CMS|publish\w*|metadata|parameter|attribute)\b/i;
@@ -256,13 +256,13 @@ describe('admin config', () => {
     expect(config.backend.branch).toBe('feat/x');
   });
 
-  it('all 5 commit_messages end with [skip netlify]', async () => {
+  it('no commit_message carries [skip netlify], so every save builds', async () => {
     const config = await getConfig();
     const msgs = config.backend.commit_messages;
     const keys = ['create', 'update', 'delete', 'uploadMedia', 'deleteMedia'];
     for (const k of keys) {
-      expect(msgs[k], `${k} missing [skip netlify]`).toMatch(/\[skip netlify\]$/);
+      expect(msgs[k], `${k} missing`).toBeTruthy();
+      expect(msgs[k], `${k} still skips the build`).not.toMatch(/\[skip (netlify|ci)\]/i);
     }
-    expect(keys.length).toBe(5);
   });
 });

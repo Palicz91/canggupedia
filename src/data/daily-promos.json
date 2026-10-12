@@ -11,6 +11,16 @@
       "venueInstagram": "https://www.instagram.com/warunggouthe"
     },
     {
+      "id": "promo-mon-2",
+      "day": "Monday",
+      "title": "Margarita Mondays",
+      "venue": "Pretty Poison",
+      "description": "2-for-1 margaritas all night long - choose from classic, mango, strawberry, or spicy varieties",
+      "imageUrl": "/images/pexels-photo-1283219.webp",
+      "location": "canggu",
+      "venueInstagram": "https://instagram.com/prettypoisonbali"
+    },
+    {
       "id": "promo-tue-1",
       "day": "Tuesday",
       "title": "Taco Tuesday",

@@ -10,21 +10,24 @@ Normal commit, no tag. GitHub notifies Netlify, Netlify builds, the site updates
 ## Path 2 — Ivan saves in the admin
 
 Decap CMS uses a `git-gateway` backend, so **Save commits straight to GitHub within seconds**,
-authored as `canggupedia <canggupedia@gmail.com>`. His work is never sitting unsaved somewhere.
+authored as `canggupedia <canggupedia@gmail.com>`. That push triggers a normal Netlify build, so
+**every Save goes live on its own in about 2 minutes**. The status strip at the bottom of the admin
+counts down while it builds.
 
-But every CMS commit is stamped `[skip netlify]` — see the `commit_messages` block in
-`src/pages/admin/config.yml.ts`. Netlify honours that tag and does **not** build. This is deliberate:
-without it, twenty field edits in an afternoon would mean twenty full rebuilds and a two-minute wait
-after every click.
+Changed 2026-10-12. Before that, every CMS commit was stamped `[skip netlify]` (see the
+`commit_messages` block in `src/pages/admin/config.yml.ts`) and only a separate **Put online now**
+button published. Ivan saved a Monday promo on 2026-10-06, never pressed the button, and the site
+stayed on the 2026-08-31 build for six days while he reported "saved but not live" and "photos always
+broken" (the admin loads photos from the live site, so a photo that never deployed 404s there too).
+`test/admin-config.test.ts` now fails if `[skip netlify]` or `[skip ci]` returns to any commit message.
 
-So for CMS edits the automatic build is switched off on purpose, and the only way to publish is the
-**`Put online now`** button in the status strip at the bottom of the admin:
+The button survives as a fallback in the help panel, **Update the website now**:
 
 ```
-admin button -> POST /.netlify/functions/deploy  (with a Netlify Identity JWT)
-             -> function checks: logged in? known-bad context? BUILD_HOOK_URL present?
-             -> POST to the site's build hook  ("Admin: put online", branch main)
-             -> Netlify builds -> live in ~2 minutes
+help panel button -> POST /.netlify/functions/deploy  (with a Netlify Identity JWT)
+                  -> function checks: logged in? known-bad context? BUILD_HOOK_URL present?
+                  -> POST to the site's build hook  ("Admin: put online", branch main)
+                  -> Netlify builds -> live in ~2 minutes
 ```
 
 `BUILD_HOOK_URL` is a Netlify environment variable, scoped **functions-only, production context
@@ -40,11 +43,9 @@ because saving genuinely worked and the changes genuinely reached GitHub. The gu
 a *known-bad* context (`CONTEXT` set and not `production`), never an absent one. Covered by
 `test/deploy-function.test.ts`.
 
-**A silent publish step fails silently.** Nothing on the site or in the admin reveals that a
-`[skip netlify]` commit is waiting. The strip's pending counter lives in `localStorage`, so it is
-per-browser: edits made on a phone are invisible to the counter on a laptop. If you need to know
-whether content is actually live, compare the newest CMS commit on `main` against the commit of the
-last Netlify deploy — if the deploy is older, something is waiting.
+**A silent publish step fails silently.** That is why the two-step flow above was removed. To check
+whether content is actually live, compare the newest commit on `main` with the commit of the current
+Netlify deploy. If the deploy is older, a build failed or never started.
 
 **Do not let a refusal message guess at the cause.** The admin used to print "this is a test copy of
 the admin, not the real one" for *every* failure, including an expired login. That one sentence is
@@ -57,5 +58,5 @@ directory so a build always knows what to run; leave it in place.
 
 ## Publishing manually
 
-If the button is broken and something must go out, any push to `main` rebuilds the site and carries
-all pending `[skip netlify]` commits live with it.
+If a save's build did not go out, use **Update the website now** in the admin help panel, or push
+any commit to `main`. Both rebuild from the current `main`.

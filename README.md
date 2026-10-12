@@ -116,10 +116,10 @@ browser branch with no global to attach to.
 
 Two things build the site:
 
-- **Netlify's native GitHub integration** — builds on push and honours `[skip netlify]`. Every CMS commit carries that flag (`src/pages/admin/config.yml.ts`), so Ivan saving an edit does *not* build.
-- **The "Put online now" button** — `netlify/functions/deploy.js` POSTs to `BUILD_HOOK_URL` (the "Admin: put online" build hook). This is what publishes a batch of CMS edits, and the only reason the batching works.
+- **Netlify's native GitHub integration** — builds on every push to `main`, CMS saves included. Since 2026-10-12 CMS commits no longer carry `[skip netlify]` (`src/pages/admin/config.yml.ts`), so each Save goes live on its own in about 2 minutes. `test/admin-config.test.ts` fails if the tag comes back.
+- **"Update the website now" in the admin help panel** — `netlify/functions/deploy.js` POSTs to `BUILD_HOOK_URL` (the "Admin: put online" build hook). A fallback only, for when a save's build failed or never started.
 
-Build hooks ignore `[skip netlify]` by design, which is exactly why the button uses one.
+Until 2026-10-12 every CMS save was tagged `[skip netlify]` and only a separate "Put online now" button published. Ivan saved a promo on 2026-10-06, never pressed the button, and the site stayed on the 2026-08-31 build for six days. A second step a non-technical editor has to remember is a step that gets forgotten; don't bring it back to save build minutes.
 
 ### The 2026-08-26 relink
 
