@@ -11,16 +11,6 @@
       "venueInstagram": "https://www.instagram.com/warunggouthe"
     },
     {
-      "id": "promo-mon-2",
-      "day": "Monday",
-      "title": "Margarita Mondays",
-      "venue": "Pretty Poison",
-      "description": "2-for-1 margaritas all night long - choose from classic, mango, strawberry, or spicy varieties",
-      "imageUrl": "/images/pexels-photo-1283219.webp",
-      "location": "canggu",
-      "venueInstagram": "https://instagram.com/prettypoisonbali"
-    },
-    {
       "id": "promo-tue-1",
       "day": "Tuesday",
       "title": "Taco Tuesday",
@@ -79,6 +69,16 @@
       "imageUrl": "/images/pexels-photo-262978.webp",
       "location": "uluwatu",
       "venueInstagram": "https://instagram.com/ulucliffhouse"
+    },
+    {
+      "location": "canggu",
+      "title": "Monday all day pasta",
+      "day": "Monday",
+      "venue": "La Naya",
+      "venueInstagram": "https://www.instagram.com/lanaya.bali/",
+      "description": "Selected pasta and add Rp 5.000 for coffee or tea",
+      "imageUrl": "/images/d405f67a-1666-4e10-bfd7-4f529232eaa2.png",
+      "id": "monday-all-day-pasta-mv62vv77"
     }
   ]
 }
