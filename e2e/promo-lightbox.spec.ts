@@ -50,6 +50,11 @@ test('the back button closes it instead of leaving the page', async ({ page }) =
   await expect(page.locator('.promo-card').first()).toBeVisible();
 });
 
+test('a card has a Map button only when its promo has a Google Maps link', async ({ page }) => {
+  const withMap = promos.filter((p: { googleMapsUrl?: string }) => p.googleMapsUrl?.trim());
+  await expect(page.locator('.promo-card a', { hasText: /^\s*Map\s*$/ })).toHaveCount(withMap.length);
+});
+
 test('it opens again after being closed', async ({ page }) => {
   const zoom = page.locator('.promo-zoom').first();
   await zoom.click();

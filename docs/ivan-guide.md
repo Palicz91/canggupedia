@@ -22,6 +22,8 @@ The "Our Top Pick" badge is a switch on each venue. Use the Filter button and pi
 
 Promo pictures in Deals & events can be any shape: square or tall posters are fine. On the website the card shows a wide strip of the picture, and anyone who taps it sees the whole picture full screen. Tap again or press back to close it.
 
+Each promo also has a Google Maps link box. Open the venue on Google Maps, press Share, then Copy link, paste it in the box and Save. The card then shows an orange Map button. Leave the box empty and there is no Map button.
+
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, Save, then Put online now. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
 
 If you delete something, the bar at the bottom won't count it. Press Help, then Put online now.

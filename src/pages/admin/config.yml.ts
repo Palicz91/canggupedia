@@ -247,6 +247,7 @@ const dealsCollection = {
           imageField(),
           { label: 'Description', name: 'description', widget: 'text' },
           areaSelect,
+          linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
           linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],
