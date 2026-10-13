@@ -20,6 +20,8 @@ Each section has one list for the whole section, then one list per tab under it.
 
 The "Our Top Pick" badge is a switch on each venue. Use the Filter button and pick Top picks only to see which ones have it. Right now 23 hangout venues have it. Turn off the ones that shouldn't.
 
+Promo pictures in Deals & events can be any shape: square or tall posters are fine. On the website the card shows a wide strip of the picture, and anyone who taps it sees the whole picture full screen. Tap again or press back to close it.
+
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, Save, then Put online now. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
 
 If you delete something, the bar at the bottom won't count it. Press Help, then Put online now.
