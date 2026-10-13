@@ -1,0 +1,47 @@
+---
+/**
+ * One full-screen picture viewer for every page. Cards crop their pictures to a wide strip, so any
+ * element with `data-zoom="<url of the full picture>"` opens that picture whole on a tap. Asked for
+ * on the promos first, then for every picture ("as i check Food&Dining if i click the picture its
+ * not zooming"). The click listener sits on the document in the capture phase, so it also catches
+ * the React venue cards and the MORE popup, which stops clicks from bubbling out of itself.
+ */
+---
+
+<dialog
+  id="image-lightbox"
+  aria-label="Picture"
+  class="m-0 p-0 w-full h-full max-w-none max-h-none bg-transparent backdrop:bg-black/85 cursor-zoom-out"
+>
+  <img id="image-lightbox-img" alt="" class="w-full h-full object-contain p-4" />
+</dialog>
+
+<script>
+  // Opening pushes a history entry so the phone's back button closes it, and every other way of
+  // closing goes through history.back() too, so the two never get out of step.
+  const lightbox = document.getElementById('image-lightbox') as HTMLDialogElement | null;
+  const lightboxImg = document.getElementById('image-lightbox-img') as HTMLImageElement | null;
+  if (lightbox && lightboxImg) {
+    document.addEventListener(
+      'click',
+      (event) => {
+        const trigger = (event.target as Element | null)?.closest<HTMLElement>('[data-zoom]');
+        if (!trigger || lightbox.open) return;
+        lightboxImg.src = trigger.dataset.zoom || '';
+        lightboxImg.alt = trigger.querySelector('img')?.alt || '';
+        lightbox.showModal();
+        history.pushState({ imageLightbox: true }, '');
+      },
+      true,
+    );
+    lightbox.addEventListener('click', () => history.back());
+    lightbox.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      history.back();
+    });
+    lightbox.addEventListener('close', () => lightboxImg.removeAttribute('src'));
+    window.addEventListener('popstate', () => {
+      if (lightbox.open) lightbox.close();
+    });
+  }
+</script>

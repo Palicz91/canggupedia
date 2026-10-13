@@ -34,13 +34,20 @@ const sortedEvents = upcomingEvents(eventsData.events, baliToday());
                   <img src="/images/pediafamlogo.webp" alt="" class="w-24 max-w-[60%] opacity-40" />
                 </div>
                 {event.imageUrl && (
-                  <img
-                    src={cdnImage(event.imageUrl, 800)}
-                    alt={event.title}
-                    class="relative w-full h-full object-cover"
-                    loading="lazy"
-                    onerror="this.remove()"
-                  />
+                  <button
+                    type="button"
+                    class="image-zoom relative block w-full h-full cursor-zoom-in"
+                    data-zoom={cdnImage(event.imageUrl, 1200)}
+                    aria-label={`Show the full picture: ${event.title}`}
+                  >
+                    <img
+                      src={cdnImage(event.imageUrl, 800)}
+                      alt={event.title}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      onerror="this.parentElement.remove()"
+                    />
+                  </button>
                 )}
               </div>
               <div class="p-6">

@@ -30,13 +30,20 @@ const happyHours = happyHoursData.happy_hours;
                   <img src="/images/pediafamlogo.webp" alt="" class="w-24 max-w-[60%] opacity-40" />
                 </div>
                 {hh.imageUrl && (
-                  <img
-                    src={cdnImage(hh.imageUrl, 800)}
-                    alt={hh.venue}
-                    class="relative w-full h-full object-cover"
-                    loading="lazy"
-                    onerror="this.remove()"
-                  />
+                  <button
+                    type="button"
+                    class="image-zoom relative block w-full h-full cursor-zoom-in"
+                    data-zoom={cdnImage(hh.imageUrl, 1200)}
+                    aria-label={`Show the full picture: ${hh.venue}`}
+                  >
+                    <img
+                      src={cdnImage(hh.imageUrl, 800)}
+                      alt={hh.venue}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      onerror="this.parentElement.remove()"
+                    />
+                  </button>
                 )}
               </div>
               <div class="p-6">

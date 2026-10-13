@@ -54,8 +54,8 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
                     {promo.imageUrl && (
                       <button
                         type="button"
-                        class="promo-zoom relative block w-full h-full cursor-zoom-in"
-                        data-full={cdnImage(promo.imageUrl, 1200)}
+                        class="image-zoom relative block w-full h-full cursor-zoom-in"
+                        data-zoom={cdnImage(promo.imageUrl, 1200)}
                         aria-label={`Show the full picture: ${promo.title}`}
                       >
                         <img
@@ -113,14 +113,6 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
       </div>
     </div>
   </div>
-
-  <dialog
-    id="promo-lightbox"
-    aria-label="Promo picture"
-    class="m-0 p-0 w-full h-full max-w-none max-h-none bg-transparent backdrop:bg-black/85 cursor-zoom-out"
-  >
-    <img id="promo-lightbox-img" alt="" class="w-full h-full object-contain p-4" />
-  </dialog>
 </BaseLayout>
 
 <script>
@@ -147,30 +139,5 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
       emptyText.textContent = 'Nothing in this area yet.';
       empty.hidden = false;
     }
-  }
-
-  // Cards crop promo pictures to a wide strip; a tap shows the whole picture. Opening pushes a
-  // history entry so the phone's back button closes it, and every other way of closing goes
-  // through history.back() too, so the two never get out of step.
-  const lightbox = document.getElementById('promo-lightbox') as HTMLDialogElement | null;
-  const lightboxImg = document.getElementById('promo-lightbox-img') as HTMLImageElement | null;
-  if (lightbox && lightboxImg) {
-    document.querySelectorAll<HTMLButtonElement>('.promo-zoom').forEach((button) => {
-      button.addEventListener('click', () => {
-        lightboxImg.src = button.dataset.full || '';
-        lightboxImg.alt = button.querySelector('img')?.alt || '';
-        lightbox.showModal();
-        history.pushState({ promoLightbox: true }, '');
-      });
-    });
-    lightbox.addEventListener('click', () => history.back());
-    lightbox.addEventListener('cancel', (event) => {
-      event.preventDefault();
-      history.back();
-    });
-    lightbox.addEventListener('close', () => lightboxImg.removeAttribute('src'));
-    window.addEventListener('popstate', () => {
-      if (lightbox.open) lightbox.close();
-    });
   }
 </script>

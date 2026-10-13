@@ -24,9 +24,12 @@ function VenueImage({
   rounded = '',
   width,
   cdn = false,
+  zoom = false,
 }: {
   width: number;
   cdn?: boolean;
+  /** Wrap the picture in a button that opens it whole in the site's lightbox (ImageZoom.astro). */
+  zoom?: boolean;
   src?: string;
   alt: string;
   className: string;
@@ -47,7 +50,7 @@ function VenueImage({
     );
   }
 
-  return (
+  const img = (
     <img
       src={cdnImage(src, width, cdn)}
       alt={alt}
@@ -55,6 +58,17 @@ function VenueImage({
       loading="lazy"
       onError={() => setFailed(true)}
     />
+  );
+  if (!zoom) return img;
+  return (
+    <button
+      type="button"
+      className="image-zoom block w-full h-full cursor-zoom-in"
+      data-zoom={cdnImage(src, 1200, cdn)}
+      aria-label={`Show the full picture: ${alt}`}
+    >
+      {img}
+    </button>
   );
 }
 
@@ -204,6 +218,7 @@ export default function VenueGrid({
                     src={venue.imageUrl}
                     width={800}
                     cdn={cdn}
+                    zoom
                     alt={venue.name}
                     className="w-full h-full object-cover"
                   />
@@ -285,6 +300,7 @@ export default function VenueGrid({
                   src={selectedVenue.imageUrl}
                   width={1024}
                   cdn={cdn}
+                  zoom
                   alt={selectedVenue.name}
                   className="w-full h-full object-cover rounded-xl"
                   rounded="rounded-xl"
