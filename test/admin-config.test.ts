@@ -105,7 +105,7 @@ describe('admin config', () => {
     walk(config.collections);
 
     const custom = [...widgets].filter((w) => !builtIn.has(w));
-    expect(custom).toEqual(['venue_order']);
+    expect(custom.sort()).toEqual(['promo_order', 'venue_order']);
     for (const widget of custom) {
       const script = `${widget.replace(/_/g, '-')}-widget.js`;
       expect(html, `index.html does not load ${script}`).toContain(`/admin/${script}`);

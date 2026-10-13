@@ -211,6 +211,23 @@
       .map(function (x) { return x.it; });
   }
 
+  /** Daily promos in week order, and within a day in the order Ivan set on the order screen
+   *  (`order` is { Monday: [ids] }). A promo missing from its day's list (new, or moved from another
+   *  day) goes after the listed ones, keeping the order it was already in. */
+  function orderPromos(items, order, dayOf, idOf) {
+    order = order || {};
+    var dayRank = function (it) { var i = DAYS.indexOf(dayOf(it)); return i === -1 ? DAYS.length : i; };
+    var posRank = function (it) {
+      var ids = order[dayOf(it)] || [];
+      var i = ids.indexOf(idOf(it));
+      return i === -1 ? ids.length : i;
+    };
+    return items
+      .map(function (it, i) { return { it: it, i: i }; })
+      .sort(function (a, b) { return dayRank(a.it) - dayRank(b.it) || posRank(a.it) - posRank(b.it) || a.i - b.i; })
+      .map(function (x) { return x.it; });
+  }
+
   /** One string per JSON value whatever its key order, spacing or trailing newline, so two copies
    *  of a data file compare equal when only formatting differs. Text that is not JSON compares as
    *  trimmed text. */
@@ -240,6 +257,7 @@
     decodeBase64Utf8: decodeBase64Utf8,
     uniqueKey: uniqueKey,
     sortByWeekday: sortByWeekday,
+    orderPromos: orderPromos,
     slugify: slugify,
     fixUrl: fixUrl,
     fixLinks: fixLinks,

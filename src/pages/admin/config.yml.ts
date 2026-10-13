@@ -238,6 +238,11 @@ const dealsCollection = {
     {
       name: 'daily-promos', label: 'Daily promos', file: 'src/data/daily-promos.json', format: 'json',
       fields: [{
+        // Above the list on purpose: with 50 promos the list is a long scroll. Never stored — the
+        // admin's preSave puts the promos in this order and drops the field (promo-order-widget.js).
+        label: 'Order on the website', name: 'promo_order', widget: 'promo_order', required: false,
+        hint: 'Open a day, type a new number next to a promo and press Enter. It jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day.',
+      }, {
         label: 'Daily promos', name: 'daily_promos', label_singular: 'promo', widget: 'list',
         summary: '{{fields.day}} — {{fields.title}}',
         fields: [

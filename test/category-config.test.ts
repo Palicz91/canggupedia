@@ -25,6 +25,12 @@ const H = (() => {
   return g.CpHelpers as {
     uniqueKey(base: string, taken: string[], fallback: string): string;
     sortByWeekday<T>(items: T[], dayOf: (item: T) => string): T[];
+    orderPromos<T>(
+      items: T[],
+      order: Record<string, string[]> | undefined,
+      dayOf: (item: T) => string,
+      idOf: (item: T) => string | undefined,
+    ): T[];
     canonical(v: unknown): string;
     decodeBase64Utf8(b64: string): string;
   };
@@ -46,6 +52,35 @@ describe('sortByWeekday', () => {
       { day: 'Monday', t: 'd' }, { day: '', t: 'e' },
     ];
     expect(H.sortByWeekday(items, (i) => i.day).map((i) => i.t)).toEqual(['b', 'd', 'a', 'c', 'e']);
+  });
+});
+
+describe('orderPromos', () => {
+  const day = (i: { day: string }) => i.day;
+  const id = (i: { id?: string }) => i.id;
+  const titles = (items: { t: string }[]) => items.map((i) => i.t);
+
+  it('puts each day in the order set for it, days still in week order', () => {
+    const items = [
+      { id: 'a', day: 'Monday', t: 'a' }, { id: 'b', day: 'Tuesday', t: 'b' },
+      { id: 'c', day: 'Monday', t: 'c' }, { id: 'd', day: 'Monday', t: 'd' },
+    ];
+    expect(titles(H.orderPromos(items, { Monday: ['d', 'a', 'c'] }, day, id))).toEqual(['d', 'a', 'c', 'b']);
+  });
+
+  it('puts promos missing from the list (new, no id, or moved from another day) after the listed ones', () => {
+    const items = [
+      { id: 'a', day: 'Monday', t: 'a' }, { day: 'Monday', t: 'new' },
+      { id: 'b', day: 'Monday', t: 'b' }, { id: 'x', day: 'Monday', t: 'x' },
+    ];
+    // 'x' is listed under Tuesday only, and 'gone' is a deleted promo: both are ignored.
+    const order = { Monday: ['gone', 'b', 'a'], Tuesday: ['x'] };
+    expect(titles(H.orderPromos(items, order, day, id))).toEqual(['b', 'a', 'new', 'x']);
+  });
+
+  it('with no order is the plain week sort', () => {
+    const items = [{ id: 'a', day: 'Sunday', t: 'a' }, { id: 'b', day: 'Monday', t: 'b' }];
+    expect(titles(H.orderPromos(items, undefined, day, id))).toEqual(titles(H.sortByWeekday(items, day)));
   });
 });
 

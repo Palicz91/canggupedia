@@ -24,6 +24,8 @@ Promo pictures in Deals & events can be any shape: square or tall posters are fi
 
 Each promo also has a Google Maps link box. Open the venue on Google Maps, press Share, then Copy link, paste it in the box and Save. The card then shows an orange Map button. Leave the box empty and there is no Map button.
 
+To change the order of promos on a day, open Deals & events, then Daily promos. At the top is Order on the website, with one line per day. Click a day to open it. Every promo of that day is there with a number. Type a new number next to a promo and press Enter: it jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day; a promo you added a minute ago needs one Save before you can move it.
+
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, Save, then Put online now. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
 
 If you delete something, the bar at the bottom won't count it. Press Help, then Put online now.

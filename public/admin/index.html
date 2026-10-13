@@ -75,6 +75,8 @@
       width: 56px; min-height: 34px; padding: 4px 6px; text-align: center;
       border: 1px solid #d1d5db; border-radius: 4px; font: inherit;
     }
+    /* promo-order-widget.js: a promo added in this session has no position box until it is saved. */
+    .cp-order-new { display: flex; align-items: center; justify-content: center; color: #6b7280; border-color: transparent; }
     .cp-order-name {
       flex: 1; min-width: 0; min-height: 34px; display: flex; align-items: center;
       padding: 0 10px; border-radius: 4px; background: #fff; border: 1px solid #eceff3;
@@ -189,6 +191,7 @@
   <script src="/admin/helpers.js"></script>
   <script src="/admin/one-click-save.js"></script>
   <script src="/admin/venue-order-widget.js"></script>
+  <script src="/admin/promo-order-widget.js"></script>
 
   <div id="cp-strip" role="status" aria-live="polite">
     <i class="cp-progress" aria-hidden="true"></i>
@@ -372,12 +375,18 @@
             });
           });
           // "Add promo" puts the new one at the bottom of one long list. Saved in week order, a new
-          // Monday promo sits with the other Mondays the next time the list is opened.
+          // Monday promo sits with the other Mondays the next time the list is opened. Within a day
+          // the website shows them in file order, so the order screen (promo_order, see
+          // public/admin/promo-order-widget.js) is applied here and not stored: the file order is it.
           if (data.has('daily_promos') && data.get('daily_promos')) {
+            var promoOrder = data.get('promo_order');
+            promoOrder = promoOrder && typeof promoOrder.toJS === 'function' ? promoOrder.toJS() : promoOrder;
             data = data.update('daily_promos', function (items) {
-              return items.clear().concat(H.sortByWeekday(items.toArray(), function (it) { return it.get('day'); }));
+              return items.clear().concat(H.orderPromos(items.toArray(), promoOrder,
+                function (it) { return it.get('day'); }, function (it) { return it.get('id'); }));
             });
           }
+          if (data.has('promo_order')) data = data.delete('promo_order');
 
           if (!(data.has('name') && data.has('location'))) return data;
           if (data.get('featured') === undefined || data.get('featured') === null) data = data.set('featured', false);
