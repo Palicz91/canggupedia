@@ -4,9 +4,9 @@ Go to the website and add /admin/ to the address. Log in with your email.
 
 On the left you see the sections: Home page, Food & Dining, Hangout Spots, Wellness & Fitness, Fun & Family, Order of venues, Deals & events, and Categories & types.
 
-Save is not the same as online. Save keeps your change. The website doesn't know yet. When you're done for the day, press Put online now in the bar at the bottom of the screen. About 2 minutes later, reload the website. Press it once at the end, not after every change.
+Every Save goes on the website by itself. After you press Save, the bar at the bottom of the screen counts down for about 2 minutes, then says Live on the website. Open the website and reload it to see your change. Nothing else to press. Saved more than 5 minutes ago and the website still looks old? Press Help, then Update the website now. If the bar at the bottom still shows a Put online now button, your admin page is an old copy: reload it once.
 
-To change the two big photos on the front page, click Home page. There is one photo for Canggu and one for Uluwatu. Click Choose different image, then Upload, and pick a photo from your computer. Wide photos look best. You can also change the three lines of text at the top of the front page on the same screen. Save, then Put online now.
+To change the two big photos on the front page, click Home page. There is one photo for Canggu and one for Uluwatu. Click Choose different image, then Upload, and pick a photo from your computer. Wide photos look best. You can also change the three lines of text at the top of the front page on the same screen. Save, and it goes live by itself.
 
 To add a venue, pick a section, click the Add button at the top right, fill in the form, and click Save. Set the Area to Canggu or Uluwatu, that decides which page it shows on. Pick one or more types (Brunch, Bars, Yoga…). For photos, click Choose an image then Upload. No links needed. For Instagram, paste the full link or just the username like @cratecafe. WhatsApp links like wa.me/62812… work too.
 
@@ -26,6 +26,6 @@ Each promo also has a Google Maps link box. Open the venue on Google Maps, press
 
 To change the order of promos on a day, open Deals & events, then Daily promos. At the top is Order on the website, with one line per day. Click a day to open it. Every promo of that day is there with a number. Type a new number next to a promo and press Enter: it jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day; a promo you added a minute ago needs one Save before you can move it.
 
-To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, Save, then Put online now. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
+To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, and Save. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
 
-If you delete something, the bar at the bottom won't count it. Press Help, then Put online now.
+Deleting works the same way: the website updates by itself about 2 minutes later. The bar at the bottom shows no countdown for a delete, so just reload the website after 2 minutes.
