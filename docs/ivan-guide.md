@@ -24,6 +24,10 @@ Promo pictures in Deals & events can be any shape: square or tall posters are fi
 
 Each promo also has a Google Maps link box. Open the venue on Google Maps, press Share, then Copy link, paste it in the box and Save. The card then shows an orange Map button. Leave the box empty and there is no Map button.
 
+A promo that runs in both Canggu and Uluwatu only needs posting once: set its Area to Canggu and Uluwatu and it shows on both pages. The same choice is there for happy hours and events.
+
+Each promo also has a Booking link box. Paste a WhatsApp link like wa.me/62812… (your number with 62 in front, no + and no spaces) or a booking website, and the card shows a green Book button. Tapping it opens a WhatsApp chat with that number. Leave it empty and there is no Book button.
+
 To change the order of promos on a day, open Deals & events, then Daily promos. At the top is Order on the website, with one line per day. Click a day to open it. Every promo of that day is there with a number. Type a new number next to a promo and press Enter: it jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day; a promo you added a minute ago needs one Save before you can move it.
 
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, and Save. After about 2 minutes reload the admin page and the new type is in every venue's Type list.

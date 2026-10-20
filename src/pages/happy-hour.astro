@@ -105,6 +105,8 @@ const happyHours = happyHoursData.happy_hours;
 </BaseLayout>
 
 <script>
+  import { showsInArea } from '../lib/areas';
+
   const params = new URLSearchParams(window.location.search);
   const location = params.get('location');
   if (location) {
@@ -113,7 +115,7 @@ const happyHours = happyHoursData.happy_hours;
     if (subtitle) subtitle.textContent = `${name} - Best drink deals around town`;
 
     document.querySelectorAll<HTMLElement>('.hh-card').forEach((card) => {
-      if (card.getAttribute('data-location') !== location) card.style.display = 'none';
+      if (!showsInArea(card.getAttribute('data-location'), location)) card.style.display = 'none';
     });
 
     const anyVisible = Array.from(document.querySelectorAll<HTMLElement>('.hh-card')).some((c) => c.style.display !== 'none');

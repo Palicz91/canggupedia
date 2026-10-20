@@ -276,11 +276,21 @@ a name lookup here silently picks the wrong entry.
 A venue deleted in the CMS leaves a dangling id behind here. That is harmless — `sortVenues` ignores
 ids it cannot match — and deliberately not a test failure, so it can never block Ivan's next deploy.
 
+## Deals in both areas
+
+Promos, happy hours and events have a third Area choice, **Canggu and Uluwatu**, stored as
+`location: "both"` (added 2026-10-20 so Ivan can post a chain-wide promo once). The deal pages filter
+by `?location=` in the browser through `showsInArea` in `src/lib/areas.ts`, which lets `both`
+through on every area page. Venues do not get the option: a venue's area decides which page it
+lives on. Daily promos also have an optional `bookingUrl`, shown as a green Book button (a `wa.me`
+link opens a WhatsApp chat).
+
 ## How to add an area
 
 1. Add the area key and label to `locations` in `src/data/category-config.ts`
 2. Create `src/pages/<area>/index.astro` and `src/pages/<area>/[category].astro` (copy from canggu)
-3. Rebuild. The area appears in venue dropdowns automatically.
+3. Rebuild. The area appears in venue dropdowns automatically. Deals saved as `both` show on the new
+   area's pages too; if a deal should not, give it a single area.
 
 ## How to add a category
 

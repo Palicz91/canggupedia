@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { stringify } from 'yaml';
 import { categories, locations } from '../../data/category-config';
 import { subOrderKey } from '../../lib/venues';
+import { BOTH_AREAS } from '../../lib/areas';
 
 // Only areas that have a page. A Seminyak option used to sit here, and a venue saved with it showed
 // on no page at all (Mirror Bali, until 2026-10-12).
@@ -205,9 +206,11 @@ const venueOrderCollection = {
   ],
 };
 
+// Deals only: one promo can run in both areas, so Ivan posts it once (2026-10-20).
 const areaSelect = {
   label: 'Area', name: 'location', widget: 'select', default: 'canggu',
-  options: Object.entries(locations).map(([value, label]) => ({ label, value })),
+  options: [...areaOptions, { label: 'Canggu and Uluwatu', value: BOTH_AREAS }],
+  hint: 'Pick Canggu and Uluwatu to show it on both pages.',
 };
 
 const dealsCollection = {
@@ -253,6 +256,7 @@ const dealsCollection = {
           { label: 'Description', name: 'description', widget: 'text' },
           areaSelect,
           linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
+          linkField('Booking link', 'bookingUrl', 'Adds a green Book button. A WhatsApp link opens a chat: wa.me/62812…'),
           linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],

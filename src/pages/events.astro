@@ -111,6 +111,7 @@ const sortedEvents = upcomingEvents(eventsData.events, baliToday());
 
 <script>
   import { baliToday } from '../lib/events';
+  import { showsInArea } from '../lib/areas';
 
   const params = new URLSearchParams(window.location.search);
   const location = params.get('location');
@@ -130,7 +131,7 @@ const sortedEvents = upcomingEvents(eventsData.events, baliToday());
       return;
     }
     upcoming++;
-    if (location && card.getAttribute('data-location') !== location) {
+    if (location && !showsInArea(card.getAttribute('data-location'), location)) {
       card.style.display = 'none';
       return;
     }

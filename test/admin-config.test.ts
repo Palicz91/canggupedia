@@ -196,6 +196,27 @@ describe('admin config', () => {
     }
   });
 
+  it('deals can be posted for both areas, venues cannot', async () => {
+    const config = await getConfig();
+    const deals = config.collections.find((c: any) => c.name === 'deals');
+    for (const file of deals.files) {
+      const area = file.fields.find((f: any) => f.widget === 'list').fields.find((f: any) => f.name === 'location');
+      expect(area.options.map((o: any) => o.value), file.name).toEqual(['canggu', 'uluwatu', 'both']);
+    }
+    for (const coll of config.collections.filter((c: any) => c.name.endsWith('-venues'))) {
+      const area = coll.fields.find((f: any) => f.name === 'location');
+      expect(area.options.map((o: any) => o.value), coll.name).not.toContain('both');
+    }
+  });
+
+  it('every daily promo has a booking link box', async () => {
+    const config = await getConfig();
+    const promos = config.collections.find((c: any) => c.name === 'deals').files.find((f: any) => f.name === 'daily-promos');
+    const list = promos.fields.find((f: any) => f.name === 'daily_promos');
+    const booking = list.fields.find((f: any) => f.name === 'bookingUrl');
+    expect(booking).toMatchObject({ widget: 'string', required: false });
+  });
+
   it('image widgets disable choose_url', async () => {
     const config = await getConfig();
     const venueColls = config.collections.filter((c: any) => c.name.endsWith('-venues'));
