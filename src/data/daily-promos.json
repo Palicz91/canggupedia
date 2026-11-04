@@ -58,7 +58,7 @@
       "venueInstagram": "https://www.instagram.com/tygrsushi",
       "imageUrl": "/images/wyld-wednesday-sushi-special.png",
       "description": "WYLD WEDNESDAY\n\nSPECIALTY ROLLS\n3PCS FISH TACOS\nGYUDON BEEF\nIMPORT WINE\nSELECTED COCKTAILS\n88K NET\n\nCANGGU - UBUD - BERAWA - MUNGGU",
-      "id": "wyld-wednesday-mw1jcfnf"
+      "id": "wyld-wednesday-mw1jny3g"
     },
     {
       "id": "promo-thu-1",
@@ -69,6 +69,16 @@
       "imageUrl": "/images/pexels-photo-1763075.webp",
       "location": "canggu",
       "venueInstagram": "https://instagram.com/oldmanscanggu"
+    },
+    {
+      "location": "canggu",
+      "title": "Thursday Pasta",
+      "day": "Thursday",
+      "venue": "Black Sand Brewery",
+      "venueInstagram": "https://www.instagram.com/blacksandbrewery",
+      "imageUrl": "/images/pasta-thursday-at-black-sand-brewery.png",
+      "description": "PASTA THURSDAY\n\nFROM 12 - 8 PM | DINE IN ONLY\n\nTHURSDAY SPECIAL PASTA MENU",
+      "id": "thursday-pasta-mw1jny3h"
     },
     {
       "id": "promo-fri-1",
