@@ -1,0 +1,17 @@
+{
+  "name": "Pump kitchen",
+  "featured": false,
+  "note": "The prices is depends on what you will order from menu or from the build your own bowl",
+  "priceRange": "Rp 95.000 - Rp 200.000",
+  "imageUrl": "/images/img_1211.jpg",
+  "location": "canggu",
+  "openingHours": "8.00 am–9.00 pm",
+  "id": "canggu-pump-kitchen",
+  "description": "Pump Kitchen is Bali's ultimate dining hotspot for fitness enthusiasts, gym-goers, and anyone focused on maintaining a clean, macro-tracked diet. Located in the trendy area of Pererenan, it specializes in premium high-protein, calorie-conscious meals and customizable clean bowls that prove healthy eating can still taste incredible.",
+  "instagramUrl": "https://www.instagram.com/pump.kitchens",
+  "category": "food",
+  "subcategory": [
+    "healthy"
+  ],
+  "googleMapsUrl": "https://maps.app.goo.gl/w5h72dVDq3ubrdHXA"
+}
