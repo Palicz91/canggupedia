@@ -51,6 +51,16 @@
       "venueInstagram": "https://instagram.com/ulucliffhouse"
     },
     {
+      "location": "canggu",
+      "title": "WYLD Wednesday ",
+      "day": "Wednesday",
+      "venue": "TYGR Sushi",
+      "venueInstagram": "https://www.instagram.com/tygrsushi",
+      "imageUrl": "/images/wyld-wednesday-sushi-special.png",
+      "description": "WYLD WEDNESDAY\n\nSPECIALTY ROLLS\n3PCS FISH TACOS\nGYUDON BEEF\nIMPORT WINE\nSELECTED COCKTAILS\n88K NET\n\nCANGGU - UBUD - BERAWA - MUNGGU",
+      "id": "wyld-wednesday-mw1jcfnf"
+    },
+    {
       "id": "promo-thu-1",
       "day": "Thursday",
       "title": "Throwback Thursday",
