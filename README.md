@@ -48,7 +48,7 @@ The panel also uses one word per thing, which is not something a test can check:
 **Put online now** everywhere (never "publish"), and the panel that opens on a venue card is "when
 someone opens the venue" (never "popup"). If you add a screen, reuse the existing word.
 
-The one deliberate exception is the **Categories & types** screen, whose four groups the order
+The one deliberate exception is the **Categories & types** screen, whose groups the order
 screen calls sections. A 2026-08-31 pass renamed it to "Sections & types" for consistency and Adam
 asked for "Categories" back the same day — it is what he and Ivan say out loud, and matching their
 speech beats matching the other screen. Leave it.
