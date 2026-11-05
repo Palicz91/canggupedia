@@ -1,0 +1,131 @@
+---
+/**
+ * One promo card, used by What's On (daily promos) and Deals. Every button shows only when its
+ * field is filled in. More opens the owner's caption (table bookings and the like) in a popup.
+ */
+import { toHref } from '../lib/links';
+import { cdnImage } from '../lib/images';
+
+// The admin writes optional fields only once someone fills them in, so the JSON alone can't type them.
+export interface Promo {
+  title: string;
+  venue: string;
+  description: string;
+  imageUrl?: string;
+  location: string;
+  timing?: string;
+  venueInstagram?: string;
+  googleMapsUrl?: string;
+  bookingUrl?: string;
+  moreInfo?: string;
+}
+
+const { promo } = Astro.props as { promo: Promo };
+const moreInfo = promo.moreInfo?.trim();
+---
+
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover promo-card" data-location={promo.location}>
+  <div class="relative h-48">
+    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100" aria-hidden="true">
+      <img src="/images/pediafamlogo.webp" alt="" class="w-24 max-w-[60%] opacity-40" />
+    </div>
+    {promo.imageUrl && (
+      <button
+        type="button"
+        class="image-zoom relative block w-full h-full cursor-zoom-in"
+        data-zoom={cdnImage(promo.imageUrl, 1200)}
+        aria-label={`Show the full picture: ${promo.title}`}
+      >
+        <img
+          src={cdnImage(promo.imageUrl, 800)}
+          alt={promo.title}
+          class="w-full h-full object-cover"
+          loading="lazy"
+          onerror="this.parentElement.remove()"
+        />
+      </button>
+    )}
+  </div>
+  <div class="p-6">
+    <h3 class="font-display font-bold text-2xl text-gray-800 mb-2">
+      {promo.title}
+    </h3>
+    <p class="text-sunset-orange font-bold text-lg mb-3">
+      {promo.venue}
+    </p>
+    {promo.timing && <p class="text-gray-800 font-semibold mb-3">{promo.timing}</p>}
+    <p class="text-gray-600 mb-6">{promo.description}</p>
+    <div class="flex flex-wrap gap-2">
+      {toHref(promo.googleMapsUrl) && (
+        <a
+          href={toHref(promo.googleMapsUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center space-x-2 bg-sunset-orange text-white py-2 px-4 rounded-xl hover:bg-sunset-coral transition-colors font-semibold"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Map</span>
+        </a>
+      )}
+      {toHref(promo.bookingUrl) && (
+        <a
+          href={toHref(promo.bookingUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center space-x-2 bg-emerald-500 text-white py-2 px-4 rounded-xl hover:bg-emerald-600 transition-colors font-semibold"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <span>Book</span>
+        </a>
+      )}
+      {toHref(promo.venueInstagram, 'instagram') && (
+        <a
+          href={toHref(promo.venueInstagram, 'instagram')}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center space-x-2 bg-pink-500 text-white py-2 px-4 rounded-xl hover:bg-pink-600 transition-colors font-semibold"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <span>View Venue</span>
+        </a>
+      )}
+    </div>
+    {moreInfo && (
+      <Fragment>
+      <button
+        type="button"
+        data-promo-more
+        class="bg-gray-200 text-gray-700 py-2 px-4 rounded-xl font-semibold hover:bg-gray-300 transition w-full mt-2 cursor-pointer"
+      >
+        MORE
+      </button>
+      <dialog
+        data-promo-popup
+        aria-label={promo.title}
+        class="m-auto bg-white rounded-2xl shadow-xl max-w-lg w-[calc(100%-2rem)] max-h-[90vh] p-6 backdrop:bg-black/50"
+      >
+        <button type="button" data-promo-close aria-label="Close" class="float-right text-2xl leading-none text-gray-500 hover:text-gray-800 cursor-pointer">&times;</button>
+        <h3 class="font-display font-bold text-2xl text-gray-800 mb-2 pr-8">{promo.title}</h3>
+        <p class="text-sunset-orange font-bold text-lg mb-3">{promo.venue}</p>
+        <p class="text-gray-600 whitespace-pre-line">{moreInfo}</p>
+      </dialog>
+      </Fragment>
+    )}
+  </div>
+</div>
+
+<script>
+  // One listener per page, however many cards. Native dialog: Escape closes it for free.
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    if (!target) return;
+    if (target.closest('[data-promo-more]')) {
+      target.closest('.promo-card')?.querySelector<HTMLDialogElement>('[data-promo-popup]')?.showModal();
+      return;
+    }
+    const popup = target.closest<HTMLDialogElement>('[data-promo-popup]');
+    if (!popup) return;
+    // A click on the dark area around the popup lands on the dialog itself.
+    if (target === popup || target.closest('[data-promo-close]')) popup.close();
+  });
+</script>

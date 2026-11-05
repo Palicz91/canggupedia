@@ -25,12 +25,13 @@ describe('admin config', () => {
     expect(config.publish_mode).toBe('simple');
   });
 
-  it('has 8 collections in the right order', async () => {
+  it('has 12 collections in the right order', async () => {
     const config = await getConfig();
     const names = config.collections.map((c: any) => c.name);
     expect(names).toEqual([
       'home',
       'food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues',
+      'coffee-matcha-venues', 'co-working-venues', 'byob-venues', 'services-venues',
       'venue-order', 'deals', 'settings',
     ]);
   });

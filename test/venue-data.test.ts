@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const VENUES_DIR = 'src/data/venues';
-const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family'];
+const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family', 'coffee-matcha', 'co-working', 'byob', 'services'];
 
 function allVenueFiles() {
   const files: { path: string; data: any; category: string }[] = [];

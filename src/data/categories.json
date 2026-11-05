@@ -24,6 +24,14 @@
         {
           "name": "Rooftop",
           "value": "rooftop"
+        },
+        {
+          "name": "Vegan",
+          "value": "vegan"
+        },
+        {
+          "name": "Late Bite",
+          "value": "late-bite"
         }
       ]
     },
@@ -43,6 +51,10 @@
         {
           "name": "Beach Clubs",
           "value": "beach-clubs"
+        },
+        {
+          "name": "Shopping Mall",
+          "value": "shopping-mall"
         }
       ]
     },
@@ -74,6 +86,10 @@
         {
           "name": "Spa & Massage",
           "value": "spa"
+        },
+        {
+          "name": "Self Care",
+          "value": "self-care"
         }
       ]
     },
@@ -93,6 +109,54 @@
         {
           "name": "Activities",
           "value": "activities"
+        }
+      ]
+    },
+    {
+      "value": "coffee-matcha",
+      "title": "Coffee & Matcha",
+      "description": "Best spots for your daily coffee & matcha",
+      "subcategories": [
+        {
+          "name": "Coffee",
+          "value": "coffee"
+        },
+        {
+          "name": "Matcha",
+          "value": "matcha"
+        }
+      ]
+    },
+    {
+      "value": "co-working",
+      "title": "Co Working",
+      "description": "Inspiring workspaces and productive environments",
+      "subcategories": [
+        {
+          "name": "Workspaces",
+          "value": "workspaces"
+        }
+      ]
+    },
+    {
+      "value": "byob",
+      "title": "BYOB",
+      "description": "Your bowl, your choice, create your own bowl",
+      "subcategories": [
+        {
+          "name": "Bowls",
+          "value": "bowls"
+        }
+      ]
+    },
+    {
+      "value": "services",
+      "title": "Services",
+      "description": "Everything you need, right at your doorstep",
+      "subcategories": [
+        {
+          "name": "Services",
+          "value": "services"
         }
       ]
     }

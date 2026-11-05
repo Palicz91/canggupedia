@@ -285,6 +285,23 @@ through on every area page. Venues do not get the option: a venue's area decides
 lives on. Daily promos also have an optional `bookingUrl`, shown as a green Book button (a `wa.me`
 link opens a WhatsApp chat).
 
+## Area boxes, Deals and the More button (2026-11-05)
+
+The boxes on `/canggu` and `/uluwatu` come from `areaBoxes` in `src/lib/area-boxes.ts`: `BOX_ORDER` is
+Ivan's 12-box order, `STYLES` holds each section's gradient and icon. A new section in
+`categories.json` needs a folder in `src/data/venues/`, a `venueCollection` line in
+`src/pages/admin/config.yml.ts`, keys in `venue-order/*.json` and a place in `BOX_ORDER`, or its box
+goes last with a grey fallback style.
+
+`hubSections` keeps a section with no venues in the area, so its box shows **Coming Soon** and its page
+still builds. Empty types stay dropped, so a new type shows only once a venue uses it.
+
+What's On (`/daily-promos`) is the Monday to Sunday list. Deals (`/deals`, `src/data/deals.json`) are
+promos with no weekday: `timing` is free text shown on the card. Both render `src/components/PromoCard.astro`.
+Its optional `moreInfo` adds a grey MORE button that opens a native `<dialog>`; `showModal` gives the
+Escape key and focus handling. The dialog needs `m-auto` because Tailwind's reset removes the browser's
+centering.
+
 ## How to add an area
 
 1. Add the area key and label to `locations` in `src/data/category-config.ts`

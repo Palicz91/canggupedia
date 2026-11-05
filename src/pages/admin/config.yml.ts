@@ -89,6 +89,10 @@ const venueCollections = [
   venueCollection(byValue['hangout'], 'src/data/venues/hangout', 'hangout venue', '5PM – 2AM'),
   venueCollection(byValue['wellness'], 'src/data/venues/wellness', 'wellness venue', '6AM – 10PM'),
   venueCollection(byValue['fun-family'], 'src/data/venues/fun-family', 'fun & family venue', '9AM – 6PM'),
+  venueCollection(byValue['coffee-matcha'], 'src/data/venues/coffee-matcha', 'coffee & matcha venue', '7AM – 5PM'),
+  venueCollection(byValue['co-working'], 'src/data/venues/co-working', 'co working venue', '8AM – 8PM'),
+  venueCollection(byValue['byob'], 'src/data/venues/byob', 'BYOB venue', '8AM – 9PM'),
+  venueCollection(byValue['services'], 'src/data/venues/services', 'service', '9AM – 6PM'),
 ];
 
 /**
@@ -213,10 +217,15 @@ const areaSelect = {
   hint: 'Pick Canggu and Uluwatu to show it on both pages.',
 };
 
+const moreInfoField = {
+  label: 'More info', name: 'moreInfo', widget: 'text', required: false,
+  hint: 'Shows when someone presses MORE, e.g. how to book a table. Leave empty and the card has no MORE button.',
+};
+
 const dealsCollection = {
   name: 'deals',
   label: 'Deals & events',
-  description: 'Happy hours, daily promos and upcoming events. Open one, add or change an item, then Save. It goes on the website by itself about 2 minutes later.',
+  description: 'Happy hours, daily promos, deals and upcoming events. Open one, add or change an item, then Save. It goes on the website by itself about 2 minutes later.',
   editor: { preview: false },
   files: [
     {
@@ -258,6 +267,27 @@ const dealsCollection = {
           linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
           linkField('Booking link', 'bookingUrl', 'Adds a green Book button. A WhatsApp link opens a chat: wa.me/62812…'),
           linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
+          moreInfoField,
+          { label: 'Ref', name: 'id', widget: 'hidden' },
+        ],
+      }],
+    },
+    {
+      name: 'deals', label: 'Deals', file: 'src/data/deals.json', format: 'json',
+      fields: [{
+        label: 'Deals', name: 'deals', label_singular: 'deal', widget: 'list',
+        summary: '{{fields.title}} — {{fields.venue}}',
+        fields: [
+          { label: 'Title', name: 'title', widget: 'string', hint: 'e.g. Christmas Set Menu' },
+          { label: 'When', name: 'timing', widget: 'string', required: false, hint: 'e.g. Every day, or 20 to 26 December' },
+          { label: 'Venue', name: 'venue', widget: 'string' },
+          imageField(),
+          { label: 'Description', name: 'description', widget: 'text' },
+          areaSelect,
+          linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
+          linkField('Booking link', 'bookingUrl', 'Adds a green Book button. A WhatsApp link opens a chat: wa.me/62812…'),
+          linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
+          moreInfoField,
           { label: 'Ref', name: 'id', widget: 'hidden' },
         ],
       }],
@@ -296,7 +326,7 @@ const categoriesCollection = {
     fields: [{
       label: 'Sections', name: 'categories', label_singular: 'section', widget: 'list',
       allow_add: false, allow_remove: false, collapsed: true, summary: '{{fields.title}}',
-      hint: 'The four main sections of the website. Open one to add or rename its types. To add a whole new section, ask Adam.',
+      hint: 'The main sections of the website. Open one to add or rename its types. To add a whole new section, ask Adam.',
       fields: [
         { label: 'Section name', name: 'title', widget: 'string' },
         { label: 'Line under the section name', name: 'description', widget: 'string' },

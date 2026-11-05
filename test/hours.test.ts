@@ -17,7 +17,7 @@ const CpHelpers = (() => {
 })();
 
 const VENUES_DIR = 'src/data/venues';
-const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family'];
+const CATEGORIES = ['food', 'hangout', 'wellness', 'fun-family', 'coffee-matcha', 'co-working', 'byob', 'services'];
 
 function allOpeningHours() {
   const out: { path: string; hours: string }[] = [];

@@ -7,16 +7,17 @@ const cfg = {
 };
 
 describe('hubSections', () => {
-  it('uses CMS titles and drops empty types and sections', () => {
+  it('uses CMS titles, drops empty types and keeps empty sections', () => {
     const venues = [
       { location: 'canggu', category: 'food', subcategory: ['brunch'] },
       { location: 'uluwatu', category: 'wellness', subcategory: 'yoga' },
     ];
     expect(hubSections(cfg, venues, 'canggu')).toEqual([
       { key: 'food', title: 'Food & Dining', description: 'Eat', types: ['Brunch'] },
+      { key: 'wellness', title: 'Wellness', description: 'Relax', types: [] },
     ]);
   });
-  it('returns nothing for an area without venues', () => {
-    expect(hubSections(cfg, [], 'canggu')).toEqual([]);
+  it('still lists every section for an area without venues', () => {
+    expect(hubSections(cfg, [], 'canggu').map((s) => s.key)).toEqual(['food', 'wellness']);
   });
 });

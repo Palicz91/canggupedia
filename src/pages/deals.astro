@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import dealsData from '../data/deals.json';
+import PromoCard, { type Promo } from '../components/PromoCard.astro';
+
+// What's On is the Monday to Sunday list. Deals run every day or for a set time, like a Christmas promo.
+const deals: Promo[] = dealsData.deals;
+---
+
+<BaseLayout
+  title="Deals in Bali | The Canggupedia"
+  description="Find everyday and limited-time deals in Canggu and Uluwatu, Bali."
+>
+  <div class="min-h-screen bg-gradient-to-br from-fuchsia-100 to-purple-100">
+    <div class="container mx-auto px-4 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-4">
+          Deals
+        </h1>
+        <p id="deals-subtitle" class="text-xl text-gray-600">
+          Find your everyday deals
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {deals.map((deal) => <PromoCard promo={deal} />)}
+      </div>
+
+      <div id="empty-state" class="text-center py-16" hidden={deals.length > 0}>
+        <p id="empty-state-text" class="text-xl text-gray-600">No deals yet. Coming soon!</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { showsInArea } from '../lib/areas';
+
+  const location = new URLSearchParams(window.location.search).get('location');
+  if (location) {
+    const name = location.charAt(0).toUpperCase() + location.slice(1);
+    const subtitle = document.getElementById('deals-subtitle');
+    if (subtitle) subtitle.textContent = `${name} - Find your everyday deals`;
+
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.promo-card'));
+    cards.forEach((card) => {
+      if (!showsInArea(card.getAttribute('data-location'), location)) card.style.display = 'none';
+    });
+
+    const empty = document.getElementById('empty-state');
+    const emptyText = document.getElementById('empty-state-text');
+    if (cards.length > 0 && cards.every((c) => c.style.display === 'none') && empty && emptyText) {
+      emptyText.textContent = 'Nothing in this area yet.';
+      empty.hidden = false;
+    }
+  }
+</script>

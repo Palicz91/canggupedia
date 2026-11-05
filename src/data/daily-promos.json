@@ -28,7 +28,8 @@
       "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
       "imageUrl": "/images/pexels-photo-4958792.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/labrisabali"
+      "venueInstagram": "https://instagram.com/labrisabali",
+      "googleMapsUrl": "https://maps.app.goo.gl/rYXfeYKTrBLwFFYB8"
     },
     {
       "location": "canggu",
@@ -48,7 +49,8 @@
       "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
       "imageUrl": "/images/pexels-photo-1407846.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/ulucliffhouse"
+      "venueInstagram": "https://instagram.com/ulucliffhouse",
+      "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     },
     {
       "location": "canggu",
@@ -68,7 +70,8 @@
       "description": "90s & 2000s party with drink specials and nostalgic hits all night",
       "imageUrl": "/images/pexels-photo-1763075.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/oldmanscanggu"
+      "venueInstagram": "https://instagram.com/oldmanscanggu",
+      "googleMapsUrl": "https://maps.app.goo.gl/GfGFkBkzps7TsqXh9"
     },
     {
       "location": "canggu",
@@ -88,7 +91,8 @@
       "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
       "imageUrl": "/images/pexels-photo-1540406.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/singlefinbali"
+      "venueInstagram": "https://instagram.com/singlefinbali",
+      "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali"
     },
     {
       "id": "promo-sat-1",
@@ -98,7 +102,8 @@
       "description": "Extended brunch menu with live acoustic music from 10am-3pm",
       "imageUrl": "/images/pexels-photo-1640777.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/cratecafe"
+      "venueInstagram": "https://instagram.com/cratecafe",
+      "googleMapsUrl": "https://maps.app.goo.gl/z6Ght9sofZHFVL3V6"
     },
     {
       "id": "promo-sun-1",
@@ -108,7 +113,8 @@
       "description": "Traditional Sunday roast with ocean views - booking recommended",
       "imageUrl": "/images/pexels-photo-262978.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/ulucliffhouse"
+      "venueInstagram": "https://instagram.com/ulucliffhouse",
+      "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     }
   ]
 }

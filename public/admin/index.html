@@ -360,7 +360,7 @@
             });
           }
 
-          [['happy_hours', 'venue'], ['daily_promos', 'title'], ['events', 'title']].forEach(function (pair) {
+          [['happy_hours', 'venue'], ['daily_promos', 'title'], ['deals', 'title'], ['events', 'title']].forEach(function (pair) {
             var key = pair[0], nameField = pair[1];
             if (!data.has(key) || !data.get(key)) return;
             var used = [];
@@ -409,6 +409,7 @@
         if (loc && cat && (loc === 'canggu' || loc === 'uluwatu')) return SITE + '/' + loc + '/' + cat;
         if (data.has('happy_hours')) return SITE + '/happy-hour';
         if (data.has('daily_promos')) return SITE + '/daily-promos';
+        if (data.has('deals')) return SITE + '/deals';
         if (data.has('events')) return SITE + '/events';
         return SITE;
       }
@@ -637,7 +638,7 @@
             h('p', { className: 'cp-hint' }, 'This preview updates as you type. The website changes about 2 minutes after you press Save.'));
         }
       });
-      ['food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues'].forEach(function (name) {
+      ['food-venues', 'hangout-venues', 'wellness-venues', 'fun-family-venues', 'coffee-matcha-venues', 'co-working-venues', 'byob-venues', 'services-venues'].forEach(function (name) {
         CMS.registerPreviewTemplate(name, VenuePreview);
       });
     })();

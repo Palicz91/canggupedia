@@ -2,7 +2,7 @@
 
 Go to the website and add /admin/ to the address. Log in with your email.
 
-On the left you see the sections: Home page, Food & Dining, Hangout Spots, Wellness & Fitness, Fun & Family, Order of venues, Deals & events, and Categories & types.
+On the left you see the sections: Home page, Food & Dining, Hangout Spots, Wellness & Fitness, Fun & Family, Coffee & Matcha, Co Working, BYOB, Services, Order of venues, Deals & events, and Categories & types.
 
 Every Save goes on the website by itself. After you press Save, the bar at the bottom of the screen counts down for about 2 minutes, then says Live on the website. Open the website and reload it to see your change. Nothing else to press. Saved more than 5 minutes ago and the website still looks old? Press Help, then Update the website now. If the bar at the bottom still shows a Put online now button, your admin page is an old copy: reload it once.
 
@@ -29,6 +29,12 @@ A promo that runs in both Canggu and Uluwatu only needs posting once: set its Ar
 Each promo also has a Booking link box. Paste a WhatsApp link like wa.me/62812… (your number with 62 in front, no + and no spaces) or a booking website, and the card shows a green Book button. Tapping it opens a WhatsApp chat with that number. Leave it empty and there is no Book button.
 
 To change the order of promos on a day, open Deals & events, then Daily promos. At the top is Order on the website, with one line per day. Click a day to open it. Every promo of that day is there with a number. Type a new number next to a promo and press Enter: it jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day; a promo you added a minute ago needs one Save before you can move it.
+
+What's On on the area pages shows the Monday to Sunday promos, from Daily promos. Deals & events also has Deals, for promos that run every day or for a set time, like a Christmas promo. A deal has a When box where you write the time ("Every day", "20 to 26 December"), and it shows on the card. It has no day to pick.
+
+Both promos and deals have a More info box. Write what people should know, like how to book a table, and the card gets a grey MORE button that opens your text. Leave the box empty and there is no MORE button.
+
+A section with no venues in an area still shows its box on that area's page, marked Coming Soon. Add the first venue and its types replace those words. Types work the same way: a tab like Vegan or Late Bite shows on the website once a venue in that area uses it.
 
 To add a new type (like "Rooftop"), go to Categories & types, open the section, click Add type, name it, and Save. After about 2 minutes reload the admin page and the new type is in every venue's Type list.
 

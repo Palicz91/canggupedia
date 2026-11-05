@@ -46,3 +46,13 @@
 - Build: clean, 17 pages
 - Config: publish_mode=simple, no editorial_workflow, skip netlify ×5, no jargon
 - Secret scan: clean
+
+## Ivan's change list (2026-11-05)
+- [x] What's On = Monday to Sunday only; new Deals page and admin list
+- [x] New sections Coffee & Matcha, Co Working, BYOB, Services on both areas; empty ones show Coming Soon
+- [x] 12-box order in one place (`src/lib/area-boxes.ts`)
+- [x] New types Vegan, Late Bite, Shopping Mall, Self Care
+- [x] More button and More info box on promos and deals
+- [x] Map links copied from existing venues to 6 of 11 promos
+- [ ] Ivan: map links for Warung Gouthe, La Naya, Tacosaqui bali, TYGR Sushi, Black Sand Brewery
+- [ ] Ivan: was anything else on his Wellness list? Screenshots cut off after Self Care

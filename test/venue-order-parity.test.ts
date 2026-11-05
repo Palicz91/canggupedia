@@ -59,7 +59,7 @@ function siteOrder(venues: Venue[], stored: string[], sectionOrder: string[], su
 }
 
 describe('the widget orders venues exactly like the website', () => {
-  // Every list on the screen: 2 areas x (4 sections + 17 tabs).
+  // Every list on the screen: 2 areas x (every section + every tab).
   const cases: { name: string; area: string; section: string; sub: string | null; subOrder: string[] }[] = [];
   for (const area of AREAS) {
     for (const cat of categories) {
