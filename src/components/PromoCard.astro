@@ -60,7 +60,7 @@ const mapsHref = promoMapsHref(promo, venues);
       {promo.venue}
     </p>
     {promo.timing && <p class="text-gray-800 font-semibold mb-3">{promo.timing}</p>}
-    <p class="text-gray-600 mb-6">{promo.description}</p>
+    <p class="text-gray-600 mb-6 whitespace-pre-line">{promo.description?.trim()}</p>
     <div class="flex flex-wrap gap-2">
       {mapsHref && (
         <a
