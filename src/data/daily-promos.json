@@ -21,17 +21,6 @@
       "id": "monday-all-day-pasta-mv62vv77"
     },
     {
-      "venueInstagram": "https://instagram.com/labrisabali",
-      "venue": "La Brisa",
-      "imageUrl": "/images/pexels-photo-4958792.webp",
-      "location": "canggu",
-      "title": "Taco Tuesday",
-      "id": "promo-tue-1",
-      "day": "Tuesday",
-      "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
-      "googleMapsUrl": "https://maps.app.goo.gl/rYXfeYKTrBLwFFYB8"
-    },
-    {
       "location": "canggu",
       "title": "Taco tueday",
       "day": "Tuesday",
@@ -49,7 +38,7 @@
       "venueInstagram": "https://www.instagram.com/thebench.canggu",
       "description": "Burger and Pint Rp 150.000 ++\nMonday to Friday 12pm - 3pm",
       "imageUrl": "/images/burger-pint-lunch-promo.png",
-      "id": "burger-and-pint-mwa2bfzm"
+      "id": "burger-and-pint-mwa2nm3k"
     },
     {
       "location": "canggu",
@@ -59,7 +48,7 @@
       "imageUrl": "/images/retro-taco-tuesday-specials-poster.png",
       "description": "Taco and Slushy Margarita special all day",
       "venueInstagram": "https://www.instagram.com/sol.rooftopbali",
-      "id": "sol-rooftop-taco-tuesday-mwa2bfzm"
+      "id": "sol-rooftop-taco-tuesday-mwa2nm3k"
     },
     {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
