@@ -106,6 +106,32 @@
       "googleMapsUrl": "https://maps.app.goo.gl/FKzE7hd57ZfmE3kUA"
     },
     {
+      "venueInstagram": "https://www.instagram.com/linglingsbali/",
+      "venue": "Ling Ling's",
+      "imageUrl": "/images/ling-ling-s-taco-tuesday-feast.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "Taco Tiuesday",
+      "id": "taco-tiuesday-mwa77n9q",
+      "description": "TACO TUESDAY at LING-LING’S!\n\nTaco cravings? We’ve got you covered!\n\n🌮 Tacos for only IDR 15K\n📅 Every Tuesday\n⏰ 5 PM – 10 PM\n\nGather your friends, enjoy delicious tacos and make your Tuesday a little more exciting!\n\nPrice subject to tax & service.",
+      "googleMapsUrl": "https://maps.app.goo.gl/tvYmHcVXZJZd13MUA"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/pizzafabbricabali",
+      "venue": "Pizza Fabbrica Umalas & Canggu",
+      "imageUrl": "/images/pizza-fabbrica-tuesday-pasta-special-1-.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "TUESDAY – PASTA E BASTA",
+      "id": "tuesday-pasta-e-basta-mwa77n9r",
+      "description": "85K TUESDAY – PASTA E BASTA!\n\nPasta lovers, this one’s for you!\n\nEnjoy our special off-menu pasta dishes for only IDR 85K.\n\n📅 Every Tuesday\n📍 Pizza Fabbrica – Umalas & Canggu\n\nOne day only. Don’t miss it!\n",
+      "googleMapsUrl": "https://maps.app.goo.gl/yfwdurUiPii8dqCE8"
+    },
+    {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
       "imageUrl": "/images/pexels-photo-1407846.webp",
