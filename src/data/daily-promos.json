@@ -132,6 +132,33 @@
       "googleMapsUrl": "https://maps.app.goo.gl/yfwdurUiPii8dqCE8"
     },
     {
+      "venueInstagram": "https://www.instagram.com/nourishbali/",
+      "venue": "Nourish ",
+      "imageUrl": "/images/vintage-fish-chips-tuesday-poster.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "Fish & Chips day",
+      "id": "fish-and-chips-day-mwa8vzi0",
+      "description": "TUESDAYS FISH & CHIPS DAY!\n\nYour Tuesday comfort food fix is here!\n\nEnjoy Fish & Chips served with crispy shoestring fries for only IDR 70K.\n\n📅 Every Tuesday\n⏰ 5 PM – 8 PM\n\nPerfect for an early dinner!\n\nPrice subject to government tax & service.\n",
+      "googleMapsUrl": "https://maps.app.goo.gl/tsNrrWcJDpioKTuT8"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/bohemecanggu",
+      "venue": "Boheme Canggu",
+      "imageUrl": "/images/boheme-melody-night-poster.png",
+      "location": "canggu",
+      "bookingUrl": "https://wa.me/6281125041444",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "Melody Night",
+      "id": "melody-night-mwa8vzi0",
+      "description": "BOHEME – Melody Night \n\nEase into your melody night with soulful live acoustic vibes, good drinks, and cozy moments under the Canggu sky.\n6.30 PM\nEvery Tuesday & Thursday\nat Boheme Pererenan\nLive Acoustic\nFree Entry\nJoin us for an intimate evening filled with music, laughter, and laid-back atmosphere.\n",
+      "googleMapsUrl": "https://maps.app.goo.gl/1UxnMpipYWstuykA8"
+    },
+    {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
       "imageUrl": "/images/pexels-photo-1407846.webp",
