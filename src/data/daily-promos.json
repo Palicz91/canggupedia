@@ -5,11 +5,11 @@
       "venue": "Warung Gouthe",
       "imageUrl": "/images/chatgpt-image-oct-6-2026-11_18_55-am.png",
       "location": "canggu",
-      "title": "Brochette Monday 2 4 1",
-      "id": "promo-mon-1",
       "days": [
         "Monday"
       ],
+      "title": "Brochette Monday 2 4 1",
+      "id": "promo-mon-1",
       "description": "2-for-1 brochette 5pm to 8pm the lowest price goes free",
       "googleMapsUrl": "https://maps.google.com/?q=Warung+Gouthe%2C+Jl.+Pantai+Berawa+No.7A%2C+Canggu%2C+Bali"
     },
@@ -18,11 +18,11 @@
       "venue": "La Naya",
       "imageUrl": "/images/d405f67a-1666-4e10-bfd7-4f529232eaa2.png",
       "location": "canggu",
-      "title": "Monday all day pasta",
-      "id": "monday-all-day-pasta-mv62vv77",
       "days": [
         "Monday"
       ],
+      "title": "Monday all day pasta",
+      "id": "monday-all-day-pasta-mv62vv77",
       "description": "Selected pasta and add Rp 5.000 for coffee or tea",
       "googleMapsUrl": "https://maps.google.com/?q=La+Naya+Bali%2C+Kerobokan%2C+Bali"
     },
@@ -31,11 +31,11 @@
       "venue": "Tacosaqui bali",
       "imageUrl": "/images/poster-taco-selasa-retro-uluwatu.png",
       "location": "canggu",
-      "title": "Taco tueday",
-      "id": "taco-tueday-mvgafr0w",
       "days": [
         "Tuesday"
       ],
+      "title": "Taco tueday",
+      "id": "taco-tueday-mvgafr0w",
       "description": "35k tacos all day Umalas and Uluwatu venue",
       "googleMapsUrl": "https://maps.google.com/?q=Tacos+Aqui%2C+Jl.+Bumbak+No.79-81%2C+Umalas%2C+Bali"
     },
@@ -44,11 +44,11 @@
       "venue": "The Bench Canggu",
       "imageUrl": "/images/burger-pint-lunch-promo.png",
       "location": "canggu",
-      "title": "Burger and Pint",
-      "id": "burger-and-pint-mwa2nm3k",
       "days": [
         "Tuesday"
       ],
+      "title": "Burger and Pint",
+      "id": "burger-and-pint-mwa2nm3k",
       "description": "Burger and Pint Rp 150.000 ++\nMonday to Friday 12pm - 3pm",
       "googleMapsUrl": "https://maps.google.com/?q=The+Bench%2C+Jl.+Pantai+Batu+Bolong+No.99%2C+Canggu%2C+Bali"
     },
@@ -57,11 +57,11 @@
       "venue": "Sol rooftop",
       "imageUrl": "/images/retro-taco-tuesday-specials-poster.png",
       "location": "canggu",
-      "title": "Sol rooftop Taco Tuesday",
-      "id": "sol-rooftop-taco-tuesday-mwa2nm3k",
       "days": [
         "Tuesday"
       ],
+      "title": "Sol rooftop Taco Tuesday",
+      "id": "sol-rooftop-taco-tuesday-mwa2nm3k",
       "description": "Taco and Slushy Margarita special all day",
       "googleMapsUrl": "https://maps.app.goo.gl/qQ2CZtmHhVUjGs3B8"
     },
@@ -70,25 +70,51 @@
       "venue": "Uma Garden",
       "imageUrl": "/images/chatgpt-image-nov-10-2026-11_18_46-am.png",
       "location": "canggu",
-      "title": "LIVE MUSIC AT UMA GARDEN",
-      "id": "live-music-at-uma-garden-mwa4ru3d",
       "days": [
         "Tuesday",
         "Thursday"
       ],
+      "title": "LIVE MUSIC AT UMA GARDEN",
+      "id": "live-music-at-uma-garden-mwa4ru3d",
       "description": "UMA GARDEN\nFIRE COOKING • BACKYARD CONVERSATIONS\n\nLIVE MUSIC AT UMA GARDEN\nTuesday Live Jazz\nTHURSDAY BLUES NIGHT\nwith Blues Mates\nEVERY TUESDAY & THURSDAY\n7.45 PM",
       "googleMapsUrl": "https://maps.app.goo.gl/W5aG9zqmkqkiXA9aA"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/legendsbistro.bali/",
+      "venue": "The Legends Bistro",
+      "imageUrl": "/images/legends-weekly-deals-poster.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "Taco Tuesday",
+      "id": "taco-tuesday-mwa5jfi5",
+      "description": "LEGENDS WEEKLY DEALS\n\nEnjoy our daily specials starting from IDR 139K++!\n\n🌮 TUESDAY\nTaco + Beer 🍺",
+      "googleMapsUrl": "https://maps.app.goo.gl/nAKBaJ8BrVzbZpBV8"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/calleochobali",
+      "venue": "Calle Ocho",
+      "imageUrl": "/images/calle-ocho-taco-tuesday-promo.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "Taco Tuesday",
+      "id": "taco-tuesday-mwa5jfi9",
+      "description": "TACO TUESDAY at CALLE OCHO! \n\nMake your Tuesday a little more delicious!\n\n🌮 2 Tacos for only IDR 30K\n🍸 All Cocktails for only IDR 80K\n\nBring your friends, enjoy great food, sip on your favourite cocktails and make the most of your Tuesday!\n",
+      "googleMapsUrl": "https://maps.app.goo.gl/FKzE7hd57ZfmE3kUA"
     },
     {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
       "imageUrl": "/images/pexels-photo-1407846.webp",
       "location": "uluwatu",
-      "title": "Wine Wednesday",
-      "id": "promo-wed-1",
       "days": [
         "Wednesday"
       ],
+      "title": "Wine Wednesday",
+      "id": "promo-wed-1",
       "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
       "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     },
@@ -97,11 +123,11 @@
       "venue": "TYGR Sushi",
       "imageUrl": "/images/wyld-wednesday-sushi-special.png",
       "location": "canggu",
-      "title": "WYLD Wednesday ",
-      "id": "wyld-wednesday-mw1jny3g",
       "days": [
         "Wednesday"
       ],
+      "title": "WYLD Wednesday ",
+      "id": "wyld-wednesday-mw1jny3g",
       "description": "WYLD WEDNESDAY\n\nSPECIALTY ROLLS\n3PCS FISH TACOS\nGYUDON BEEF\nIMPORT WINE\nSELECTED COCKTAILS\n88K NET\n\nCANGGU - UBUD - BERAWA - MUNGGU",
       "googleMapsUrl": "https://maps.google.com/?q=TYGR%2C+Jl.+Pantai+Batu+Bolong+No.55%2C+Canggu%2C+Bali"
     },
@@ -110,11 +136,11 @@
       "venue": "Old Mans",
       "imageUrl": "/images/pexels-photo-1763075.webp",
       "location": "canggu",
-      "title": "Throwback Thursday",
-      "id": "promo-thu-1",
       "days": [
         "Thursday"
       ],
+      "title": "Throwback Thursday",
+      "id": "promo-thu-1",
       "description": "90s & 2000s party with drink specials and nostalgic hits all night",
       "googleMapsUrl": "https://maps.app.goo.gl/GfGFkBkzps7TsqXh9"
     },
@@ -123,11 +149,11 @@
       "venue": "Black Sand Brewery",
       "imageUrl": "/images/pasta-thursday-at-black-sand-brewery.png",
       "location": "canggu",
-      "title": "Thursday Pasta",
-      "id": "thursday-pasta-mw1jny3h",
       "days": [
         "Thursday"
       ],
+      "title": "Thursday Pasta",
+      "id": "thursday-pasta-mw1jny3h",
       "description": "PASTA THURSDAY\n\nFROM 12 - 8 PM | DINE IN ONLY\n\nTHURSDAY SPECIAL PASTA MENU",
       "googleMapsUrl": "https://maps.google.com/?q=Black+Sand+Brewery%2C+Jl.+Pantai+Batu+Bolong%2C+Canggu%2C+Bali"
     },
@@ -136,11 +162,11 @@
       "venue": "Single Fin",
       "imageUrl": "/images/pexels-photo-1540406.webp",
       "location": "uluwatu",
-      "title": "Friday Sunset Sessions",
-      "id": "promo-fri-1",
       "days": [
         "Friday"
       ],
+      "title": "Friday Sunset Sessions",
+      "id": "promo-fri-1",
       "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
       "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali"
     },
@@ -149,11 +175,11 @@
       "venue": "Bella ",
       "imageUrl": "/images/bella-before-friday-night.png",
       "location": "canggu",
-      "title": "BELLA BEFORE FRIDAY",
-      "id": "bella-before-friday-mwa3ng0e",
       "days": [
         "Friday"
       ],
+      "title": "BELLA BEFORE FRIDAY",
+      "id": "bella-before-friday-mwa3ng0e",
       "description": "Bella Before. The move you make before anything else.\nDinner unfolding slowly, the bar is pumping, wine swirling, cocktails arriving one after another. Live performances take center stage… DJ set with velvet vocals.\nThe room builds with intention.\nYou don’t rush to the next party.\nYou prepare for it.\nEVERY FRIDAY 8PM",
       "googleMapsUrl": "https://maps.app.goo.gl/AMcJiGxc5oGvPxva9"
     },
@@ -162,11 +188,11 @@
       "venue": "Crate Cafe",
       "imageUrl": "/images/pexels-photo-1640777.webp",
       "location": "canggu",
-      "title": "Brunch & Beats",
-      "id": "promo-sat-1",
       "days": [
         "Saturday"
       ],
+      "title": "Brunch & Beats",
+      "id": "promo-sat-1",
       "description": "Extended brunch menu with live acoustic music from 10am-3pm",
       "googleMapsUrl": "https://maps.app.goo.gl/z6Ght9sofZHFVL3V6"
     },
@@ -175,11 +201,11 @@
       "venue": "Ulu Cliffhouse",
       "imageUrl": "/images/pexels-photo-262978.webp",
       "location": "uluwatu",
-      "title": "Sunday Roast",
-      "id": "promo-sun-1",
       "days": [
         "Sunday"
       ],
+      "title": "Sunday Roast",
+      "id": "promo-sun-1",
       "description": "Traditional Sunday roast with ocean views - booking recommended",
       "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     }
