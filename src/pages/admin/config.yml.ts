@@ -264,10 +264,10 @@ const dealsCollection = {
         hint: 'Open a day, type a new number next to a promo and press Enter. It jumps to that place and the rest shift down by one. Then Save. New promos go to the bottom of their day.',
       }, {
         label: 'Daily promos', name: 'daily_promos', label_singular: 'promo', widget: 'list',
-        summary: '{{fields.day}} — {{fields.title}}',
+        summary: '{{fields.days}} — {{fields.title}}',
         fields: [
           { label: 'Title', name: 'title', widget: 'string', hint: 'e.g. Taco Tuesday' },
-          { label: 'Day', name: 'day', widget: 'select', options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] },
+          { label: 'Days', name: 'days', widget: 'select', multiple: true, options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], hint: 'Pick every day it runs (e.g. Tuesday and Thursday). The promo shows on each of those days.' },
           { label: 'Venue', name: 'venue', widget: 'string' },
           promoMapsField,
           imageField(),

@@ -374,19 +374,43 @@
               });
             });
           });
-          // "Add promo" puts the new one at the bottom of one long list. Saved in week order, a new
-          // Monday promo sits with the other Mondays the next time the list is opened. Within a day
-          // the website shows them in file order, so the order screen (promo_order, see
-          // public/admin/promo-order-widget.js) is applied here and not stored: the file order is it.
+          // "Add promo" puts the new one at the bottom of one long list. Saved in week order (by a
+          // promo's first day), a new Monday promo sits with the other Mondays the next time the
+          // list is opened. Each day's order on the website comes from promo_order, stored in the
+          // file since 2026-11-10 (a promo on two days needs a place on each; see
+          // public/admin/promo-order-widget.js and src/lib/promo-days.ts). A promo still carrying
+          // the old single `day` is moved to `days` here.
           if (data.has('daily_promos') && data.get('daily_promos')) {
+            data = data.update('daily_promos', function (items) {
+              return items.map(function (it) {
+                var days = it.get('days');
+                var hasDays = days && (typeof days.size === 'number' ? days.size : days.length);
+                if (!hasDays && it.get('day')) it = it.set('days', items.clear().push(it.get('day')));
+                return it.has('day') ? it.delete('day') : it;
+              });
+            });
             var promoOrder = data.get('promo_order');
             promoOrder = promoOrder && typeof promoOrder.toJS === 'function' ? promoOrder.toJS() : promoOrder;
+            var plain = data.get('daily_promos').toJS();
+            var firstDay = function (it) { return H.promoDays(it.toJS())[0] || ''; };
             data = data.update('daily_promos', function (items) {
-              return items.clear().concat(H.orderPromos(items.toArray(), promoOrder,
-                function (it) { return it.get('day'); }, function (it) { return it.get('id'); }));
+              return items.clear().concat(H.orderPromos(items.toArray(), promoOrder, firstDay,
+                function (it) { return it.get('id'); }));
             });
+            // Immutable is not a global: an empty Map and List are borrowed from the entry.
+            var cleaned = H.cleanPromoOrder(plain, promoOrder);
+            if (cleaned) {
+              var emptyList = data.get('daily_promos').clear();
+              var stored = Object.keys(cleaned).reduce(function (m, d) {
+                return m.set(d, emptyList.concat(cleaned[d]));
+              }, data.clear());
+              data = data.set('promo_order', stored);
+            } else if (data.has('promo_order')) {
+              data = data.delete('promo_order');
+            }
+          } else if (data.has('promo_order')) {
+            data = data.delete('promo_order');
           }
-          if (data.has('promo_order')) data = data.delete('promo_order');
 
           if (!(data.has('name') && data.has('location'))) return data;
           if (data.get('featured') === undefined || data.get('featured') === null) data = data.set('featured', false);

@@ -6,10 +6,12 @@
  * different number". Dragging in Decap's list is the only other way, across one long list of every
  * day mixed together.
  *
- * The website shows a day's promos in file order, so the file order is the order. This widget only
- * holds the moves typed since the last save ({ Monday: [ids] }); the preSave hook in index.html
- * applies them to `daily_promos` with CpHelpers.orderPromos and drops the field. The rows come from
- * the promo list in the same entry, read live, so a promo added a minute ago is already on its day.
+ * Each day's order is stored in the promo file as `promo_order` ({ Monday: [ids] }) and loaded back
+ * into this widget, because a promo on two days (2026-11-10) needs its own place on each, which one
+ * file order cannot give. A move rewrites that day's whole list; the preSave hook in index.html
+ * cleans the lists (CpHelpers.cleanPromoOrder). The website sorts each day by it
+ * (src/lib/promo-days.ts). The rows come from the promo list in the same entry, read live, so a
+ * promo added a minute ago is already on its day.
  * Same look and behaviour as venue-order-widget.js (type a number, Enter, the rest shift down),
  * which Ivan already uses; it explains why the rows are hidden with CSS rather than unmounted.
  */
@@ -36,14 +38,9 @@
     },
 
     /** One day's promos in the order the website will show them after a save. */
+    // A promo on several days is listed under each of them, with its own place in each.
     dayPromos: function (day) {
-      var ordered = window.CpHelpers.orderPromos(
-        this.promos(),
-        this.pending(),
-        function (p) { return p.day; },
-        function (p) { return p.id; },
-      );
-      return ordered.filter(function (p) { return p.day === day; });
+      return window.CpHelpers.promosForDay(this.promos(), this.pending(), day);
     },
 
     // Writes the day's whole list, so the order on screen is exactly what the save applies.

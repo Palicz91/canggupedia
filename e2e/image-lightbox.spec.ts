@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
+import { promoDays } from '../src/lib/promo-days';
 import { promoMapsHref } from '../src/lib/promo-maps';
 
 /**
@@ -58,8 +59,10 @@ test.describe('daily promos', () => {
     const venues = readdirSync('src/data/venues', { recursive: true })
       .filter((f) => String(f).endsWith('.json'))
       .map((f) => JSON.parse(readFileSync(`src/data/venues/${f}`, 'utf8')));
-    const withMap = promos.filter((p: Parameters<typeof promoMapsHref>[0]) => promoMapsHref(p, venues));
-    await expect(page.locator('.promo-card a', { hasText: /^\s*Map\s*$/ })).toHaveCount(withMap.length);
+    // A promo on two days is a card on each day.
+    const withMap = promos.filter((p: Parameters<typeof promoMapsHref>[0]) => promoMapsHref(p, venues))
+      .reduce((n: number, p: Parameters<typeof promoDays>[0]) => n + promoDays(p).length, 0);
+    await expect(page.locator('.promo-card a', { hasText: /^\s*Map\s*$/ })).toHaveCount(withMap);
   });
 
   test('it opens again after being closed', async ({ page }) => {

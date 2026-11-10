@@ -312,7 +312,16 @@ What's On has day buttons (All, Monday … Sunday) above the list, styled like t
 venue pages (2026-11-10, Ivan: checking Thursday meant scrolling the whole week). They filter in the
 browser together with `?location=`; a day with no promo in that area gets no button.
 `e2e/whats-on-days.spec.ts` covers it.
-Its optional `moreInfo` adds a grey MORE button that opens a native `<dialog>`; `showModal` gives the
+
+A daily promo can run on several days (2026-11-10, Ivan: live music at Uma Garden is Tuesday and
+Thursday): the admin's **Days** field is a multi-select stored as `days: [...]`, and the card shows on
+each of those days. A promo with the old single `day` still renders, and the admin save moves it to
+`days`. Because a two-day promo needs its own place on each day, each day's order (the admin's order
+screen) is stored in the file as `promo_order: { Tuesday: [ids] }`; promos not listed follow in file
+order. `src/lib/promo-days.ts` (site) and `public/admin/helpers.js` (admin) hold the same logic,
+`test/promo-days.test.ts` runs both, `e2e/admin-promo-order.spec.ts` covers the order screen.
+
+The promo card's optional `moreInfo` adds a grey MORE button that opens a native `<dialog>`; `showModal` gives the
 Escape key and focus handling. The dialog needs `m-auto` because Tailwind's reset removes the browser's
 centering.
 

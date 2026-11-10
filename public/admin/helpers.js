@@ -228,6 +228,42 @@
       .map(function (x) { return x.it; });
   }
 
+  /** Days a daily promo runs: `days` (since 2026-11-10) or the older single `day`, in week order.
+   *  Line-for-line mirror of src/lib/promo-days.ts; test/promo-days.test.ts runs both. */
+  function promoDays(promo) {
+    var list = Array.isArray(promo.days) && promo.days.length ? promo.days : promo.day ? [promo.day] : [];
+    return DAYS.filter(function (d) { return list.indexOf(d) !== -1; });
+  }
+
+  /** One day's promos: the ids in order[day] first, in that order, then the rest in file order. */
+  function promosForDay(promos, order, day) {
+    var ids = (order && order[day]) || [];
+    var rank = function (p) {
+      var i = p.id ? ids.indexOf(p.id) : -1;
+      return i === -1 ? ids.length : i;
+    };
+    return promos
+      .map(function (p, i) { return { p: p, i: i }; })
+      .filter(function (x) { return promoDays(x.p).indexOf(day) !== -1; })
+      .sort(function (a, b) { return rank(a.p) - rank(b.p) || a.i - b.i; })
+      .map(function (x) { return x.p; });
+  }
+
+  /** The stored per-day order, cleaned for saving: only ids of promos that still run that day,
+   *  no duplicates, no empty days. Returns null when nothing is left to store. */
+  function cleanPromoOrder(promos, order) {
+    var out = {}, any = false;
+    DAYS.forEach(function (day) {
+      var list = (order && order[day]) || [];
+      var running = promos.filter(function (p) { return p.id && promoDays(p).indexOf(day) !== -1; })
+        .map(function (p) { return p.id; });
+      var kept = [];
+      list.forEach(function (id) { if (running.indexOf(id) !== -1 && kept.indexOf(id) === -1) kept.push(id); });
+      if (kept.length) { out[day] = kept; any = true; }
+    });
+    return any ? out : null;
+  }
+
   /** One string per JSON value whatever its key order, spacing or trailing newline, so two copies
    *  of a data file compare equal when only formatting differs. Text that is not JSON compares as
    *  trimmed text. */
@@ -258,6 +294,9 @@
     uniqueKey: uniqueKey,
     sortByWeekday: sortByWeekday,
     orderPromos: orderPromos,
+    promoDays: promoDays,
+    promosForDay: promosForDay,
+    cleanPromoOrder: cleanPromoOrder,
     slugify: slugify,
     fixUrl: fixUrl,
     fixLinks: fixLinks,

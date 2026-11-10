@@ -2,10 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import promosData from '../data/daily-promos.json';
 import PromoCard, { type Promo } from '../components/PromoCard.astro';
-type DailyPromo = Promo & { day: string };
+import { DAYS, promoDays, promosForDay } from '../lib/promo-days';
+type DailyPromo = Promo & { day?: string; days?: string[] };
 const dailyPromos: DailyPromo[] = promosData.daily_promos;
+// Each day's own order (set in the admin's order screen); a promo on two days has a place on each.
+const promoOrder = (promosData as { promo_order?: Record<string, string[]> }).promo_order;
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const daysOfWeek = DAYS;
 ---
 
 <BaseLayout
@@ -29,7 +32,7 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
         <button type="button" class="day-chip px-4 md:px-6 py-2 rounded-full font-semibold transition-all cursor-pointer bg-gradient-tropical text-white shadow-lg" data-day="all" aria-pressed="true">
           All
         </button>
-        {daysOfWeek.filter((day) => dailyPromos.some((promo) => promo.day === day)).map((day) => (
+        {daysOfWeek.filter((day) => dailyPromos.some((promo) => promoDays(promo).includes(day))).map((day) => (
           <button type="button" class="day-chip px-4 md:px-6 py-2 rounded-full font-semibold transition-all cursor-pointer bg-white text-gray-700 hover:bg-gray-100" data-day={day} aria-pressed="false">
             {day}
           </button>
@@ -37,7 +40,7 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
       </div>
 
       {daysOfWeek.map((day) => {
-        const dayPromos = dailyPromos.filter((promo) => promo.day === day);
+        const dayPromos = promosForDay(dailyPromos, promoOrder, day);
         if (dayPromos.length === 0) return null;
 
         return (
