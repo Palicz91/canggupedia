@@ -159,6 +159,19 @@
       "googleMapsUrl": "https://maps.app.goo.gl/1UxnMpipYWstuykA8"
     },
     {
+      "venueInstagram": "https://www.instagram.com/blacksandbrewery",
+      "venue": "Black Sand Brewery",
+      "imageUrl": "/images/241-pizza-tuesday-poster.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "2 4 1 Pizza",
+      "id": "2-4-1-pizza-mwaap89u",
+      "description": "241 PIZZA TUESDAY at BLACK SAND BREWERY!\n\nPizza lovers, Tuesdays just got better!\n\nEnjoy our 2-for-1 Pizza Special every Tuesday.\n\n🍕 Buy 1, Get 1 Free\n⏰ From 5 PM till late\n📍 Black Sand Brewery\n\nDine-in only. Bring your friends, grab a beer and enjoy a pizza night!\n",
+      "googleMapsUrl": "https://maps.app.goo.gl/a9YTz1K9fsnqz5JR9"
+    },
+    {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
       "imageUrl": "/images/pexels-photo-1407846.webp",
