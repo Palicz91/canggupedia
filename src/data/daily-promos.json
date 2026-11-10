@@ -21,14 +21,14 @@
       "id": "monday-all-day-pasta-mv62vv77"
     },
     {
-      "id": "promo-tue-1",
-      "day": "Tuesday",
-      "title": "Taco Tuesday",
+      "venueInstagram": "https://instagram.com/labrisabali",
       "venue": "La Brisa",
-      "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
       "imageUrl": "/images/pexels-photo-4958792.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/labrisabali",
+      "title": "Taco Tuesday",
+      "id": "promo-tue-1",
+      "day": "Tuesday",
+      "description": "Special taco menu with discounted prices - enjoy authentic Mexican flavors by the beach",
       "googleMapsUrl": "https://maps.app.goo.gl/rYXfeYKTrBLwFFYB8"
     },
     {
@@ -42,14 +42,34 @@
       "id": "taco-tueday-mvgafr0w"
     },
     {
-      "id": "promo-wed-1",
-      "day": "Wednesday",
-      "title": "Wine Wednesday",
+      "location": "canggu",
+      "title": "Burger and Pint",
+      "day": "Tuesday",
+      "venue": "The Bench Canggu",
+      "venueInstagram": "https://www.instagram.com/thebench.canggu",
+      "description": "Burger and Pint Rp 150.000 ++\nMonday to Friday 12pm - 3pm",
+      "imageUrl": "/images/burger-pint-lunch-promo.png",
+      "id": "burger-and-pint-mwa2bfzm"
+    },
+    {
+      "location": "canggu",
+      "title": "Sol rooftop Taco Tuesday",
+      "day": "Tuesday",
+      "venue": "Sol rooftop",
+      "imageUrl": "/images/retro-taco-tuesday-specials-poster.png",
+      "description": "Taco and Slushy Margarita special all day",
+      "venueInstagram": "https://www.instagram.com/sol.rooftopbali",
+      "id": "sol-rooftop-taco-tuesday-mwa2bfzm"
+    },
+    {
+      "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
-      "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
       "imageUrl": "/images/pexels-photo-1407846.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/ulucliffhouse",
+      "title": "Wine Wednesday",
+      "id": "promo-wed-1",
+      "day": "Wednesday",
+      "description": "50% off all wines by the bottle - perfect for sunset viewing with friends",
       "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     },
     {
@@ -63,14 +83,14 @@
       "id": "wyld-wednesday-mw1jny3g"
     },
     {
-      "id": "promo-thu-1",
-      "day": "Thursday",
-      "title": "Throwback Thursday",
+      "venueInstagram": "https://instagram.com/oldmanscanggu",
       "venue": "Old Mans",
-      "description": "90s & 2000s party with drink specials and nostalgic hits all night",
       "imageUrl": "/images/pexels-photo-1763075.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/oldmanscanggu",
+      "title": "Throwback Thursday",
+      "id": "promo-thu-1",
+      "day": "Thursday",
+      "description": "90s & 2000s party with drink specials and nostalgic hits all night",
       "googleMapsUrl": "https://maps.app.goo.gl/GfGFkBkzps7TsqXh9"
     },
     {
@@ -84,36 +104,36 @@
       "id": "thursday-pasta-mw1jny3h"
     },
     {
-      "id": "promo-fri-1",
-      "day": "Friday",
-      "title": "Friday Sunset Sessions",
+      "venueInstagram": "https://instagram.com/singlefinbali",
       "venue": "Single Fin",
-      "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
       "imageUrl": "/images/pexels-photo-1540406.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/singlefinbali",
+      "title": "Friday Sunset Sessions",
+      "id": "promo-fri-1",
+      "day": "Friday",
+      "description": "Live DJ + special cocktail menu from 5-8pm with clifftop views",
       "googleMapsUrl": "https://maps.google.com/?q=Single+Fin+Uluwatu+Bali"
     },
     {
-      "id": "promo-sat-1",
-      "day": "Saturday",
-      "title": "Brunch & Beats",
+      "venueInstagram": "https://instagram.com/cratecafe",
       "venue": "Crate Cafe",
-      "description": "Extended brunch menu with live acoustic music from 10am-3pm",
       "imageUrl": "/images/pexels-photo-1640777.webp",
       "location": "canggu",
-      "venueInstagram": "https://instagram.com/cratecafe",
+      "title": "Brunch & Beats",
+      "id": "promo-sat-1",
+      "day": "Saturday",
+      "description": "Extended brunch menu with live acoustic music from 10am-3pm",
       "googleMapsUrl": "https://maps.app.goo.gl/z6Ght9sofZHFVL3V6"
     },
     {
-      "id": "promo-sun-1",
-      "day": "Sunday",
-      "title": "Sunday Roast",
+      "venueInstagram": "https://instagram.com/ulucliffhouse",
       "venue": "Ulu Cliffhouse",
-      "description": "Traditional Sunday roast with ocean views - booking recommended",
       "imageUrl": "/images/pexels-photo-262978.webp",
       "location": "uluwatu",
-      "venueInstagram": "https://instagram.com/ulucliffhouse",
+      "title": "Sunday Roast",
+      "id": "promo-sun-1",
+      "day": "Sunday",
+      "description": "Traditional Sunday roast with ocean views - booking recommended",
       "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     }
   ]
