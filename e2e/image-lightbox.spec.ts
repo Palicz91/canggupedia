@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { promoMapsHref } from '../src/lib/promo-maps';
 
 /**
  * Cards crop their picture to a wide strip, so a tap has to show the whole thing. Checked on the
@@ -52,8 +53,12 @@ test.describe('daily promos', () => {
     await expect(page.locator('.promo-card').first()).toBeVisible();
   });
 
-  test('a card has a Map button only when its promo has a Google Maps link', async ({ page }) => {
-    const withMap = promos.filter((p: { googleMapsUrl?: string }) => p.googleMapsUrl?.trim());
+  test('a card has a Map button only when its promo or its listed venue has a Google Maps link', async ({ page }) => {
+    // Since 2026-11-10 a promo without a link borrows the listed venue's (src/lib/promo-maps.ts).
+    const venues = readdirSync('src/data/venues', { recursive: true })
+      .filter((f) => String(f).endsWith('.json'))
+      .map((f) => JSON.parse(readFileSync(`src/data/venues/${f}`, 'utf8')));
+    const withMap = promos.filter((p: Parameters<typeof promoMapsHref>[0]) => promoMapsHref(p, venues));
     await expect(page.locator('.promo-card a', { hasText: /^\s*Map\s*$/ })).toHaveCount(withMap.length);
   });
 

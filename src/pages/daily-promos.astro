@@ -23,6 +23,19 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
         </p>
       </div>
 
+      <!-- Day buttons like the Party / Bars / Beach Clubs ones on the venue pages (Ivan, 2026-11-10):
+           without them, checking Thursday meant scrolling past Monday to Wednesday. -->
+      <div id="day-chips" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-12" hidden={dailyPromos.length === 0}>
+        <button type="button" class="day-chip px-4 md:px-6 py-2 rounded-full font-semibold transition-all cursor-pointer bg-gradient-tropical text-white shadow-lg" data-day="all" aria-pressed="true">
+          All
+        </button>
+        {daysOfWeek.filter((day) => dailyPromos.some((promo) => promo.day === day)).map((day) => (
+          <button type="button" class="day-chip px-4 md:px-6 py-2 rounded-full font-semibold transition-all cursor-pointer bg-white text-gray-700 hover:bg-gray-100" data-day={day} aria-pressed="false">
+            {day}
+          </button>
+        ))}
+      </div>
+
       {daysOfWeek.map((day) => {
         const dayPromos = dailyPromos.filter((promo) => promo.day === day);
         if (dayPromos.length === 0) return null;
@@ -51,26 +64,62 @@ const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sat
 <script>
   import { showsInArea } from '../lib/areas';
 
+  const ACTIVE = ['bg-gradient-tropical', 'text-white', 'shadow-lg'];
+  const INACTIVE = ['bg-white', 'text-gray-700', 'hover:bg-gray-100'];
+
   const params = new URLSearchParams(window.location.search);
   const location = params.get('location');
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('.day-section'));
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.day-chip'));
+  const empty = document.getElementById('empty-state');
+  const emptyText = document.getElementById('empty-state-text');
+
+  // The area never changes on this page, so hide the other area's cards once and count per day.
+  const cardsPerDay = new Map<string, number>();
+  for (const section of sections) {
+    let shown = 0;
+    section.querySelectorAll<HTMLElement>('.promo-card').forEach((card) => {
+      const inArea = !location || showsInArea(card.getAttribute('data-location'), location);
+      card.style.display = inArea ? '' : 'none';
+      if (inArea) shown++;
+    });
+    cardsPerDay.set(section.dataset.day || '', shown);
+  }
+
   if (location) {
     const name = location.charAt(0).toUpperCase() + location.slice(1);
     const subtitle = document.getElementById('promos-subtitle');
     if (subtitle) subtitle.textContent = `${name} - Monday to Sunday Promos`;
+  }
 
-    document.querySelectorAll<HTMLElement>('.promo-card').forEach((card) => {
-      if (!showsInArea(card.getAttribute('data-location'), location)) card.style.display = 'none';
-    });
+  // A day with nothing in this area gets no button, so no button leads to an empty page.
+  for (const chip of chips) {
+    const day = chip.dataset.day || '';
+    if (day !== 'all' && !cardsPerDay.get(day)) chip.hidden = true;
+  }
 
-    document.querySelectorAll<HTMLElement>('.day-section').forEach((section) => {
-      const visible = Array.from(section.querySelectorAll<HTMLElement>('.promo-card')).some((c) => c.style.display !== 'none');
-      if (!visible) section.style.display = 'none';
-    });
+  function show(activeDay: string) {
+    for (const section of sections) {
+      const day = section.dataset.day || '';
+      const visible = (cardsPerDay.get(day) || 0) > 0 && (activeDay === 'all' || day === activeDay);
+      section.style.display = visible ? '' : 'none';
+    }
+    for (const chip of chips) {
+      const on = chip.dataset.day === activeDay;
+      chip.classList.remove(...(on ? INACTIVE : ACTIVE));
+      chip.classList.add(...(on ? ACTIVE : INACTIVE));
+      chip.setAttribute('aria-pressed', String(on));
+    }
+  }
 
-    const anyVisible = Array.from(document.querySelectorAll<HTMLElement>('.promo-card')).some((c) => c.style.display !== 'none');
-    const empty = document.getElementById('empty-state');
-    const emptyText = document.getElementById('empty-state-text');
-    if (empty && emptyText && !anyVisible) {
+  chips.forEach((chip) => chip.addEventListener('click', () => show(chip.dataset.day || 'all')));
+  show('all');
+
+  const anyInArea = Array.from(cardsPerDay.values()).some((n) => n > 0);
+  if (!anyInArea) {
+    const chipRow = document.getElementById('day-chips');
+    if (chipRow) chipRow.hidden = true;
+    if (empty && emptyText && location) {
       emptyText.textContent = 'Nothing in this area yet.';
       empty.hidden = false;
     }

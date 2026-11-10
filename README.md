@@ -307,6 +307,11 @@ still builds. Empty types stay dropped, so a new type shows only once a venue us
 
 What's On (`/daily-promos`) is the Monday to Sunday list. Deals (`/deals`, `src/data/deals.json`) are
 promos with no weekday: `timing` is free text shown on the card. Both render `src/components/PromoCard.astro`.
+
+What's On has day buttons (All, Monday … Sunday) above the list, styled like the type buttons on the
+venue pages (2026-11-10, Ivan: checking Thursday meant scrolling the whole week). They filter in the
+browser together with `?location=`; a day with no promo in that area gets no button.
+`e2e/whats-on-days.spec.ts` covers it.
 Its optional `moreInfo` adds a grey MORE button that opens a native `<dialog>`; `showModal` gives the
 Escape key and focus handling. The dialog needs `m-auto` because Tailwind's reset removes the browser's
 centering.
