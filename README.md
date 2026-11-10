@@ -285,6 +285,15 @@ through on every area page. Venues do not get the option: a venue's area decides
 lives on. Daily promos also have an optional `bookingUrl`, shown as a green Book button (a `wa.me`
 link opens a WhatsApp chat).
 
+## Map button on promos and deals (2026-11-10)
+
+A promo or deal card shows **Map** from its own `googleMapsUrl`. When that is empty, `promoMapsHref`
+(`src/lib/promo-maps.ts`) borrows the link from the venue's own page if the venue is listed: the names
+match without case, punctuation or the words Bali/Canggu/Uluwatu ("La Brisa" = "La Brisa Bali"), the
+area must match (a `both` promo matches any area), and the match must give exactly one link, or there is
+no button. In the admin the Maps field sits right under Venue in Daily promos and Deals, because Ivan
+missed it lower down and asked why some cards had no Map button.
+
 ## Area boxes, Deals and the More button (2026-11-05)
 
 The boxes on `/canggu` and `/uluwatu` come from `areaBoxes` in `src/lib/area-boxes.ts`: `BOX_ORDER` is

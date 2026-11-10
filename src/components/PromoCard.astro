@@ -4,6 +4,7 @@
  * field is filled in. More opens the owner's caption (table bookings and the like) in a popup.
  */
 import { toHref } from '../lib/links';
+import { promoMapsHref, type MapsVenue } from '../lib/promo-maps';
 import { cdnImage } from '../lib/images';
 
 // The admin writes optional fields only once someone fills them in, so the JSON alone can't type them.
@@ -22,6 +23,11 @@ export interface Promo {
 
 const { promo } = Astro.props as { promo: Promo };
 const moreInfo = promo.moreInfo?.trim();
+// No Maps link on the promo → borrow the one from the venue's own page, if it is listed.
+const venues = Object.values(
+  import.meta.glob<MapsVenue>('../data/venues/**/*.json', { eager: true, import: 'default' }),
+);
+const mapsHref = promoMapsHref(promo, venues);
 ---
 
 <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover promo-card" data-location={promo.location}>
@@ -56,9 +62,9 @@ const moreInfo = promo.moreInfo?.trim();
     {promo.timing && <p class="text-gray-800 font-semibold mb-3">{promo.timing}</p>}
     <p class="text-gray-600 mb-6">{promo.description}</p>
     <div class="flex flex-wrap gap-2">
-      {toHref(promo.googleMapsUrl) && (
+      {mapsHref && (
         <a
-          href={toHref(promo.googleMapsUrl)}
+          href={mapsHref}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center space-x-2 bg-sunset-orange text-white py-2 px-4 rounded-xl hover:bg-sunset-coral transition-colors font-semibold"

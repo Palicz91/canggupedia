@@ -222,6 +222,14 @@ const moreInfoField = {
   hint: 'Shows when someone presses MORE, e.g. how to book a table. Leave empty and the card has no MORE button.',
 };
 
+// Right under Venue on purpose: Ivan missed it lower down, below Description and Area (2026-11-10).
+// Empty is fine when the venue has its own page: the card borrows that link (src/lib/promo-maps.ts).
+const promoMapsField = linkField(
+  '📍 Google Maps link (Map button)',
+  'googleMapsUrl',
+  'Google Maps → the venue → Share → Copy link, paste it here. Empty: the card uses the venue page\'s link if the venue is on the site, otherwise it has no Map button.',
+);
+
 const dealsCollection = {
   name: 'deals',
   label: 'Deals & events',
@@ -261,10 +269,10 @@ const dealsCollection = {
           { label: 'Title', name: 'title', widget: 'string', hint: 'e.g. Taco Tuesday' },
           { label: 'Day', name: 'day', widget: 'select', options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] },
           { label: 'Venue', name: 'venue', widget: 'string' },
+          promoMapsField,
           imageField(),
           { label: 'Description', name: 'description', widget: 'text' },
           areaSelect,
-          linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
           linkField('Booking link', 'bookingUrl', 'Adds a green Book button. A WhatsApp link opens a chat: wa.me/62812…'),
           linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
           moreInfoField,
@@ -281,10 +289,10 @@ const dealsCollection = {
           { label: 'Title', name: 'title', widget: 'string', hint: 'e.g. Christmas Set Menu' },
           { label: 'When', name: 'timing', widget: 'string', required: false, hint: 'e.g. Every day, or 20 to 26 December' },
           { label: 'Venue', name: 'venue', widget: 'string' },
+          promoMapsField,
           imageField(),
           { label: 'Description', name: 'description', widget: 'text' },
           areaSelect,
-          linkField('Google Maps link', 'googleMapsUrl', 'Paste the link from Google Maps (Share → Copy link). Leave empty and the card has no Map button.'),
           linkField('Booking link', 'bookingUrl', 'Adds a green Book button. A WhatsApp link opens a chat: wa.me/62812…'),
           linkField('Venue Instagram', 'venueInstagram', 'Profile link or username, e.g. @labrisabali'),
           moreInfoField,
