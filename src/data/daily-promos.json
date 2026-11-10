@@ -1,58 +1,59 @@
 {
   "daily_promos": [
     {
-      "id": "promo-mon-1",
-      "day": "Monday",
-      "title": "Brochette Monday 2 4 1",
+      "venueInstagram": "https://www.instagram.com/warunggouthe",
       "venue": "Warung Gouthe",
-      "description": "2-for-1 brochette 5pm to 8pm the lowest price goes free",
       "imageUrl": "/images/chatgpt-image-oct-6-2026-11_18_55-am.png",
       "location": "canggu",
-      "venueInstagram": "https://www.instagram.com/warunggouthe",
+      "title": "Brochette Monday 2 4 1",
+      "id": "promo-mon-1",
+      "day": "Monday",
+      "description": "2-for-1 brochette 5pm to 8pm the lowest price goes free",
       "googleMapsUrl": "https://maps.google.com/?q=Warung+Gouthe%2C+Jl.+Pantai+Berawa+No.7A%2C+Canggu%2C+Bali"
     },
     {
+      "venueInstagram": "https://www.instagram.com/lanaya.bali/",
+      "venue": "La Naya",
+      "imageUrl": "/images/d405f67a-1666-4e10-bfd7-4f529232eaa2.png",
       "location": "canggu",
       "title": "Monday all day pasta",
-      "day": "Monday",
-      "venue": "La Naya",
-      "venueInstagram": "https://www.instagram.com/lanaya.bali/",
-      "description": "Selected pasta and add Rp 5.000 for coffee or tea",
-      "imageUrl": "/images/d405f67a-1666-4e10-bfd7-4f529232eaa2.png",
       "id": "monday-all-day-pasta-mv62vv77",
+      "day": "Monday",
+      "description": "Selected pasta and add Rp 5.000 for coffee or tea",
       "googleMapsUrl": "https://maps.google.com/?q=La+Naya+Bali%2C+Kerobokan%2C+Bali"
     },
     {
-      "location": "canggu",
-      "title": "Taco tueday",
-      "day": "Tuesday",
+      "venueInstagram": "https://www.instagram.com/tacosaqui.bali/",
       "venue": "Tacosaqui bali",
       "imageUrl": "/images/poster-taco-selasa-retro-uluwatu.png",
-      "description": "35k tacos all day Umalas and Uluwatu venue",
-      "venueInstagram": "https://www.instagram.com/tacosaqui.bali/",
+      "location": "canggu",
+      "title": "Taco tueday",
       "id": "taco-tueday-mvgafr0w",
+      "day": "Tuesday",
+      "description": "35k tacos all day Umalas and Uluwatu venue",
       "googleMapsUrl": "https://maps.google.com/?q=Tacos+Aqui%2C+Jl.+Bumbak+No.79-81%2C+Umalas%2C+Bali"
     },
     {
+      "venueInstagram": "https://www.instagram.com/thebench.canggu",
+      "venue": "The Bench Canggu",
+      "imageUrl": "/images/burger-pint-lunch-promo.png",
       "location": "canggu",
       "title": "Burger and Pint",
-      "day": "Tuesday",
-      "venue": "The Bench Canggu",
-      "venueInstagram": "https://www.instagram.com/thebench.canggu",
-      "description": "Burger and Pint Rp 150.000 ++\nMonday to Friday 12pm - 3pm",
-      "imageUrl": "/images/burger-pint-lunch-promo.png",
       "id": "burger-and-pint-mwa2nm3k",
+      "day": "Tuesday",
+      "description": "Burger and Pint Rp 150.000 ++\nMonday to Friday 12pm - 3pm",
       "googleMapsUrl": "https://maps.google.com/?q=The+Bench%2C+Jl.+Pantai+Batu+Bolong+No.99%2C+Canggu%2C+Bali"
     },
     {
-      "location": "canggu",
-      "title": "Sol rooftop Taco Tuesday",
-      "day": "Tuesday",
+      "venueInstagram": "https://www.instagram.com/sol.rooftopbali",
       "venue": "Sol rooftop",
       "imageUrl": "/images/retro-taco-tuesday-specials-poster.png",
+      "location": "canggu",
+      "title": "Sol rooftop Taco Tuesday",
+      "id": "sol-rooftop-taco-tuesday-mwa2nm3k",
+      "day": "Tuesday",
       "description": "Taco and Slushy Margarita special all day",
-      "venueInstagram": "https://www.instagram.com/sol.rooftopbali",
-      "id": "sol-rooftop-taco-tuesday-mwa2nm3k"
+      "googleMapsUrl": "https://maps.app.goo.gl/qQ2CZtmHhVUjGs3B8"
     },
     {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
@@ -66,14 +67,14 @@
       "googleMapsUrl": "https://maps.google.com/?q=Ulu+Cliffhouse+Uluwatu+Bali"
     },
     {
+      "venueInstagram": "https://www.instagram.com/tygrsushi",
+      "venue": "TYGR Sushi",
+      "imageUrl": "/images/wyld-wednesday-sushi-special.png",
       "location": "canggu",
       "title": "WYLD Wednesday ",
-      "day": "Wednesday",
-      "venue": "TYGR Sushi",
-      "venueInstagram": "https://www.instagram.com/tygrsushi",
-      "imageUrl": "/images/wyld-wednesday-sushi-special.png",
-      "description": "WYLD WEDNESDAY\n\nSPECIALTY ROLLS\n3PCS FISH TACOS\nGYUDON BEEF\nIMPORT WINE\nSELECTED COCKTAILS\n88K NET\n\nCANGGU - UBUD - BERAWA - MUNGGU",
       "id": "wyld-wednesday-mw1jny3g",
+      "day": "Wednesday",
+      "description": "WYLD WEDNESDAY\n\nSPECIALTY ROLLS\n3PCS FISH TACOS\nGYUDON BEEF\nIMPORT WINE\nSELECTED COCKTAILS\n88K NET\n\nCANGGU - UBUD - BERAWA - MUNGGU",
       "googleMapsUrl": "https://maps.google.com/?q=TYGR%2C+Jl.+Pantai+Batu+Bolong+No.55%2C+Canggu%2C+Bali"
     },
     {
@@ -88,14 +89,14 @@
       "googleMapsUrl": "https://maps.app.goo.gl/GfGFkBkzps7TsqXh9"
     },
     {
+      "venueInstagram": "https://www.instagram.com/blacksandbrewery",
+      "venue": "Black Sand Brewery",
+      "imageUrl": "/images/pasta-thursday-at-black-sand-brewery.png",
       "location": "canggu",
       "title": "Thursday Pasta",
-      "day": "Thursday",
-      "venue": "Black Sand Brewery",
-      "venueInstagram": "https://www.instagram.com/blacksandbrewery",
-      "imageUrl": "/images/pasta-thursday-at-black-sand-brewery.png",
-      "description": "PASTA THURSDAY\n\nFROM 12 - 8 PM | DINE IN ONLY\n\nTHURSDAY SPECIAL PASTA MENU",
       "id": "thursday-pasta-mw1jny3h",
+      "day": "Thursday",
+      "description": "PASTA THURSDAY\n\nFROM 12 - 8 PM | DINE IN ONLY\n\nTHURSDAY SPECIAL PASTA MENU",
       "googleMapsUrl": "https://maps.google.com/?q=Black+Sand+Brewery%2C+Jl.+Pantai+Batu+Bolong%2C+Canggu%2C+Bali"
     },
     {
