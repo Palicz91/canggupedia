@@ -167,7 +167,7 @@
         "Tuesday"
       ],
       "title": "2 4 1 Pizza",
-      "id": "2-4-1-pizza-mwab7gbh",
+      "id": "2-4-1-pizza-mwabrbir",
       "description": "241 PIZZA TUESDAY at BLACK SAND BREWERY!\n\nPizza lovers, Tuesdays just got better!\n\nEnjoy our 2-for-1 Pizza Special every Tuesday.\n\n🍕 Buy 1, Get 1 Free\n⏰ From 5 PM till late\n📍 Black Sand Brewery\n\nDine-in only. Bring your friends, grab a beer and enjoy a pizza night!\n",
       "googleMapsUrl": "https://maps.app.goo.gl/a9YTz1K9fsnqz5JR9"
     },
@@ -180,7 +180,7 @@
         "Tuesday"
       ],
       "title": "Tuesday Madness",
-      "id": "tuesday-madness-mwab7gbh",
+      "id": "tuesday-madness-mwabrbir",
       "description": "TUESDAY MADNESS at MILANO!\n\nMake your Tuesday a little more delicious!\n\nOrder ANY PIZZA and get a FREE SOFT DRINK on us! 🍹\n\n📍 Milano Umalas\n⏰ Starting from 5 PM\n📅 Every Tuesday\n\nGood pizza, good vibes and a little something extra to make your Tuesday better!",
       "googleMapsUrl": "https://maps.app.goo.gl/1xSx5uviL2xksYJA7"
     },
@@ -193,9 +193,22 @@
         "Tuesday"
       ],
       "title": "Piano Night",
-      "id": "piano-night-mwab7gbh",
+      "id": "piano-night-mwabrbir",
       "description": "PIANO NIGHT at WOODS!\n\nMake your Tuesday evenings a little more special with live piano music, a cosy atmosphere and good vibes.\n\nEnjoy a beautiful evening of music while dining and unwinding at Woods.\n\n📅 Every Tuesday\n⏰ 8 PM – 10 PM\n📍 Woods\n\nBring your friends, enjoy the atmosphere and let the music set the mood. 🎶",
       "googleMapsUrl": "https://maps.app.goo.gl/3J2TAxf7uWTc1Eas7"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/bb52burgers",
+      "venue": "BB52 Burgers all Venue",
+      "imageUrl": "/images/trippin-tuesday-burger-deal.png",
+      "location": "canggu",
+      "days": [
+        "Tuesday"
+      ],
+      "title": "50% Off every Tuesday",
+      "id": "50-off-every-tuesday-mwabrbir",
+      "description": "TRIPPIN’ TUESDAY at BB52 CRAFT BURGERS!\n\nTuesdays just got better! Enjoy 50% OFF The O.G Burger every Tuesday.\n\n🍔 The O.G Burger\n🔥 50% OFF\n📅 Every Tuesday\n⏰ 11 AM – 11 PM\n\nAvailable for dine-in, takeaway and delivery via GoFood & GrabFood.\n\nGood burgers, great deals. Don’t miss it!",
+      "googleMapsUrl": "https://maps.app.goo.gl/B6qVaZ3VrYenSQQD6"
     },
     {
       "venueInstagram": "https://instagram.com/ulucliffhouse",
