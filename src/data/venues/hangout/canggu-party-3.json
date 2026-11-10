@@ -1,20 +1,20 @@
 {
-  "id": "canggu-party-3",
+  "ticketUrl": "https://example.com/ticket",
+  "tableBookingUrl": "https://wa.me/6281139619892",
   "name": "The Shady Pig",
-  "description": "a 1920s-themed speakeasy bar in Canggu, Bali, known for its experimental cocktails and mobster syndicate-inspired atmosphere. It offers a menu of refined bites and canapés to accompany its signature and classic drinks.",
+  "featured": true,
+  "priceRange": "Rp 130.000 – Rp 500.000 per person (cocktails + bar bites) and minimum spend from ~Rp 8.000.000 for VIP table after 23:00",
   "imageUrl": "/images/the-shady-pig-venue-3.webp",
+  "location": "canggu",
+  "openingHours": "Tue–Sun 19:00 – 04:00, Closed Monday",
+  "guestlistUrl": "https://linktr.ee/thecanggupedia?utm_source=linktree_profile_share&ltsid=7ca12862-da46-4584-a2c0-1942bfa134d7",
+  "id": "canggu-party-3",
+  "description": "a 1920s-themed speakeasy bar in Canggu, Bali, known for its experimental cocktails and mobster syndicate-inspired atmosphere. It offers a menu of refined bites and canapés to accompany its signature and classic drinks.",
+  "instagramUrl": "https://instagram.com/theshadypig",
   "category": "hangout",
   "subcategory": [
     "party",
     "bars"
   ],
-  "location": "canggu",
-  "googleMapsUrl": "https://maps.app.goo.gl/mvdrHccYNxayh7ni7",
-  "instagramUrl": "https://instagram.com/theshadypig",
-  "featured": true,
-  "tableBookingUrl": "https://wa.me/6281139619892",
-  "guestlistUrl": "https://bit.ly/TSFamCanggupedia",
-  "ticketUrl": "https://example.com/ticket",
-  "openingHours": "Tue–Sun 19:00 – 04:00, Closed Monday",
-  "priceRange": "Rp 130.000 – Rp 500.000 per person (cocktails + bar bites) and minimum spend from ~Rp 8.000.000 for VIP table after 23:00"
+  "googleMapsUrl": "https://maps.app.goo.gl/mvdrHccYNxayh7ni7"
 }
