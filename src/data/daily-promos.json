@@ -253,7 +253,7 @@
     },
     {
       "venueInstagram": "https://www.instagram.com/lusa.bistro",
-      "venue": "Lusa",
+      "venue": "Lusa Bistro",
       "imageUrl": "/images/steak_nights_instagram_feed_1080x1350.jpg",
       "location": "canggu",
       "days": [
@@ -261,9 +261,22 @@
         "Saturday"
       ],
       "title": "Steak Nighs",
-      "id": "steak-nighs-mwlpd4v5",
+      "id": "steak-nighs-mwlppbfz",
       "description": "STEAK NIGHT. WEDNESDAY + SATURDAY.\nThree cuts to choose from: Wagyu Striploin MB5, Stone Axe Wagyu Chuck Eye Roll MB8–9, or Tri Tip Stone Axe Wagyu MB9.\nFrom 5PM at LUSA. Pick your cut\n\nWine from Rp 100.000\nLive band and Sax",
       "googleMapsUrl": "https://maps.app.goo.gl/ZyqKTPd6oEmu4Q2e6"
+    },
+    {
+      "venueInstagram": "https://www.instagram.com/nudebali",
+      "venue": "Nude Babakan - Pererenan - Umalas",
+      "imageUrl": "/images/nu-de-bali-2-for-1-burger-wednesday.png",
+      "location": "canggu",
+      "days": [
+        "Wednesday"
+      ],
+      "title": "2 for n1 Burgers",
+      "id": "2-for-n1-burgers-mwlppbfz",
+      "description": "2 for 1 Burger every wednesday start 3pm",
+      "googleMapsUrl": "https://maps.app.goo.gl/8vPxoN4YUd8hdST26"
     },
     {
       "venueInstagram": "https://instagram.com/oldmanscanggu",
