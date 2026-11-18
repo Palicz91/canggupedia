@@ -252,6 +252,20 @@
       "googleMapsUrl": "https://maps.google.com/?q=TYGR%2C+Jl.+Pantai+Batu+Bolong+No.55%2C+Canggu%2C+Bali"
     },
     {
+      "venueInstagram": "https://www.instagram.com/lusa.bistro",
+      "venue": "Lusa",
+      "imageUrl": "/images/steak_nights_instagram_feed_1080x1350.jpg",
+      "location": "canggu",
+      "days": [
+        "Wednesday",
+        "Saturday"
+      ],
+      "title": "Steak Nighs",
+      "id": "steak-nighs-mwlpd4v5",
+      "description": "STEAK NIGHT. WEDNESDAY + SATURDAY.\nThree cuts to choose from: Wagyu Striploin MB5, Stone Axe Wagyu Chuck Eye Roll MB8–9, or Tri Tip Stone Axe Wagyu MB9.\nFrom 5PM at LUSA. Pick your cut\n\nWine from Rp 100.000\nLive band and Sax",
+      "googleMapsUrl": "https://maps.app.goo.gl/ZyqKTPd6oEmu4Q2e6"
+    },
+    {
       "venueInstagram": "https://instagram.com/oldmanscanggu",
       "venue": "Old Mans",
       "imageUrl": "/images/pexels-photo-1763075.webp",
