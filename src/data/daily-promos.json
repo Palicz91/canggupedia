@@ -681,7 +681,7 @@
         "Wednesday"
       ],
       "title": "WEDNESDAY WINGS",
-      "id": "wednesday-wings-mwvj2tum",
+      "id": "wednesday-wings-mwvjc2ob",
       "description": "WEDNESDAY WINGS AT LOLITA BALI!\n\nWednesdays just got tastier! Get your midweek fix with crispy, delicious chicken wings for only IDR 30K NET.\n\nPerfect for a casual dinner, a little catch-up with friends, or simply satisfying those cravings. 🤤\n\n🔥 Chicken Wings – IDR 30K NET\n📅 Every Wednesday\n⏰ From 5 PM\n📍 Lolita Bali – Spanish Restaurant\nJl. Bumbak Dauh No. 110, Kerobokan\n\nDine-in only. No takeaway or delivery. While stocks last. Offers may end without notice.",
       "googleMapsUrl": "https://maps.app.goo.gl/hkEqmribaL7qNXgq5"
     },
@@ -694,7 +694,7 @@
         "Wednesday"
       ],
       "title": "WINE WEDNESDAYS",
-      "id": "wine-wednesdays-mwvj2tum",
+      "id": "wine-wednesdays-mwvjc2ob",
       "description": "WINE WEDNESDAYS AT MÎA\n\nA little midweek indulgence never hurt anyone. ✨\n\nMake your Wednesdays more special at MîA with 25% OFF ALL WINES BY THE BOTTLE!\n\nWhether it’s a dinner date, a catch-up with friends, or simply an excuse to enjoy a good bottle of wine, MîA sets the perfect mood.\n\n🥂 25% OFF all wines by the bottle\n📅 Every Wednesday\n\nGood food, great company, and your favourite bottle waiting to be opened.\n\n📍 MîA – Modern Asian Restaurant & Bar, Berawa, Canggu.",
       "googleMapsUrl": "https://maps.app.goo.gl/pTLNf1GLi7yjbFRA6"
     },
@@ -707,9 +707,21 @@
         "Wednesday"
       ],
       "title": "Get 1 tattoo + 1 cocktail ",
-      "id": "get-1-tattoo-1-cocktail-mwvj2tum",
+      "id": "get-1-tattoo-1-cocktail-mwvjc2ob",
       "description": "A little ink, a cocktail, and a whole lot of good vibes!\n\nWednesday nights at Calle Ocho just got more interesting!\n\nGet 1 tattoo + 1 cocktail for only IDR 250K.\n\n✨ Every Wednesday\n✨ Choose a simple design (up to 3 cm)\n✨ Perfect for anyone looking to add a little something permanent to their Bali memories\n\n📍 Calle Ocho, Petitenget, Bali\n\nSlots are limited, so book ahead and get your design ready!",
       "googleMapsUrl": "https://maps.app.goo.gl/jtACC66kCUJ8W7YC9"
+    },
+    {
+      "location": "canggu",
+      "description": "SENORITA & TEQUILA at JALAPEÑO!\n\nLadies, Wednesday nights just got a whole lot better!\n\nGet your girls together and head to Jalapeño for Senorita & Tequila, a midweek treat made for the ladies. Enjoy 50% OFF ALL SIGNATURE COCKTAILS and make the most of a fun evening filled with great drinks, good company and Mexican-inspired vibes.\n\nWhether you’re planning a girls’ night out, catching up with friends or simply looking for an excuse to enjoy your favourite cocktails, this is your Wednesday plan!\n\n🍸 50% OFF all signature cocktails\n👯 Ladies only\n📅 Every Wednesday\n⏰ 7 PM – 10 PM\n📍 Jalapeño Taqueria, Bali\n\nGrab your girls, pick your favourite cocktails and make Wednesday your new favourite night of the week!",
+      "imageUrl": "/images/whatsapp-image-2026-11-25-at-10.57.50-am.jpeg",
+      "venue": "JALAPEÑO",
+      "title": "SENORITA & TEQUILA ",
+      "days": [
+        "Wednesday"
+      ],
+      "venueInstagram": "https://www.instagram.com/jalapenobali",
+      "id": "senorita-and-tequila-mwvjc2ob"
     },
     {
       "venueInstagram": "https://instagram.com/oldmanscanggu",
